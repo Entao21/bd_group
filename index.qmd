@@ -73,11 +73,6 @@ th { background-color: #f8f9fa; font-weight: bold; }
     <td>Locations of 65 settlements and 18 cities across Greenland.</td>
     <td>GEE User Asset</td>
   </tr>
-  <tr>
-    <td>Risk Map</td>
-    <td>Derived Random Forest regression output (0-1 scale).</td>
-    <td>Generated Analysis</td>
-  </tr>
 </table>
 
 ### Methodology
