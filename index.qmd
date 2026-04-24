@@ -20,7 +20,65 @@ Who are you building this application for? How does it address a need this commu
 
 ### Data
 
-What data are you using? 
+The study integrates multi-source datasets processed within the GEE environment.
+
+<style>
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; }
+th { background-color: #f8f9fa; font-weight: bold; }
+.cat-cell { font-weight: bold; background-color: #fdfdfd; width: 15%; }
+</style>
+
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Dataset</th>
+    <th>Description</th>
+    <th>Source/Link</th>
+  </tr>
+  <tr>
+    <td rowspan="4" class="cat-cell">GEE Public</td>
+    <td>Landsat 7/8/9 C2</td>
+    <td>NDSI for glacier mapping and Surface Temperature (LST) trends (2000–2024).</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/landsat">USGS / GEE</a></td>
+  </tr>
+  <tr>
+    <td>ArcticDEM v4</td>
+    <td>2m resolution mosaic used for high-precision elevation and slope derivation.</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic">PGC / UMN</a></td>
+  </tr>
+  <tr>
+    <td>LSIB Simple</td>
+    <td>Official Greenland boundary and coastline geometry.</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/USDOS_LSIB_SIMPLE_2017">US Dept. of State</a></td>
+  </tr>
+  <tr>
+    <td>Graticules 15°</td>
+    <td>Polar spatial reference grid for visualization.</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/projects_sat-io_open-datasets_graticules_15">Natural Earth</a></td>
+  </tr>
+  <tr>
+    <td rowspan="4" class="cat-cell">Project Assets</td>
+    <td>Mining Drillholes</td>
+    <td>Spatial points of mineral exploration sites (Post-2000).</td>
+    <td>Taarup-Esbensen (2020)</td>
+  </tr>
+  <tr>
+    <td>Mineral Licences</td>
+    <td>Active industrial mining licence polygons (2026 data).</td>
+    <td>Greenland Portal</td>
+  </tr>
+  <tr>
+    <td>Settlements</td>
+    <td>Locations of 65 settlements and 18 cities across Greenland.</td>
+    <td>GEE User Asset</td>
+  </tr>
+  <tr>
+    <td>Risk Map</td>
+    <td>Derived Random Forest regression output (0-1 scale).</td>
+    <td>Generated Analysis</td>
+  </tr>
+</table>
 
 ### Methodology
 
