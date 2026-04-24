@@ -5,3 +5,9 @@
 
 /.quarto/
 **/*.quarto_ipynb
+
+# Local legacy copy from teammate; not part of the submitted repo.
+gee/gee_glacier_mining_app_original_from_teammate.js
+
+# Heavy experimental version; 1000 m version is used for submission/demo.
+gee/gee_glacier_mining_app_500m_50trees_234.js
