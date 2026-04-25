@@ -1,17 +1,16 @@
 ---
 title: "Greenland’s Glacier Retreat Susceptibility Application"
-title-block-banner: images/Greenland_title.png
 language: 
   en:
     toc-title-document: "Contents"
 format:
   html:
-    css: tools/style.css
+    css: tools/style.css        
     toc: true
-    toc-depth: 4              
+    toc-depth: 4
     toc-location: right
-    page-layout: full         
-    title-block-banner: true
+    page-layout: full
+    title-block-banner: images/Greenland_title.png  
 ---
 
 ---
