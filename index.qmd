@@ -1,18 +1,33 @@
 ---
 title: "Greenland’s Glacier Retreat Susceptibility Application"
+title-block-banner: images/Greenland_title.png
 language: 
   en:
     toc-title-document: "Contents"
+format:
+  html:
+    css: tools/style.css
+    toc: true
+    toc-depth: 4              
+    toc-location: right
+    page-layout: full         
+    title-block-banner: true
+---
+
+---
+title: "Greenland’s Glacier Retreat Susceptibility Application"
+subtitle: "Evaluating Climate and Mining Pressures using Random Forest"
+author: "CASA25 Rasternauts"
+ # 这里将右侧目录标题改为 Contents
 format:
   html:
     css: style.css
     toc: true
     toc-depth: 3
     toc-location: right
-    page-layout: full   
-    title-block-banner: true
+    page-layout: full          # 关键：这会让你的页面宽度更大，更像案例
+    title-block-banner: true    # 必须为 true，CSS 才会去渲染图片
 ---
-
 
 ## Project Summary 
 
