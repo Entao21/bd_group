@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="CASA25 Rasternauts">
 
 <title>Greenland’s Glacier Retreat Susceptibility Application</title>
 <style>
@@ -107,6 +106,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(images/Greenland_title.png);
+background-size: cover;
+      }
+</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -138,7 +144,7 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tools/style.css">
 </head>
 
 <body class="quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
@@ -309,19 +315,12 @@ window.Quarto = {
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Greenland’s Glacier Retreat Susceptibility Application</h1>
-            <p class="subtitle lead">Evaluating Climate and Mining Pressures using Random Forest</p>
                       </div>
   </div>
     
   
   <div class="quarto-title-meta column-body">
 
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>CASA25 Rasternauts </p>
-            </div>
-    </div>
       
     
       
@@ -337,11 +336,18 @@ window.Quarto = {
    
   <ul>
   <li><a href="#project-summary" id="toc-project-summary" class="nav-link active" data-scroll-target="#project-summary">Project Summary</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
   <li><a href="#end-user" id="toc-end-user" class="nav-link" data-scroll-target="#end-user">End User</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
+  <ul class="collapse">
+  <li><a href="#glacier-change-detection-and-preprocessing" id="toc-glacier-change-detection-and-preprocessing" class="nav-link" data-scroll-target="#glacier-change-detection-and-preprocessing">Glacier Change Detection and Preprocessing</a></li>
+  <li><a href="#climate-trend-and-predictor-modelling" id="toc-climate-trend-and-predictor-modelling" class="nav-link" data-scroll-target="#climate-trend-and-predictor-modelling">Climate Trend and Predictor Modelling</a></li>
+  <li><a href="#random-forest-retreat-susceptibility-model" id="toc-random-forest-retreat-susceptibility-model" class="nav-link" data-scroll-target="#random-forest-retreat-susceptibility-model">Random Forest Retreat Susceptibility Model</a></li>
+  <li><a href="#precomputed-asset-architecture" id="toc-precomputed-asset-architecture" class="nav-link" data-scroll-target="#precomputed-asset-architecture">Precomputed Asset Architecture</a></li>
+  <li><a href="#interactive-regional-statistics" id="toc-interactive-regional-statistics" class="nav-link" data-scroll-target="#interactive-regional-statistics">Interactive Regional Statistics</a></li>
+  </ul></li>
   <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
   </ul></li>
   <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a></li>
