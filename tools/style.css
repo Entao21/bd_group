@@ -1,146 +1,118 @@
 /* ============================================================
-   Greenland Glacier & Mining Nexus - Custom CSS
+   Greenland Glacier & Mining Nexus - Professional Academic Style
    ============================================================ */
 
-/* ---------- 1. 全局布局 (General Layout) ---------- */
+/* ---------- 1. 页面整体布局 (Layout) ---------- */
 body {
-    background-color: #f0f4f8; 
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-    color: #2c3e50; 
-    line-height: 1.7;
-    max-width: 900px; 
-    margin: 0 auto;
-    padding: 20px;
+    background-color: #f4f8fb; /* 淡淡的冰川背景色，比纯白更有质感 */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #2c3e50;
+    line-height: 1.8;
 }
 
-/* ---------- 2. 标题 (Headings) ---------- */
-h1, .h1 {
-    color: #1a4a75; 
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+/* 增加正文阅读区域的宽度，使其不像之前那么局促 */
+.quarto-container {
+    max-width: 1300px !important;
 }
 
-h2, .h2 {
-    color: #3498db; 
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin-top: 1.8em; 
-    margin-bottom: 0.8rem;
-    border-bottom: 1px solid #d4e3f1; 
+.page-columns .content {
+    max-width: 950px !important;
 }
 
-h3, .h3 {
-    color: #5dade2; 
-    font-size: 1.6rem;
-    font-weight: 500;
-}
-
-h4, h5, h6 {
-    color: #1a4a75;
-}
-
-/* ---------- 3. 链接 (Links) ---------- */
-a {
-    color: #2980b9; 
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease-in-out; 
-}
-
-a:hover {
-    color: #154360; 
-    text-decoration: underline;
-}
-
-a:visited {
-    color: #8e44ad; 
-}
-
-/* ---------- 4. 表格样式 (Table Styles) ---------- */
-table {
-    width: 100%;
-    border-collapse: collapse; 
-    margin: 24px 0;
-    background-color: #ffffff; 
-    border: 1px solid #d4e3f1; 
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); 
-}
-
-th {
-    background-color: #d4e3f1 !important; 
-    color: #1a4a75; 
-    padding: 14px 16px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 0.9rem;
-    border-bottom: 2px solid #a9cce3; 
-}
-
-td {
-    padding: 14px 16px;
-    border-bottom: 1px solid #edf2f6; 
-    color: #34495e;
-}
-
-tr:hover {
-    background-color: #fbfdff; 
-}
-
-.cat-cell {
-    background-color: #f7fbff !important;
-}
-
-/* ---------- 5. 代码与公式 (Code & Math) ---------- */
-code {
-    background-color: #eaf1f7; 
-    color: #e04a5f; 
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-family: ui-monospace, "SF Mono", "Roboto Mono", "Courier New", monospace;
-}
-
-pre code {
-    display: block;
-    padding: 1em;
-    color: #333;
-}
-
-/* ---------- 6. 侧边栏目录 (Sidebar TOC) ---------- */
-.sidebar nav[role=doc-toc] ul > li > a.active,
-.sidebar nav[role=doc-toc] ul > li > ul > li > a.active,
-.sidebar nav[role=doc-toc] ul > li > a:hover,
-.sidebar nav[role=doc-toc] ul > li > ul > li > a:hover {
-    color: #3498db !important; 
-    border-left: 2px solid #3498db; 
-    padding-left: 8px;
-    background-color: #fbfdff;
-}
-
-/* ---------- 7. 顶部 Banner 样式 (Image Overlay) ---------- */
-.quarto-title-block .quarto-title-banner {
-    /* 叠加 40% 不透明度的深蓝色滤镜 */
-    background-image: linear-gradient(rgba(26, 74, 117, 0.4), rgba(26, 74, 117, 0.4)), url('images/Greenland_title.jpg');
-    background-size: cover;
-    background-position: center;
+/* ---------- 2. 顶部 Banner 增强 (尼泊尔同款全屏感) ---------- */
+header#title-block-header.quarto-title-block.default .quarto-title-banner {
+    background-image: linear-gradient(rgba(26, 74, 117, 0.45), rgba(10, 30, 50, 0.6)), url('images/Greenland_title.jpg') !important;
+    background-size: cover !important;
+    background-position: center 30% !important; /* 稍微向上偏移，露出更多冰川细节 */
     background-repeat: no-repeat;
-    height: 350px;
+    height: 450px !important; /* 增加高度，更显大气 */
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 0;
+    box-shadow: inset 0 -100px 100px rgba(0,0,0,0.2); /* 底部微阴影，平滑过渡到正文 */
 }
 
+/* 标题文字样式：更大、更厚重 */
 #title-block-header.quarto-title-block.default .quarto-title .title {
-    color: #ffffff !important; /* 白色标题文字 */
-    text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5); /* 文字阴影增强可读性 */
-    font-size: 3.5rem;
-    font-weight: 800;
-    text-align: center;
+    color: #ffffff !important;
+    font-size: 4.2rem !important; /* 加大字号 */
+    font-weight: 800 !important;
+    letter-spacing: -1px;
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6) !important;
+    line-height: 1.1;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-/* ---------- 8. 正文段落 (Text) ---------- */
-p {
-    font-size: 1.05rem; 
-    margin-bottom: 1.2rem;
+/* ---------- 3. 目录美化 (TOC) ---------- */
+/* 将 "On this page" 标题改为深蓝色并加粗 */
+#quarto-toc-label {
+    color: #1a4a75;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.sidebar nav[role=doc-toc] {
+    border-left: 1px solid #e1e8ed; /* 目录左侧淡线条 */
+}
+
+.sidebar nav[role=doc-toc] ul > li > a {
+    color: #5d707f; /* 未激活时的颜色 */
+    font-size: 0.9rem;
+    padding: 4px 10px;
+}
+
+.sidebar nav[role=doc-toc] ul > li > a.active {
+    color: #3498db !important;
+    border-left: 2px solid #3498db !important; /* 激活时的冰蓝色竖线 */
+    font-weight: 600;
+    background-color: rgba(52, 152, 219, 0.05); /* 淡淡的背景色 */
+}
+
+/* ---------- 4. 正文标题 (Headings) ---------- */
+h2 {
+    color: #1a4a75;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-top: 2.5em;
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid #3498db; /* 标题下方亮蓝色横线 */
+}
+
+h3 {
+    color: #3498db;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-top: 1.5em;
+}
+
+/* ---------- 5. 其它细节 (Tables & Links) ---------- */
+table {
+    border: 1px solid #d1dbe5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #f0f7fd !important;
+    color: #1a4a75;
+}
+
+a {
+    color: #3498db;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #1a4a75;
+    text-decoration: underline;
+}
+
+code {
+    background-color: #eef2f6;
+    color: #e04a5f;
+    border-radius: 4px;
 }
