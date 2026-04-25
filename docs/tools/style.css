@@ -19,12 +19,12 @@ body {
 /* 调整正文区域宽度，配合右侧导航实现整体视觉居中 */
 @media (min-width: 992px) {
     #quarto-content {
-        padding-left: 8% !important;   /* 增加左边距，把正文往右推 */
+        padding-left: 12% !important;   /* 增加左边距，把正文往右推 */
         padding-right: 2% !important;  /* 缩小右边距，让导航栏靠右 */
     }
     
     .page-columns .content {
-        max-width: 1050px !important;  /* 正文加宽 */
+        max-width: 1150px !important;  /* 正文加宽 */
     }
 }
 
