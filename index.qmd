@@ -1,5 +1,5 @@
 ---
-title: "Greenland’s Glacier Retreat Susceptibility Application"
+title: "Greenland Glacier Retreat Susceptibility Application"
 language: 
   en:
     toc-title-document: "Contents"

@@ -1,129 +1,111 @@
 /* ============================================================
-   Greenland Glacier & Mining Nexus - Custom CSS (Fixed Version)
+   Greenland Glacier & Mining Nexus - Final Precision Tuning
    ============================================================ */
 
-/* ---------- 1. 全局布局 (General Layout) ---------- */
+/* ---------- 1. 全局布局：加宽并实现视觉居中 ---------- */
 body {
     background-color: #f0f6fa; /* 冰川淡蓝色背景 */
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: #2c3e50; 
-    line-height: 1.7;
+    line-height: 1.8;
 }
 
-/* 强制增加页面内容区域的宽度，使排版更大气 */
+/* 调整大容器，给左右留出空间实现居中感 */
 .quarto-container {
     max-width: 1400px !important;
-}
-.page-columns .content {
-    max-width: 1000px !important; 
+    margin: 0 auto !important;
 }
 
-/* ---------- 2. 顶部 Banner 样式 (修正路径与后缀) ---------- */
-/* 注意：因为 CSS 文件在 tools/ 文件夹内，
-   必须使用 ../ 才能跳出去找到 images/ 文件夹。
-   文件名已修正为 .png 匹配你的仓库。
-*/
+/* 调整正文区域宽度，配合右侧导航实现整体视觉居中 */
+@media (min-width: 992px) {
+    #quarto-content {
+        padding-left: 8% !important;   /* 增加左边距，把正文往右推 */
+        padding-right: 2% !important;  /* 缩小右边距，让导航栏靠右 */
+    }
+    
+    .page-columns .content {
+        max-width: 950px !important;  /* 正文加宽 */
+    }
+}
+
+/* ---------- 2. 顶部 Banner 样式 (宽度减少 1/10，字号缩小) ---------- */
 div.quarto-title-banner,
 header#title-block-header.quarto-title-block.default .quarto-title-banner {
     background-image: linear-gradient(rgba(26, 74, 117, 0.45), rgba(26, 74, 117, 0.45)), url('../images/Greenland_title.png') !important;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    height: 450px !important; 
+    height: 400px !important; /* 高度稍微降低，更协调 */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 100% !important;
-    margin-top: 0 !important;
+    
+    /* 核心修改：宽度减少 1/10 (即 90%) 并居中 */
+    width: 90% !important; 
+    margin: 0 auto !important; 
+    border-radius: 0 0 15px 15px; /* 底部轻微圆角增加设计感 */
 }
 
-/* 大标题：白色、强制不换行、阴影增强 */
+/* 大标题：缩小字号至 3.2rem，确保单行显示不换行 */
 .quarto-title-banner h1.title,
 #title-block-header.quarto-title-block.default .quarto-title .title {
     color: #ffffff !important;
-    font-size: 4rem !important; 
+    font-size: 3.2rem !important; /* 缩小字号 */
     font-weight: 800 !important;
     text-align: center;
     text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6) !important;
-    white-space: nowrap !important; /* 强制大标题单行显示 */
+    white-space: nowrap !important; /* 强制不换行 */
+    letter-spacing: -0.5px;
 }
 
-/* ---------- 3. 蓝色系分层标题 ---------- */
-h2, .h2 {
-    color: #1a4a75; /* 深蓝色 */
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-top: 2em; 
-    margin-bottom: 0.8rem;
-    border-bottom: 2px solid #3498db; 
-}
-
-h3, .h3 {
-    color: #2980b9; /* 中蓝色 */
-    font-size: 1.7rem;
-    font-weight: 600;
-    margin-top: 1.5em;
-}
-
-h4, .h4 {
-    color: #5dade2; /* 浅蓝色 */
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-top: 1.2em;
-}
-
-/* ---------- 4. 导航栏美化 (TOC) ---------- */
-/* 确保 "Contents" 标题样式 */
+/* ---------- 3. 导航栏美化 (强制替换 "On this page" 为 "Contents") ---------- */
+/* 隐藏原有文字 */
 #quarto-toc-label, .toc-title {
+    color: transparent !important;
+    font-size: 0 !important;
+}
+
+/* 注入新文字 "Contents" */
+#quarto-toc-label::after, .toc-title::after {
+    content: "Contents";
     color: #1a4a75 !important;
+    font-size: 0.85rem !important;
     font-weight: 700 !important;
     text-transform: uppercase;
+    visibility: visible;
+    display: block;
+    letter-spacing: 1px;
 }
 
 .sidebar nav[role=doc-toc] ul > li > a.active {
     color: #3498db !important; 
     border-left: 2px solid #3498db !important; 
-    padding-left: 8px;
+    padding-left: 10px;
     background-color: rgba(52, 152, 219, 0.05);
 }
 
-/* ---------- 5. 链接 (Links) ---------- */
-a {
-    color: #3498db; 
-    text-decoration: none;
-    font-weight: 500;
-}
-
-a:hover {
+/* ---------- 4. 蓝色系分层标题 ---------- */
+h2, .h2 {
     color: #1a4a75; 
-    text-decoration: underline;
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-top: 2.2em; 
+    border-bottom: 2px solid #3498db; 
 }
 
-/* ---------- 6. 表格样式 ---------- */
-table {
-    width: 100%;
-    border-collapse: collapse; 
-    margin: 24px 0;
-    background-color: #ffffff; 
-    border: 1px solid #d4e3f1; 
+h3, .h3 {
+    color: #2980b9; 
+    font-size: 1.6rem;
+    margin-top: 1.5em;
 }
 
-th {
-    background-color: #f0f7fd !important; 
-    color: #1a4a75; 
-    padding: 14px 16px;
-    font-weight: 600;
+h4, .h4 {
+    color: #5dade2; 
+    font-size: 1.2rem;
 }
 
-/* ---------- 7. 文本与代码 ---------- */
-p {
-    font-size: 1.1rem; 
-    margin-bottom: 1.2rem;
-}
-
-code {
-    background-color: #edf2f7; 
-    color: #e04a5f; 
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-}
+/* ---------- 5. 表格、代码与段落 ---------- */
+table { width: 100%; border: 1px solid #d4e3f1; background-color: #ffffff; }
+th { background-color: #f0f7fd !important; color: #1a4a75; }
+p { font-size: 1.05rem; margin-bottom: 1.2rem; }
+code { background-color: #edf2f7; color: #e04a5f; padding: 0.2em 0.4em; border-radius: 4px; }
