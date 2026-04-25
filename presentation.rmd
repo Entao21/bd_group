@@ -1,0 +1,548 @@
+---
+title: "Greenland Glacier Retreat Susceptibility Application"
+subtitle: "A Google Earth Engine App for Cryosphere–Industry Interaction"
+author: "Entao Wang, Penghao Gao, XinLei Shi, Yunjie Zhou, Siyu Chen, Ho Man Chan"
+institute: "Data Dishwasher CASA0025: Building Spatial Applications with Big Data"
+date: "2026/04/25 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [default, xaringan-themer.css]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    seal: false
+---
+
+```{r setup_packages, message=FALSE, warning=FALSE, include=FALSE}
+library(fontawesome)
+library(xaringanthemer)
+library(xaringanExtra)
+library(knitr)
+```
+
+```{r setup_theme, include=FALSE, warning=FALSE}
+style_mono_light(
+  base_color = "#1b3a4b",
+  background_color = "#fafafa",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Lato"),
+  code_font_google   = google_font("Lato"),
+  base_font_size = "20px",
+  header_h1_font_size = "2.2rem",
+  header_h2_font_size = "1.7rem",
+  header_h3_font_size = "1.3rem",
+  extra_css = list(
+    ".remark-slide-content" = list(
+      "font-size" = "20px",
+      "line-height" = "1.4"
+    ),
+    ".title-slide" = list(
+      "background-image" = "url('images/greenland_ice.webp')",
+      "background-size" = "cover",
+      "background-position" = "center",
+      "background-repeat" = "no-repeat",
+      "color" = "white",
+      "text-shadow" = "none"
+      ),
+    ".title-slide a" = list(
+      "color" = "white",
+      "text-decoration" = "none"
+      ),
+    ".title-slide a:visited" = list(
+      "color" = "white"
+      ),
+    ".title-slide h1" = list(
+      "font-size" = "44px",
+      "margin-bottom" = "16px",
+      "color" = "white",
+      "text-shadow" = "none"
+    ),
+    ".title-slide h2" = list(
+      "font-size" = "26px",
+      "margin-top" = "0px",
+      "margin-bottom" = "24px",
+      "color" = "white",
+      "text-shadow" = "none"
+    ),
+    ".title-slide h3" = list(
+      "font-size" = "18px",
+      "font-weight" = "normal",
+      "margin-bottom" = "10px",
+      "color" = "white",
+      "text-shadow" = "none"
+    )
+  )
+)
+```
+
+```{r setup_layout, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+style_extra_css(css = list(
+   ".pull-left-wide" = list("float" = "left", "width" = "60%"),
+   ".pull-right-narrow" = list("float" = "right", "width" = "35%"),
+   ".pull-left-3" = list("float" = "left", "width" = "30%"),
+   ".pull-middle-3" = list("float" = "left", "width" = "30%", "margin-left" = "5%", "margin-right" = "5%"),
+   ".pull-right-3" = list("float" = "right", "width" = "30%"),
+   ".bottom-note" = list("position" = "absolute","bottom" = "1em","left" = "1em", "right" = "1em"),
+   ".clearfix" = list("clear" = "both", "display" = "block")
+))
+xaringanExtra::use_panelset()
+```
+
+class: center, middle, title-slide
+
+# Monitoring Glacier Retreat Susceptibility in Greenland
+
+## A Google Earth Engine App for Cryosphere–Industry Interaction
+
+### Data Dishwasher
+
+### CASA0025: Building Spatial Applications with Big Data
+
+### (updated: `r Sys.Date()`)
+
+---
+
+# Greenland Context
+
+.pull-left-wide[
+**Why Greenland?**
+
+- Greenland’s peripheral glaciers are undergoing rapid retreat under Arctic amplification.
+- At the same time, mineral exploration and mining accessibility are becoming more important in fragile cryospheric environments.
+- This project builds an integrated Earth Engine platform to explore glacier retreat, warming, terrain controls, and mining-related proximity together.
+]
+
+.pull-right-narrow[
+```{r fig_greenland_context, echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("images/greenland_mosaic.jpg")
+```
+<p style="font-size: 0.6em; text-align: center; margin-top: 0;">
+Figure 1: Greenland glacier landscape
+</p>
+]
+
+.clearfix[]
+
+<div style="background: #1b3a4b; color: white; padding: 10px 16px; border-radius: 6px; font-size: 0.9em;">
+The app is designed as an exploratory platform for identifying glacier retreat susceptibility hotspots rather than proving direct causality.
+</div>
+
+---
+
+class: inverse, center, middle
+
+## Interface logic and layer design
+
+---
+
+# Main App Interface
+
+.pull-left-wide[
+**Core interface design**
+
+- Dual-map interface for comparing glacier conditions between around 2000 and 2024
+- Layer toggles for glacier extent, retreat, susceptibility, warming, terrain, mining, and settlements
+- Click-on-map inspector for local glacier-climate summaries
+- Output panel for hotspot interpretation and model diagnostics
+]
+
+.pull-right-narrow[
+```{r fig_interface_layout, echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("images/greenland_ice_sheet.jpg")
+```
+<p style="font-size: 0.6em; text-align: center; margin-top: 0;">
+Figure 2: Example dashboard layout for Greenland monitoring
+</p>
+]
+
+.clearfix[]
+
+---
+
+# Layer Controls
+
+.pull-left[
+### Cryosphere layers
+
+- Glacier extent around 2000
+- Glacier extent around 2024
+- Retreat mask
+- Susceptibility surface
+]
+
+.pull-right[
+### Context layers
+
+- Mining drillholes
+- Mineral licence polygons
+- Settlements and cities
+- ArcticDEM elevation and slope
+]
+
+---
+
+# App Outputs
+
+.pull-left[
+### Map outputs
+
+- Glacier extent comparison
+- Historical-to-recent retreat map
+- Susceptibility distribution
+- Temperature and terrain support
+]
+
+.pull-right[
+### Analytical outputs
+
+- Glacier area change
+- Temperature change
+- Warming trend
+- Local retreat susceptibility
+]
+
+---
+
+class: inverse, center, middle
+
+# Methodology
+
+## Data integration and analytical workflow
+
+---
+
+# Methodology Overview
+
+.panelset[
+.panel[.panel-name[Step 1: Glacier Mapping]
+- Landsat 7, 8 and 9 summer imagery is used to map glacier extent
+- NDSI supports historical and recent glacier inventories
+- Retreat is defined as ice present historically but absent in the recent composite
+]
+
+.panel[.panel-name[Step 2: Predictors]
+- ArcticDEM provides elevation and slope
+- Landsat surface temperature provides baseline temperature and warming trend
+- Mining, settlement, and coastline distance rasters are added
+]
+
+.panel[.panel-name[Step 3: Susceptibility Model]
+- Cleaned retreat and stable ice labels are used for training
+- Random Forest is validated with spatial blocks
+- Outputs are exported as a precomputed Earth Engine asset
+]
+]
+
+---
+
+# Key Datasets
+
+| Theme | Main data source | Role in the app |
+|------|------|------|
+| Glacier mapping | Landsat 7 / 8 / 9 C2 | NDSI glacier extent and retreat detection |
+| Glacier reference | GLIMS 2023 | Glacier boundary support |
+| Topography | ArcticDEM v4 | Elevation and slope predictors |
+| Climate | Landsat surface temperature | Summer temperature baseline and warming trend |
+| Boundary and coast | LSIB Simple | Greenland boundary and coastline |
+| Mining | Drillholes and licences | Anthropogenic proximity indicators |
+| Human geography | Settlements and cities | Settlement screening context |
+
+---
+
+# Glacier Mapping Strategy
+
+.pull-left[
+### Boundary logic
+
+- Historical glacier extent is built from summer composites around 1999–2002
+- Recent glacier extent is built from summer composites around 2022–2024
+- Retreat is mapped as historical ice lost in the recent period
+]
+
+.pull-right[
+### Preprocessing
+
+- Connected-pixel patch cleaning reduces noisy classification
+- Seasonal snow and cloud contamination are filtered
+- All layers are standardized to a 300 m polar grid
+]
+
+---
+
+# Industrial and Exposure Layers
+
+.pull-left[
+### Anthropogenic footprint
+
+- Mining drillholes
+- Mineral licence areas
+- Settlements and cities
+]
+
+.pull-right[
+### Exposure screening
+
+- Distance to mine features
+- Distance to settlements
+- Distance to coastline
+- Overlap with susceptible glacier areas
+]
+
+---
+
+# Terrain and Climate Support
+
+.pull-left[
+### ArcticDEM
+
+- Elevation
+- Slope
+- Terrain controls near glacier fronts
+- Greenland-wide standardized raster support
+]
+
+.pull-right[
+### Thermal layers
+
+- Early summer temperature baseline
+- Recent summer temperature
+- Pixel-level warming trend
+- Landsat ST used as climate predictor
+]
+
+---
+
+class: inverse, center, middle
+
+# How It Works
+
+## From user input to hotspot output
+
+---
+
+# App Logic
+
+.panelset[
+.panel[.panel-name[1–2]
+.pull-left[
+### 1. Select comparison period
+
+The app loads glacier conditions for historical and recent periods.
+]
+
+.pull-right[
+### 2. Display analytical layers
+
+Users compare glacier extent, retreat, susceptibility, and predictor layers.
+]
+]
+
+.panel[.panel-name[3–4]
+.pull-left[
+### 3. Click a location
+
+The system calculates local statistics in a 25 km buffer.
+]
+
+.pull-right[
+### 4. Interpret the result
+
+Users assess whether glacier susceptibility overlaps with warming and mining-related proximity.
+]
+]
+
+.panel[.panel-name[5]
+### 5. Return outputs
+
+- Hotspot maps
+- Buffer summaries
+- Spatial screening indicators
+- Model diagnostics
+]
+]
+
+---
+
+# Example User Question
+
+.pull-left[
+### User asks
+
+Which glacier areas in Greenland appear most susceptible to future retreat and are also close to mining activity or settlements?
+]
+
+.pull-right[
+### App returns
+
+- Susceptibility surface
+- Retreat history context
+- Nearby anthropogenic features
+- Local glacier-climate statistics
+]
+
+---
+
+# Random Forest Design
+
+.pull-left[
+### Training labels
+
+- Cleaned historical retreat pixels
+- Stable glacier persistence pixels
+- Ambiguous pixels excluded
+]
+
+.pull-right[
+### Validation strategy
+
+- 10 spatial folds across Greenland
+- Folds 0–6 for training
+- Folds 7–9 for testing
+- Metrics include Accuracy, Kappa, Precision, Recall and F1
+]
+
+---
+
+# Precomputed Asset
+
+.pull-left[
+### Why precompute?
+
+- Landsat compositing and distance rasters are expensive at Greenland scale
+- Random Forest modelling increases startup cost
+- Precomputation improves app responsiveness
+]
+
+.pull-right[
+### Asset stores
+
+- Glacier extent 2000
+- Glacier extent 2024
+- Retreat mask
+- Warming rates
+- Temperature surfaces
+- Susceptibility predictions
+- Elevation and metadata
+]
+
+---
+
+# Interactive Regional Statistics
+
+.pull-left[
+### Click-based analysis
+
+For each selected location, the app calculates a 25 km buffer summary.
+]
+
+.pull-right[
+### Returned statistics
+
+- Glacier area change
+- Temperature change
+- Warming trend
+- Mean elevation
+- Local susceptibility
+]
+
+---
+
+# Example GEE Logic
+
+```js
+var asset = ee.Image('projects/your-project/assets/greenland_susceptibility');
+var glac2000 = asset.select('glacier_2000');
+var glac2024 = asset.select('glacier_2024');
+var retreat = asset.select('retreat');
+var susc = asset.select('susceptibility');
+
+Map.addLayer(susc, {min: 0, max: 1, palette: ['blue', 'yellow', 'red']}, 'Susceptibility');
+```
+
+---
+
+class: inverse, center, middle
+
+# Limitations
+
+## What the platform can and cannot do
+
+---
+
+# Main Limitations
+
+.pull-left[
+### Technical
+
+- Temporal mismatch exists across Landsat, ArcticDEM, and project assets
+- Resolution mismatch affects comparison between predictors
+- Greenland-wide processing remains computationally demanding
+]
+
+.pull-right[
+### Interpretation
+
+- Proximity does not prove causality
+- Mining-related predictors indicate accessibility and exposure, not direct impact
+- The app supports screening, not definitive attribution
+]
+
+---
+
+# Future Improvements
+
+.pull-left[
+### Data and workflow
+
+- Add stronger elevation-change datasets
+- Improve temporal consistency across predictors
+- Expand mining and infrastructure inputs
+]
+
+.pull-right[
+### Advanced analysis
+
+- Improve model tuning and validation
+- Add richer model interpretation outputs
+- Extend toward planning and governance communication
+]
+
+---
+
+class: inverse, center, middle
+
+# References
+
+## Key literature and datasets
+
+---
+
+# Literature and Data Sources
+
+.pull-left[
+### Key literature
+
+- Greenland peripheral glacier retreat studies
+- Arctic warming and cryosphere change studies
+- Spatial machine learning and validation studies
+]
+
+.pull-right[
+### Core datasets
+
+- Landsat Collection 2
+- GLIMS glacier outlines
+- ArcticDEM Mosaic V4
+- LSIB Simple boundary
+- Mining and settlement assets
+]
+
+---
+
+class: center, middle, inverse
+
+# Thank You
