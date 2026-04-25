@@ -1,0 +1,478 @@
+---
+title: "Greenland Glacier Retreat Susceptibility Application"
+subtitle: "A Google Earth Engine App for Cryosphere–Industry Interaction"
+author: "Entao Wang, Penghao Gao, XinLei Shi, Yunjie Zhou, Siyu Chen, Ho Man Chan"
+institute: "Data Dishwasher CASA0025: Building Spatial Applications with Big Data"
+date: "2026/04/25 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [default, xaringan-themer.css]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    seal: false
+---
+
+```{r load_packages, message=FALSE, warning=FALSE, include=FALSE}
+library(fontawesome)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+style_mono_light(
+  base_color = "#1b3a4b",
+  background_color = "#fafafa",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Lato"),
+  code_font_google   = google_font("Lato"),
+  base_font_size = "20px",
+  header_h1_font_size = "2.2rem",
+  header_h2_font_size = "1.7rem",
+  header_h3_font_size = "1.3rem",
+  extra_css = list(
+    ".remark-slide-content" = list(
+      "font-size" = "20px",
+      "line-height" = "1.4"
+    ),
+    ".title-slide" = list(
+      "background-image" = "url('images/greenland_ice.webp')",
+      "background-size" = "cover",
+      "background-position" = "center",
+      "background-repeat" = "no-repeat",
+      "color" = "white",
+      "text-shadow" = "none"
+      ),
+    ".title-slide a" = list(
+      "color" = "white",
+      "text-decoration" = "none"
+      ),
+    ".title-slide a:visited" = list(
+      "color" = "white"
+      ),
+    ".title-slide h1" = list(
+      "font-size" = "44px",
+      "margin-bottom" = "16px",
+      "color" = "white",
+      "text-shadow" = "none"
+    ),
+    ".title-slide h2" = list(
+      "font-size" = "26px",
+      "margin-top" = "0px",
+      "margin-bottom" = "24px",
+      "color" = "white",
+      "text-shadow" = "none"
+    ),
+    ".title-slide h3" = list(
+      "font-size" = "18px",
+      "font-weight" = "normal",
+      "margin-bottom" = "10px",
+      "color" = "white",
+      "text-shadow" = "none"
+    )
+  )
+)
+```
+
+```{r tech-setup, include=FALSE}
+library(xaringanthemer)
+library(xaringanExtra)
+
+options(htmltools.dir.version = FALSE)
+
+style_extra_css(css = list(
+   ".pull-left-wide" = list("float" = "left", "width" = "60%"),
+   ".pull-right-narrow" = list("float" = "right", "width" = "35%"),
+   ".pull-left-3" = list("float" = "left", "width" = "30%"),
+   ".pull-middle-3" = list("float" = "left", "width" = "30%", "margin-left" = "5%", "margin-right" = "5%"),
+   ".pull-right-3" = list("float" = "right", "width" = "30%"),
+   ".bottom-note" = list("position" = "absolute","bottom" = "1em","left" = "1em", "right" = "1em"),
+   ".clearfix" = list("clear" = "both", "display" = "block")
+))
+xaringanExtra::use_panelset()
+```
+
+class: center, middle, title-slide
+
+# Monitoring Glacier Retreat and Industrial Exposure in Greenland
+
+## A Google Earth Engine App for Cryosphere–Industry Interaction
+
+### Data Dishwasher 
+
+### CASA0025: Building Spatial Applications with Big Data
+
+### (updated: `r Sys.Date()`)
+
+---
+
+# Greenland Context
+
+.pull-left-wide[
+**Why Greenland?**
+
+- Greenland is a strong case for integrated cryosphere monitoring because glacier retreat, terrain change, and industrial development can be studied together.
+- The project connects glacier boundaries, mining activity, ports, shipping, elevation, and settlements in one Earth Engine workflow.
+- This responds directly to the need for a platform-based approach rather than separate static layers.
+]
+
+.pull-right-narrow[
+```{r, echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("images/greenland_mosaic.jpg")
+```
+<p style="font-size: 0.6em; text-align: center; margin-top: 0;">
+Figure 1: Greenland glacier landscape
+</p>
+]
+
+.clearfix[]
+
+<div style="background: #1b3a4b; color: white; padding: 10px 16px; border-radius: 6px; font-size: 0.9em;">
+Greenland has strong glacier-monitoring potential, but the main challenge is integrating cryosphere change with industrial and infrastructure layers in one interactive platform.
+</div>
+
+---
+
+class: inverse, center, middle
+
+
+## Interface logic and layer design
+
+---
+
+# Main App Interface
+
+.pull-left-wide[
+**Core interface design**
+
+- Main map for glacier extent, retreat hotspots, mining sites, ports, shipping density, terrain, and settlements
+- Layer toggles for switching between cryosphere, industrial, and environmental datasets
+- Click-on-map inspector for glacier change, distance to mine, distance to port, and settlement context
+- Output panel for hotspot summaries and screening indicators
+]
+
+.pull-right-narrow[
+```{r, echo=FALSE, out.width='100%', fig.align='center'}
+knitr::include_graphics("images/greenland_ice_sheet.jpg")
+```
+<p style="font-size: 0.6em; text-align: center; margin-top: 0;">
+Figure 2: Example dashboard layout for Greenland monitoring
+</p>
+]
+
+.clearfix[]
+
+---
+
+# Layer Controls
+
+.pull-left[
+### Cryosphere layers
+
+- GLIMS glacier outlines
+- Landsat historical extent
+- Sentinel-2 recent extent
+- Retreat hotspot polygons
+]
+
+.pull-right[
+### Context layers
+
+- GEUS mineral deposits
+- Ports and harbour locations
+- AIS shipping density
+- ArcticDEM and settlements
+]
+
+---
+
+# App Outputs
+
+.pull-left[
+### Map outputs
+
+- Glacier extent map
+- Historical-to-current retreat comparison
+- Mining and port overlay
+- Terrain and thermal context
+]
+
+.pull-right[
+### Analytical outputs
+
+- Distance from retreat zones to mines
+- Distance from retreat zones to ports
+- Settlement proximity screening
+- Priority hotspot identification
+]
+
+---
+
+class: inverse, center, middle
+
+# Methodology
+
+## Data integration and analytical workflow
+
+---
+
+# Methodology Overview
+
+.panelset[
+.panel[.panel-name[Step 1: Glacier Mapping]
+- Use GLIMS as reference glacier boundary data
+- Use Landsat for long-term comparison from 1984 onward
+- Use Sentinel-2 for more recent and finer glacier mapping
+]
+
+.panel[.panel-name[Step 2: Context Layers]
+- Add GEUS mineral and mining datasets
+- Add port and AIS-related shipping layers
+- Add ArcticDEM and settlement layers
+]
+
+.panel[.panel-name[Step 3: Overlay Analysis]
+- Compare retreat zones with industrial features
+- Measure proximity to mines, ports, and settlements
+- Identify spatial hotspots for screening
+]
+]
+
+---
+
+# Key Datasets
+
+| Theme | Main data source | Role in the app |
+|------|------|------|
+| Glacier boundary | GLIMS 2023 | Present-day glacier reference |
+| Historical imagery | Landsat 5 / 8 | Long-term glacier extent comparison |
+| Recent imagery | Sentinel-2 SR Harmonized | Higher-resolution recent mapping |
+| Topography | ArcticDEM 2m | Elevation, slope, terrain setting |
+| Thermal context | MODIS / VIIRS / Landsat ST | Melt and temperature support |
+| Industrial features | GEUS, ports, AIS | Mining and transport exposure |
+| Human geography | NunaGIS, Statistics Greenland | Settlement and context layers |
+
+---
+
+# Glacier Mapping Strategy
+
+.pull-left[
+### Boundary logic
+
+- GLIMS provides the reference outline layer
+- Landsat supports broad historical comparison
+- Sentinel-2 refines recent glacier margins
+]
+
+.pull-right[
+### Main output
+
+- Retreat polygons or change areas
+- Glacier hotspot map
+- Spatial comparison with nearby industry
+]
+
+---
+
+# Industrial and Exposure Layers
+
+.pull-left[
+### Industrial footprint
+
+- Mineral deposits and mining sites
+- Ports and harbour points
+- Shipping activity density
+]
+
+.pull-right[
+### Exposure screening
+
+- Settlement proximity
+- Distance to infrastructure
+- Co-location with retreat hotspots
+]
+
+---
+
+# Terrain and Climate Support
+
+.pull-left[
+### ArcticDEM
+
+- Elevation
+- Slope
+- Aspect
+- Terrain interpretation near glacier fronts
+]
+
+.pull-right[
+### Thermal layers
+
+- MODIS and VIIRS as broad thermal context
+- Landsat ST as intermediate thermal support
+- Contextual support for melt interpretation
+]
+
+---
+
+class: inverse, center, middle
+
+# How It Works
+
+## From user input to hotspot output
+
+---
+
+# App Logic
+
+.panelset[
+.panel[.panel-name[1–2]
+.pull-left[
+### 1. Select period
+
+User chooses a year or comparison range for glacier monitoring.
+]
+
+.pull-right[
+### 2. Load glacier data
+
+The app displays glacier outlines and related imagery.
+]
+]
+
+.panel[.panel-name[3–4]
+.pull-left[
+### 3. Detect change
+
+Retreat areas are derived from historical and recent extents.
+]
+
+.pull-right[
+### 4. Overlay industry
+
+Mining, ports, shipping, and settlements are added to the map.
+]
+]
+
+.panel[.panel-name[5]
+### 5. Return outputs
+
+- Hotspot maps
+- Summary indicators
+- Spatial exposure patterns
+]
+]
+
+---
+
+# Example User Question
+
+.pull-left[
+### User asks
+
+Which glacier retreat hotspots in Greenland are close to industrial activity and local settlements?
+]
+
+.pull-right[
+### App returns
+
+- Retreat polygons
+- Nearby mines or ports
+- Distance measures
+- Screening indicators
+]
+
+---
+
+class: inverse, center, middle
+
+# Limitations
+
+## What the platform can and cannot do
+
+---
+
+# Main Limitations
+
+.pull-left[
+### Technical
+
+- Temporal mismatch across GLIMS, Landsat, Sentinel-2, ArcticDEM, VIIRS, and MODIS
+- Resolution mismatch between coarse thermal data and fine terrain data
+- Some external elevation-change products are not directly available in GEE
+]
+
+.pull-right[
+### Interpretation
+
+- Proximity does not prove causality
+- Dust and albedo effects are better treated as literature-supported mechanisms
+- The platform is for screening, not definitive attribution
+]
+
+---
+
+# Future Improvements
+
+.pull-left[
+### Data and workflow
+
+- Add external elevation-change datasets
+- Improve consistency of temporal comparison
+- Add richer AIS or shipping-network analysis
+]
+
+.pull-right[
+### Advanced analysis
+
+- Extend toward stronger predictive modelling
+- Add machine-learning classification after baseline validation
+- Improve app outputs for planning and communication
+]
+
+---
+
+class: inverse, center, middle
+
+# References
+
+## Key literature and datasets
+
+---
+
+# Literature and Data Sources
+
+.pull-left[
+### Key literature
+
+- Larocca et al. (2023)
+- Carrivick et al. (2023)
+- Yu et al. (2022)
+- Bendixen et al. (2019)
+- Additional comparison literature on mining dust and Arctic risk
+]
+
+.pull-right[
+### Core datasets
+
+- GLIMS glacier outlines
+- Landsat Collection 2
+- Sentinel-2 SR Harmonized
+- ArcticDEM Mosaic V4.1
+- MODIS / VIIRS
+- GEUS mineral portal
+- Port / AIS datasets
+- NunaGIS
+- Statistics Greenland
+]
+
+---
+
+class: center, middle, inverse
+
+# Thank You
+
+
+
