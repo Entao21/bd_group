@@ -14,7 +14,7 @@ body {
 
 @media (min-width: 992px) {
     #quarto-content {
-        padding-left: 15% !important;   /* 增加左边距，把正文往右推 */
+        padding-left: 11% !important;   /* 增加左边距，把正文往右推 */
         padding-right: 2% !important;  /* 缩小右边距，让导航栏靠右 */
     }
     
