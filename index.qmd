@@ -20,7 +20,6 @@ The workflow consists of two components. First, a preprocessing pipeline compute
 By integrating environmental change and mining-related pressures into a single exploratory platform, the project supports policy discussions around Arctic climate adaptation, resource development, and environmental governance.
 
 
-
 ### Problem Statement 
 
 Greenland’s glaciers are undergoing rapid retreat under Arctic amplification, while growing interest in mineral extraction introduces new pressures in fragile cryospheric environments. Although glacier change is widely studied, interactions between climate drivers, topographic controls, and mining-related accessibility remain less accessible in decision-support tools.
