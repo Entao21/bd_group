@@ -12,7 +12,7 @@ format:
 
 ## Methodology
 
-The analysis is implemented across three Google Earth Engine scripts executed in sequence. `gee_preprocess_export.js` runs once to compute all raster layers — glacier extents, surface temperature trends, proximity surfaces, and the Random Forest susceptibility model — exporting everything as a single multi-band Image Asset. `gee_context_export.js` exports lightweight mask layers that separate the peripheral glacier model domain from the central ice-sheet display context. `gee_glacier_mining_app 2.js` loads these precomputed assets at application startup, enabling near-instant rendering without repeating any heavy computation.
+The core analytical challenge is translating decades of raw satellite observations into a spatially consistent, interpretable susceptibility signal across Greenland's peripheral glacier zone. Rather than relying on a single data source or a pre-classified product, this project combines multi-sensor remote sensing, per-pixel trend estimation, and machine learning to build a predictor stack that captures climate, terrain, and human-environment interactions simultaneously. Each methodological choice — from the NDSI threshold to the spatial block validation scheme — is designed to minimise label noise and reduce the risk of overfitting to spatially autocorrelated observations, so that the final susceptibility surface reflects genuine environmental gradients rather than artefacts of the training sample.
 
 #### Glacier Change Detection and Preprocessing
 
@@ -46,18 +46,53 @@ The analysis is implemented across three Google Earth Engine scripts executed in
 Glacier extent was mapped from cloud-masked Landsat summer composites (June–August) for two epochs: ~2000 (1999–2002) and ~2024 (2022–2024). The **Normalized Difference Snow Index (NDSI)** was computed from the green and SWIR bands of each sensor — Bands 2 & 5 for Landsat 7; Bands 3 & 6 for Landsat 8/9 — and thresholded at > 0.4 to classify ice-covered pixels. Retreat was identified as any pixel glaciated in ~2000 but bare in ~2024. To remove classification noise from cloud remnants, seasonal snow, and Landsat 7 SLC-off striping, connected-component filtering was applied to exclude isolated patches smaller than three contiguous pixels from both retreat and stable-ice labels. Terrain variables (elevation, slope) were derived from ArcticDEM v4 and all layers were standardized to a 300 m polar grid (EPSG:3413).
 
 ```js
+// Cloud masking using QA_PIXEL for Landsat 8/9
+function maskL8(image) {
+  var qa = image.select('QA_PIXEL');
+  return image.updateMask(
+    qa.bitwiseAnd(1 << 3).eq(0)   // cloud
+      .and(qa.bitwiseAnd(1 << 4).eq(0))  // cloud shadow
+  );
+}
+
+// NDSI from green and SWIR bands (Landsat 8/9)
 function ndsiL8(img) {
   return img.addBands(
     img.normalizedDifference(['SR_B3', 'SR_B6']).rename('NDSI'));
 }
 
+// Build median NDSI composite and threshold at 0.4
+function getGlacierExtent(startYear, endYear) {
+  var t0 = ee.Date.fromYMD(startYear, 1, 1);
+  var t1 = ee.Date.fromYMD(endYear, 12, 31);
+  var summer = ee.Filter.calendarRange(6, 8, 'month');
+
+  var l8 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+    .filterBounds(greenlandBox).filterDate(t0, t1)
+    .filter(summer).map(maskL8).map(ndsiL8);
+  var l9 = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2')
+    .filterBounds(greenlandBox).filterDate(t0, t1)
+    .filter(summer).map(maskL8).map(ndsiL8);
+
+  return l8.merge(l9).select('NDSI').median()
+    .gt(0.4).rename('ice').clip(AOI_geom).unmask(0);
+}
+
 var glacier_2000 = getGlacierExtent(1999, 2002).rename('glacier_2000');
 var glacier_2024 = getGlacierExtent(2022, 2024).rename('glacier_2024');
 
-// Filter isolated noise patches from retreat and stable labels
+// Retreat = ice in 2000 but not in 2024
+var retreatCandidate = glacier_2000.subtract(glacier_2024).max(0).gt(0);
+var stableCandidate  = glacier_2000.eq(1).and(glacier_2024.eq(1));
+
+// Remove isolated patches smaller than minPatchPixels (set to 3)
 var cleanRetreat = retreatCandidate.selfMask()
   .connectedPixelCount(8, true).gte(minPatchPixels)
   .unmask(0).toByte().rename('retreat');
+
+var cleanStable = stableCandidate.selfMask()
+  .connectedPixelCount(8, true).gte(minPatchPixels)
+  .unmask(0).toByte().rename('stable');
 ```
 
 #### Climate Trend and Predictor Modelling
@@ -96,6 +131,7 @@ Summer land surface temperature (LST) trends were estimated from Landsat ST band
 | Coast proximity | Greenland boundary |
 
 ```js
+// Convert Landsat ST_B10 DN to Celsius
 function lstL8(image) {
   return image.select('ST_B10')
     .multiply(0.00341802).add(149.0).subtract(273.15)
@@ -103,11 +139,58 @@ function lstL8(image) {
     .copyProperties(image, ['system:time_start']);
 }
 
-// Per-pixel OLS trend across 24 annual summer composites
+// Build annual summer LST composites for 2001-2024
+var years = ee.List.sequence(2001, 2024);
+
+var annualLST = ee.ImageCollection(years.map(function(year) {
+  year = ee.Number(year);
+  var s = ee.Date.fromYMD(year, 6, 1);
+  var e = ee.Date.fromYMD(year, 8, 31);
+
+  var l8 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+    .filterBounds(greenlandBox).filterDate(s, e)
+    .map(maskL8).map(lstL8);
+  var l9 = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2')
+    .filterBounds(greenlandBox).filterDate(s, e)
+    .map(maskL8).map(lstL8);
+
+  return l8.merge(l9).mean()
+    .set('year', year)
+    .set('system:time_start', s.millis());
+}));
+
+// Attach numeric time band for OLS regression
+var withTime = annualLST.map(function(img) {
+  var yr = ee.Number(img.get('year'));
+  return img.addBands(ee.Image.constant(yr).float().rename('time'));
+});
+
+// Per-pixel OLS slope = warming rate in °C/yr
 var warmingRate = withTime.select(['time', 'LST_C'])
   .reduce(ee.Reducer.linearFit())
   .select('scale')
+  .clip(AOI_geom)
   .rename('warming_rate');
+
+// Proximity rasters: inverse cumulative cost distance, scaled 0-1
+function distanceToFC(fc, maxDist) {
+  var source = ee.Image(0).byte().paint(fc.map(function(f) {
+    return f.buffer(1000);
+  }), 1);
+  return ee.Image(1).cumulativeCost(source, maxDist).unmask(maxDist);
+}
+
+var mineProximity = ee.Image(1)
+  .subtract(distanceToFC(allMines, 100000).divide(100000))
+  .max(0).min(1).rename('mine_proximity');
+
+var settlementProximity = ee.Image(1)
+  .subtract(distanceToFC(allSettlements, 100000).divide(100000))
+  .max(0).min(1).rename('settlement_proximity');
+
+var coastProximity = ee.Image(1)
+  .subtract(distToCoast.divide(300000))
+  .max(0).min(1).rename('coast_proximity');
 ```
 
 #### Random Forest Retreat Susceptibility Model
@@ -146,17 +229,62 @@ A **Random Forest regression model** (100 trees) was trained to predict the susc
 To reduce spatial autocorrelation leakage between training and test samples, **spatial block cross-validation** was applied: the bounding box was tessellated into 10 geographic folds, with folds 0–6 (70 %) used for training and folds 7–9 (30 %) as the held-out test set. A separate classification-mode Random Forest was run on the same split for performance evaluation (accuracy, kappa, precision, recall, F1). The final susceptibility surface (0–1) represents the proportion of decision trees voting for retreat, applied exclusively to current (2022–2024) glacier pixels.
 
 ```js
-// Regression RF for continuous susceptibility prediction
+// Spatial block folds: divide lon/lat grid into 10 folds
+var lonLat = ee.Image.pixelLonLat();
+var spatialFold = lonLat.select('longitude').add(180).divide(2).floor()
+  .add(lonLat.select('latitude').add(90).divide(2).floor().multiply(13))
+  .mod(10)
+  .rename('spatial_fold');
+
+// Only sample from cleaned retreat and stable pixels within model domain
+var sampleMask = cleanRetreat.eq(1).or(cleanStable.eq(1)).and(peripheralMask);
+
+var trainingImage = predictors.addBands(target).addBands(spatialFold)
+  .updateMask(sampleMask);
+
+var samples = trainingImage.stratifiedSample({
+  numPoints: 2000,
+  classBand: 'retreat',
+  region: greenlandBox,
+  scale: exportScale,
+  seed: 42,
+  geometries: false,
+  tileScale: 4
+});
+
+// 70% train (folds 0-6), 30% test (folds 7-9)
+var trainSet = samples.filter(ee.Filter.lt('spatial_fold', 7));
+var testSet  = samples.filter(ee.Filter.gte('spatial_fold', 7));
+
+// Classification RF for validation metrics
+var rfClassify = ee.Classifier.smileRandomForest({
+  numberOfTrees: 100, seed: 42
+}).train({
+  features: trainSet,
+  classProperty: 'retreat',
+  inputProperties: bandNames
+});
+
+// Regression RF for continuous susceptibility score
 var rfPredict = ee.Classifier.smileRandomForest({
   numberOfTrees: 100, seed: 42
 }).setOutputMode('REGRESSION').train({
   features: trainSet,
   classProperty: 'retreat',
-  inputProperties: ['elevation', 'slope', 'warming_rate', 'lst_mean',
-                    'mine_proximity', 'settlement_proximity', 'coast_proximity']
+  inputProperties: bandNames
 });
 
-var susceptibilityMap = predictors
+// Evaluate on held-out spatial blocks
+var testClassified  = testSet.classify(rfClassify);
+var confusionMatrix = testClassified.errorMatrix('retreat', 'classification', [0, 1]);
+var precision = tp.divide(tp.add(fp).max(1));
+var recall    = tp.divide(tp.add(fn).max(1));
+var f1        = precision.multiply(recall).multiply(2)
+                  .divide(precision.add(recall).max(0.001));
+
+// Apply regression model to current glacier pixels only
+var currentGlacierMask = glacier_2024.eq(1).and(peripheralMask);
+var susceptibilityMap  = predictors
   .updateMask(currentGlacierMask)
   .classify(rfPredict)
   .rename('susceptibility')
