@@ -12,7 +12,7 @@ book:
   repo-actions: [edit]
   downloads: [pdf, epub]
   sharing: [twitter, facebook]
-  favicon: favicon.ico
+  favicon: images/icon.png
   sidebar:
     logo: casa_logo.png
 
