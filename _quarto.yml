@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - index.qmd
 
 book:
   title: "CASA0025 Final Assessment"

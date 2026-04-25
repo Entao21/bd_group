@@ -1,262 +1,739 @@
 ---
-title: "Greenland Glacier Retreat Susceptibility Application"
+title: "Greenland Glacier-Mining Nexus Explorer"
 format:
   html:
-    css: tools/style.css        
+    css: tools/style.css
     toc: true
     toc-depth: 4
     toc-location: right
-    page-layout: article        
-    title-block-banner: images/Greenland_title.png  
+    page-layout: article
+    title-block-banner: images/Greenland_title.png
 ---
 
-## Project Summary 
+## Project Summary
 
-This project develops an interactive Google Earth Engine application to explore the nexus between glacier retreat, climate warming, and mining activity in Greenland’s peripheral glacier zone. The platform combines remote sensing change detection, climate trend analysis, proximity-based anthropogenic indicators, and a Random Forest susceptibility model to identify areas where present-day glaciers may be more susceptible to future retreat.
+This project develops an interactive Google Earth Engine application to explore glacier retreat susceptibility across Greenland's peripheral glacier zone. The app combines Landsat-derived glacier change, Landsat land surface temperature trends, ArcticDEM terrain variables, and proximity indicators for mining activity, settlements, and coastlines. A Random Forest model is trained on observed retreat and stable-ice labels to map where current glaciers are more susceptible to retreat.
 
-The workflow consists of two components. First, a preprocessing pipeline computes Landsat-derived glacier extent change (ca. 2000–2024), summer land surface temperature trends, terrain variables, and anthropogenic proximity indicators, then trains a Random Forest model to predict glacier retreat susceptibility using cleaned historical retreat and stable-ice labels with spatial block validation. These computationally expensive outputs are exported as a multi-band Earth Engine asset. Second, an interactive application loads the precomputed asset into a dual-map interface that allows users to compare glacier conditions between ~2000 and ~2024, explore susceptibility predictions, inspect model diagnostics, and query local glacier-climate statistics through map clicks.
+The purpose is not to prove that mining caused glacier retreat. Instead, the application provides a screening tool for identifying places where observed retreat, climate warming, terrain conditions, and mining-related proximity overlap. This supports more transparent discussion around Arctic resource development, environmental monitoring, and glacier vulnerability.
 
-By integrating environmental change and mining-related pressures into a single exploratory platform, the project supports policy discussions around Arctic climate adaptation, resource development, and environmental governance.
+### Problem Statement
 
+Greenland's peripheral glaciers are changing rapidly under Arctic warming, while renewed mineral exploration creates planning questions in sensitive cryospheric environments. Existing glacier products and mining datasets are usually viewed separately, making it difficult for non-specialist users to compare climate-driven change with human activity indicators.
 
-### Problem Statement 
+This project addresses that gap by building a web-based decision-support tool that:
 
-Greenland’s glaciers are undergoing rapid retreat under Arctic amplification, while growing interest in mineral extraction introduces new pressures in fragile cryospheric environments. Although glacier change is widely studied, interactions between climate drivers, topographic controls, and mining-related accessibility remain less accessible in decision-support tools.
+- maps glacier extent change from approximately 2000 to 2024;
+- estimates summer land surface temperature trends;
+- integrates elevation, slope, mining proximity, settlement proximity, and coastal proximity;
+- predicts retreat susceptibility using a validated Random Forest model;
+- communicates model outputs through an interactive split-map interface.
 
-Existing scientific outputs are often difficult for non-specialist stakeholders to explore spatially or compare interactively. This project addresses that gap by providing a visual analytical platform that combines:
+### End User
 
-historical glacier retreat detection
-warming trend analysis
-terrain controls
-proximity to mining, settlements, and coastlines
-predictive glacier retreat susceptibility modelling
+The application is designed for users who need a clear spatial overview rather than a static scientific map. Potential users include Arctic environmental researchers, Greenland planning and resource governance agencies, environmental NGOs, mining impact analysts, and students studying remote sensing or climate risk.
 
-Rather than modelling causal mining impacts directly, the platform identifies areas where these environmental and anthropogenic factors coincide, supporting exploratory analysis of potential glacier vulnerability hotspots.
-
-
-What is the problem you’re trying to address using this application? 
-
-### End User 
-
-The application is designed for hybrid users across research and policy contexts, including:
-
-Arctic environmental policymakers
-Greenland planning and resource governance agencies
-Climate and cryosphere researchers
-Mining/environmental impact analysts
-NGOs concerned with Arctic sustainability
-
-Users require a tool that is scientifically robust while remaining intuitive for exploratory spatial analysis. The split-panel interface, interactive click statistics, and model diagnostics are intended to support both scientific interpretation and policy communication.
-
-
-
-Who are you building this application for? How does it address a need this community has?
+The interface supports these users by combining technical model outputs with accessible interaction: users can compare historical and recent glacier extent, toggle model layers, inspect model diagnostics, and click anywhere on the map to retrieve local glacier, temperature, elevation, and susceptibility statistics.
 
 ### Data
 
-The study integrates multi-source datasets processed within the GEE environment.
+| Category | Dataset | Use in the project | Source |
+|---|---|---|---|
+| Satellite imagery | Landsat 7/8/9 Collection 2 Level-2 | Summer NDSI glacier extent and land surface temperature trends from ca. 2000 to 2024 | [USGS Landsat Collection 2](https://www.usgs.gov/landsat-missions/landsat-collection-2) |
+| Glacier mask context | GIMP 2000 Ice/Ocean Mask | Land-ice context and model-domain masking | [Google Earth Engine GIMP catalog](https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK) |
+| Terrain | ArcticDEM V4.1 2 m mosaic | Elevation and slope predictors, sampled to the modelling scale | [Google Earth Engine ArcticDEM catalog](https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic) |
+| Boundaries | LSIB Simple 2017 | Greenland boundary and analysis region | [Google Earth Engine LSIB catalog](https://developers.google.com/earth-engine/datasets/catalog/USDOS_LSIB_SIMPLE_2017) |
+| Mining activity | Active mineral licence polygons and post-2000 drillhole points | Mining proximity predictor and map overlay | Greenland Mineral Resources Portal / project uploads |
+| Settlements | Greenland settlements and cities | Human-accessibility proximity predictor and map overlay | Project uploads |
+| Reference grid | 15-degree graticules | Polar map orientation and visual reference | Project upload |
 
-<style>
-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; }
-th { background-color: #f8f9fa; font-weight: bold; }
-.cat-cell { font-weight: bold; background-color: #fdfdfd; width: 15%; }
-</style>
+## Methodology
 
-<table>
-  <tr>
-    <th>Category</th>
-    <th>Dataset</th>
-    <th>Description</th>
-    <th>Source/Link</th>
-  </tr>
-  <tr>
-    <td rowspan="4" class="cat-cell">GEE Public</td>
-    <td>Landsat 7/8/9 C2</td>
-    <td>NDSI for glacier mapping and Surface Temperature (LST) trends (2000–2024).</td>
-    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/landsat">USGS / GEE</a></td>
-  </tr>
-  <tr>
-    <td>ArcticDEM v4</td>
-    <td>2m resolution mosaic used for high-precision elevation and slope derivation.</td>
-    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic">PGC / UMN</a></td>
-  </tr>
-  <tr>
-    <td>LSIB Simple</td>
-    <td>Official Greenland boundary and coastline geometry.</td>
-    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/USDOS_LSIB_SIMPLE_2017">US Dept. of State</a></td>
-  </tr>
-  <tr>
-    <td>Graticules 15°</td>
-    <td>Polar spatial reference grid for visualization.</td>
-    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/projects_sat-io_open-datasets_graticules_15">Natural Earth</a></td>
-  </tr>
-  <tr>
-    <td rowspan="4" class="cat-cell">Project Assets</td>
-    <td>Mining Drillholes</td>
-    <td>Spatial points of mineral exploration sites (Post-2000).</td>
-    <td>Taarup-Esbensen (2020)</td>
-  </tr>
-  <tr>
-    <td>Mineral Licences</td>
-    <td>Active industrial mining licence polygons (2026 data).</td>
-    <td>Greenland Portal</td>
-  </tr>
-  <tr>
-    <td>Settlements</td>
-    <td>Locations of 65 settlements and 18 cities across Greenland.</td>
-    <td>GEE User Asset</td>
-  </tr>
-</table>
+The methodology follows a three-script workflow. Heavy raster processing and model training are run first, display-context masks are exported second, and the final application only loads precomputed assets. This architecture makes the app faster and avoids repeated large computations at start-up.
 
-### Methodology
+```{mermaid}
+flowchart TD
+  A["Input data"] --> B["gee_preprocess_export.js"]
+  B --> B1["Landsat NDSI glacier extent<br/>1999-2002 vs 2022-2024"]
+  B --> B2["Landsat summer LST trend<br/>2001-2024"]
+  B --> B3["ArcticDEM terrain<br/>elevation and slope"]
+  B --> B4["Mining, settlement, coast<br/>proximity rasters"]
+  B1 --> C["Retreat / stable-ice labels"]
+  B2 --> D["Predictor stack"]
+  B3 --> D
+  B4 --> D
+  C --> E["Random Forest model"]
+  D --> E
+  E --> F["Precomputed model asset"]
+  A --> G["gee_context_export.js"]
+  G --> H["Model domain and ice-sheet context asset"]
+  F --> I["gee_glacier_mining_app 2.js"]
+  H --> I
+  I --> J["Interactive split-map application"]
+```
 
-#### Glacier Change Detection and Preprocessing
+### Glacier Change Detection
 
-To address the problem of understanding glacier retreat susceptibility across Greenland, this project first builds a preprocessing workflow in Google Earth Engine that computes all major raster layers before exporting them as a reusable multi-band asset.
+Glacier extent is estimated from Landsat summer composites using the Normalized Difference Snow Index (NDSI). NDSI separates snow and ice from darker land surfaces because snow has high green reflectance and low shortwave-infrared reflectance.
 
-Glacier extent is mapped using Landsat 7, 8 and 9 summer imagery (June–August) through the **Normalized Difference Snow Index (NDSI)**. Two glacier inventories are produced:
+$$
+NDSI = \frac{Green - SWIR1}{Green + SWIR1}
+$$
 
-- Historical glacier extent (~1999–2002)  
-- Recent glacier extent (~2022–2024)
+Landsat 7 uses bands `SR_B2` and `SR_B5`, while Landsat 8/9 use `SR_B3` and `SR_B6`. Pixels with `NDSI > 0.4` are treated as glacier/snow-ice pixels. Two multi-year windows are compared: 1999-2002 as the baseline and 2022-2024 as the recent period. The multi-year windows reduce the influence of single-year cloud, snow, or sensor noise.
 
-Retreat is defined as ice present in the historical composite but absent in the recent composite.
+```js
+var glacier_2000 = getGlacierExtent(1999, 2002);
+var glacier_2024 = getGlacierExtent(2022, 2024);
 
-To reduce classification noise caused by seasonal snow, cloud contamination and Landsat striping, retreat and stable-ice labels are filtered using connected-pixel patch cleaning.
+var rawRetreat = glacier_2000.subtract(glacier_2024).max(0);
+var retreatCandidate = rawRetreat.gt(0);
+var stableCandidate = glacier_2000.eq(1).and(glacier_2024.eq(1));
+```
 
-Terrain variables are then derived from ArcticDEM, while distance surfaces are calculated for:
+The model labels are deliberately simple but cleaned: "retreat" means a pixel was mapped as glacier in the baseline window and not in the recent window; "stable" means it remained glacier in both windows. Small isolated patches are removed using connected-pixel filtering, reducing salt-and-pepper noise before sampling.
 
-- Mining drillholes and mineral licences  
-- Settlements and cities  
-- Coastline proximity
+### Predictor Engineering
 
-All layers are standardized to a 300m Greenland-wide polar grid (EPSG:3413) for efficient modelling.
+Seven predictor variables are sampled to a common modelling scale. This does not mean all source datasets have the same native resolution. Landsat and ArcticDEM have different original resolutions, but Earth Engine samples them consistently at the modelling scale during training and export.
 
+The predictor stack includes:
 
+- elevation from ArcticDEM;
+- slope derived from ArcticDEM;
+- Landsat summer LST warming rate from 2001-2024;
+- early-period mean LST;
+- proximity to mining licences and drillholes;
+- proximity to settlements and cities;
+- proximity to the coastline.
 
-#### Climate Trend and Predictor Modelling
+```js
+var predictors = ee.Image.cat([
+  elevation.rename('elevation'),
+  slope.rename('slope'),
+  warmingRate.rename('warming_rate'),
+  lstEarly.rename('lst_mean'),
+  mineProximity.rename('mine_proximity'),
+  settlementProximity.rename('settlement_proximity'),
+  coastProximity.rename('coast_proximity')
+]);
+```
 
-To capture environmental drivers of retreat susceptibility, Landsat surface temperature is used to derive:
+Mining is represented as a proximity variable rather than a direct impact radius. This is more defensible: it lets the model test whether distance to known mining activity helps explain retreat susceptibility after climate and terrain variables are included, without claiming a causal mining effect.
 
-- Early summer temperature baseline (~2000–2002)  
-- Recent summer temperature (~2022–2024)  
-- Pixel-level warming trend (2001–2024)
+### Random Forest Susceptibility Model
 
-A per-pixel linear fit generates warming rates ($^\circ C/yr$).
+The Random Forest model is trained to distinguish cleaned retreat pixels from stable glacier pixels. Sampling is stratified so both classes are represented, and a spatial block split is used for validation so nearby pixels are less likely to appear in both the training and testing sets.
 
-These climate variables are combined with topographic and anthropogenic predictors into a Random Forest predictor stack:
+```js
+var samples = predictors.addBands(target).stratifiedSample({
+  numPoints: 2000,
+  classBand: 'retreat',
+  region: AOI_geom,
+  scale: 300,
+  seed: 42,
+  geometries: true,
+  tileScale: 4
+});
 
-- Elevation  
-- Slope  
-- Warming rate  
-- Mean summer temperature  
-- Mine proximity  
-- Settlement proximity  
-- Coast proximity
+var trainSet = samples.filter(ee.Filter.lt('fold', 7));
+var testSet  = samples.filter(ee.Filter.gte('fold', 7));
 
-This allows the model to represent interactions between climate, terrain and human development pressures.
+var rf = ee.Classifier.smileRandomForest({
+  numberOfTrees: 100,
+  seed: 42
+}).train({
+  features: trainSet,
+  classProperty: 'retreat',
+  inputProperties: bandNames
+});
+```
 
+Model performance is reported using confusion matrix outputs, accuracy, kappa, precision, recall, F1 score, and variable importance. The app reads these diagnostics from asset metadata, so users can see the model quality without rerunning the classifier.
 
-#### Random Forest Retreat Susceptibility Model
+### Model Domain
 
-A Random Forest model is used to predict susceptibility of present-day glaciers to future retreat.
+The susceptibility model is focused on Greenland's peripheral glacier zone rather than the high-elevation central ice sheet. This is important because peripheral glaciers are more directly comparable to the small coastal glaciers and ice margins where mining access, settlements, and terrain gradients are meaningful. The central ice sheet is still displayed as context, but the app avoids presenting it as a directly modelled susceptibility zone.
 
-Training labels are generated from:
+```js
+var modelDomain = gimpIceMask
+  .updateMask(elevation.lt(2500).or(latitude.lt(64)))
+  .rename('model_domain');
 
-- Cleaned historical retreat pixels  
-- Stable glacier persistence pixels
+var iceSheetContext = gimpIceMask
+  .updateMask(elevation.gte(2500).and(latitude.gte(64)))
+  .rename('ice_sheet_context');
 
-Only clear retreat and stable classes are sampled, excluding ambiguous pixels.
+var northIceContext = gimpIceMask
+  .updateMask(latitude.gt(82.6))
+  .rename('north_ice_context');
+```
 
-Rather than random train-test splitting, the model uses **spatial block validation** to reduce leakage from spatial autocorrelation:
+The northern context layer is included because routine Landsat WRS-2 coverage is limited at very high latitudes. Showing this area as context helps communicate coverage uncertainty instead of silently ignoring it.
 
-- 10 spatial folds generated across Greenland  
-- Folds 0–6 used for training  
-- Folds 7–9 used for testing
+### Precomputed Asset Architecture
 
-Two Random Forest models are implemented:
+The final app does not recompute Landsat composites, distance rasters, or Random Forest predictions. Instead, two export scripts create reusable Earth Engine image assets:
 
-1. Classification model for validation  
-2. Regression-mode Random Forest for continuous susceptibility prediction
+- `gee_preprocess_export.js` exports the analytical model bands, including glacier extent, retreat labels, warming rate, early/recent LST, elevation, and susceptibility.
+- `gee_context_export.js` exports lightweight display masks for the modelled peripheral zone, central ice-sheet context, and northern context.
+- `gee_glacier_mining_app 2.js` loads those assets and builds the interface.
 
-Model evaluation includes:
+```js
+Export.image.toAsset({
+  image: exportImage,
+  description: 'greenland_glacier_mining_precomputed',
+  assetId: outputAsset,
+  region: greenlandBox,
+  crs: 'EPSG:3413',
+  scale: 300,
+  maxPixels: 1e13
+});
+```
 
-- Accuracy  
-- Kappa  
-- Precision  
-- Recall  
-- F1 Score  
-- Variable importance
-
-The final output is a glacier retreat susceptibility surface (0–1), masked to current glaciers.
-
-
-
-#### Precomputed Asset Architecture
-
-Because Landsat composites, distance rasters and machine learning are computationally expensive at Greenland scale, all outputs are exported once as a multi-band Earth Engine image asset.
-
-The asset stores:
-
-- Glacier extent 2000  
-- Glacier extent 2024  
-- Retreat mask  
-- Warming rates  
-- Early and recent temperature surfaces  
-- Susceptibility predictions  
-- Elevation  
-- Embedded model performance metadata
-
-This allows the interactive application to load analytical outputs directly without recomputing them at startup, improving scalability and responsiveness.
-
-
-#### Interactive Regional Statistics
-
-The application also supports click-based regional analysis.
-
-For each selected location, the system calculates statistics within a 25 km buffer:
-
-- Glacier area change  
-- Temperature change  
-- Warming trend  
-- Mean elevation  
-- Local retreat susceptibility
-
-This turns the model from a static prediction surface into an exploratory decision-support tool.
-
-
+This improves app reliability because users interact with already-computed layers rather than triggering large server-side operations every time the web app opens.
 
 ### Interface
 
-The interface is designed as an interactive exploratory platform for policymakers and researchers investigating glacier vulnerability.
+The interface uses a linked split map. The left map shows the approximate 2000 glacier extent and early-period temperature context. The right map shows the approximate 2024 glacier extent, observed retreat, warming rate, susceptibility prediction, mining sites, and settlements. A swipe divider allows direct visual comparison between baseline and recent glacier conditions.
 
+The side panel provides:
 
-## The Application 
+- model performance statistics from the exported asset;
+- a variable-importance chart;
+- susceptibility and domain legends;
+- a click-based statistics panel.
 
-Replace the link below with the link to your application.
+When users click the map, the app summarises a 25 km radius region around the click location. It reports glacier area change, mean temperature, warming trend, elevation, domain status, and mean retreat susceptibility.
+
+```js
+var region = point.buffer(25000);
+
+var stats = ee.Dictionary({
+  area2000: glacier_2000.multiply(ee.Image.pixelArea()).reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: region,
+    scale: clickStatsScale,
+    maxPixels: 1e9
+  }).get('glacier_2000'),
+
+  susceptibility: susceptibilityMap.reduceRegion({
+    reducer: ee.Reducer.mean(),
+    geometry: region,
+    scale: clickStatsScale,
+    maxPixels: 1e9
+  }).get('susceptibility')
+});
+```
+
+## The Application
+
+Replace the placeholder below with the published Earth Engine App link before final submission.
 
 :::{.column-page}
 
-<iframe src='https://ollielballinger.users.earthengine.app/view/turkey-earthquake' width='100%' height='700px'></iframe>
+<iframe src='https://YOUR_EE_USERNAME.users.earthengine.app/view/YOUR_APP_NAME' width='100%' height='700px'></iframe>
 
 :::
-## How it Works 
 
-Use this section to explain how your application works using code blocks and text explanations (no more than 500 words excluding code):
+## How it Works
+
+### 1. Data Preparation and Precomputations
+
+The app uses a precompute-first workflow. `gee_preprocess_export.js` runs the expensive Landsat, terrain, proximity, and Random Forest steps once. `gee_context_export.js` exports lightweight model-domain masks. `gee_glacier_mining_app 2.js` then loads these assets for interactive display. This avoids recomputing Greenland-wide raster analysis every time the app opens.
 
 ```js
-Map.setCenter(35.51898, 33.90153, 15);
+var countries    = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
+var AOI          = countries.filter(ee.Filter.eq('country_na', 'Greenland'));
+var AOI_geom     = AOI.geometry();
+var greenlandBox = ee.Geometry.Rectangle([-73, 59, -12, 84]);
 
-Map.setOptions("satellite");
-
-var aoi = ee.Geometry.Point(35.51898, 33.90153).buffer(3000);
+var exportCrs   = 'EPSG:3413';
+var exportScale = 300;
+var minPatchPixels = 3;
 ```
 
-You can include images:
+Glacier extent is mapped from summer Landsat NDSI, using a baseline window (1999-2002) and a recent window (2022-2024). The NDSI formula is:
 
-![Pixelwise T-Test, 2018](images/beirut_change_2020.jpg)
+$$
+NDSI = \frac{Green - SWIR1}{Green + SWIR1}
+$$
 
-and math:
-$$ \Large t = {\frac{\overline{x_1}-\overline{x_2}} {\sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}}} $$
+Pixels with `NDSI > 0.4` are treated as glacier/snow-ice pixels. Multi-year summer composites reduce the influence of cloud, seasonal snow, and single-image noise.
 
+```js
+function ndsiL7(image) {
+  return image.normalizedDifference(['SR_B2', 'SR_B5']).rename('NDSI');
+}
 
+function ndsiL8(image) {
+  return image.normalizedDifference(['SR_B3', 'SR_B6']).rename('NDSI');
+}
+
+function getGlacierExtent(startYear, endYear) {
+  var t0 = ee.Date.fromYMD(startYear, 1, 1);
+  var t1 = ee.Date.fromYMD(endYear, 12, 31);
+  var summer = ee.Filter.calendarRange(6, 8, 'month');
+  var ndsiComposite;
+
+  if (endYear <= 2012) {
+    ndsiComposite = ee.ImageCollection('LANDSAT/LE07/C02/T1_L2')
+      .filterBounds(greenlandBox)
+      .filterDate(t0, t1)
+      .filter(summer)
+      .map(maskL7)
+      .map(ndsiL7)
+      .select('NDSI')
+      .median();
+  } else {
+    var l8 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+      .filterBounds(greenlandBox)
+      .filterDate(t0, t1)
+      .filter(summer)
+      .map(maskL8)
+      .map(ndsiL8);
+
+    var l9 = ee.ImageCollection('LANDSAT/LC09/C02/T1_L2')
+      .filterBounds(greenlandBox)
+      .filterDate(t0, t1)
+      .filter(summer)
+      .map(maskL8)
+      .map(ndsiL8);
+
+    ndsiComposite = l8.merge(l9).select('NDSI').median();
+  }
+
+  return ndsiComposite.gt(0.4);
+}
+
+var glacier_2000 = getGlacierExtent(1999, 2002).rename('glacier_2000');
+var glacier_2024 = getGlacierExtent(2022, 2024).rename('glacier_2024');
+
+var rawRetreat = glacier_2000.subtract(glacier_2024).max(0);
+var retreatCandidate = rawRetreat.gt(0);
+var stableCandidate = glacier_2000.eq(1).and(glacier_2024.eq(1));
+
+var cleanRetreat = retreatCandidate
+  .updateMask(retreatCandidate)
+  .connectedPixelCount(8, true)
+  .gte(minPatchPixels)
+  .rename('retreat');
+
+var cleanStable = stableCandidate
+  .updateMask(stableCandidate)
+  .connectedPixelCount(8, true)
+  .gte(minPatchPixels)
+  .rename('stable');
+```
+
+The retreat label is:
+
+$$
+R = 1 \quad \text{if} \quad I_{2000}=1 \ \text{and} \ I_{2024}=0
+$$
+
+where \(I\) is the binary glacier mask. Stable ice is defined where \(I_{2000}=1\) and \(I_{2024}=1\). Connected-pixel filtering removes isolated noisy labels.
+
+Temperature trend is calculated from Landsat Surface Temperature. Each summer year is converted to Celsius, then a per-pixel linear fit estimates warming rate from 2001-2024.
+
+```js
+function lstL8(image) {
+  return image.select('ST_B10')
+    .multiply(0.00341802)
+    .add(149.0)
+    .subtract(273.15)
+    .rename('LST_C');
+}
+
+var annualLST = ee.ImageCollection(
+  ee.List.sequence(2001, 2024).map(function(y) {
+    y = ee.Number(y);
+    var summerMean = getAnnualSummerLST(y);
+    return summerMean.addBands(ee.Image.constant(y).rename('time')).float();
+  })
+);
+
+var warmingRate = annualLST
+  .select(['time', 'LST_C'])
+  .reduce(ee.Reducer.linearFit())
+  .select('scale')
+  .rename('warming_rate');
+```
+
+The predictor stack combines terrain, climate, and proximity variables. Mining is represented as proximity, not as a direct causal effect:
+
+$$
+P = 1 - \frac{\min(d, d_{max})}{d_{max}}
+$$
+
+where \(d\) is distance to the nearest mining feature. This lets the model test whether mining proximity is associated with retreat susceptibility after terrain and warming are included.
+
+```js
+var predictors = ee.Image.cat([
+  elevation.rename('elevation'),
+  slope.rename('slope'),
+  warmingRate.rename('warming_rate'),
+  lstEarly.rename('lst_mean'),
+  mineProximity.rename('mine_proximity'),
+  settlementProximity.rename('settlement_proximity'),
+  coastProximity.rename('coast_proximity')
+]);
+
+var bandNames = [
+  'elevation', 'slope', 'warming_rate', 'lst_mean',
+  'mine_proximity', 'settlement_proximity', 'coast_proximity'
+];
+```
+
+The Random Forest model is trained with stratified retreat/stable samples. A spatial block split is used instead of a purely random split, reducing leakage between nearby pixels.
+
+```js
+var trainingImage = predictors
+  .addBands(cleanRetreat.rename('retreat'))
+  .addBands(spatialFold)
+  .updateMask(sampleMask);
+
+var samples = trainingImage.stratifiedSample({
+  numPoints: 2000,
+  classBand: 'retreat',
+  region: greenlandBox,
+  scale: exportScale,
+  seed: 42,
+  geometries: false,
+  tileScale: 4
+});
+
+var trainSet = samples.filter(ee.Filter.lt('spatial_fold', 7));
+var testSet  = samples.filter(ee.Filter.gte('spatial_fold', 7));
+
+var rfClassify = ee.Classifier.smileRandomForest({
+  numberOfTrees: 100,
+  seed: 42
+}).train({
+  features: trainSet,
+  classProperty: 'retreat',
+  inputProperties: bandNames
+});
+```
+
+The validation set is used to calculate accuracy, kappa, precision, recall, F1 score, and variable importance. F1 is included because glacier retreat labels can be imbalanced:
+
+$$
+F1 = 2 \times \frac{Precision \times Recall}{Precision + Recall}
+$$
+
+```js
+var validated = testSet.classify(rfClassify);
+var confusion = validated.errorMatrix('retreat', 'classification');
+var cmArray = ee.Array(confusion.array());
+
+var TP = cmArray.get([1, 1]);
+var FP = cmArray.get([0, 1]);
+var FN = cmArray.get([1, 0]);
+
+var precision = TP.divide(TP.add(FP));
+var recall = TP.divide(TP.add(FN));
+var f1 = precision.multiply(recall).multiply(2)
+  .divide(precision.add(recall));
+
+var importance = ee.Dictionary(rfClassify.explain().get('importance'));
+```
+
+The preprocessing output is exported as a multi-band image asset. Model statistics are stored as metadata for the app panel.
+
+```js
+var precomputed = ee.Image.cat([
+  glacier_2000.toByte(),
+  glacier_2024.toByte(),
+  cleanRetreat.toByte(),
+  warmingRate.float(),
+  lstEarly.float(),
+  lstRecent.float(),
+  susceptibilityMap.float(),
+  elevation.float()
+]).set({
+  accuracy: confusion.accuracy(),
+  kappa: confusion.kappa(),
+  precision: precision,
+  recall: recall,
+  f1: f1,
+  n_train: trainSet.size(),
+  n_test: testSet.size(),
+  export_scale_m: exportScale,
+  validation_split: 'spatial block split: folds 0-6 train, 7-9 test'
+});
+
+Export.image.toAsset({
+  image: precomputed,
+  description: 'greenland_glacier_mining_precomputed',
+  assetId: outputAsset,
+  region: greenlandBox,
+  crs: exportCrs,
+  scale: exportScale,
+  maxPixels: 1e13
+});
+```
+
+The context export separates the modelled peripheral glacier zone from central/high-elevation ice-sheet context. This helps users see Greenland as a whole while avoiding over-interpretation outside the intended model domain.
+
+```js
+var gimpIceMask = ee.Image('OSU/GIMP/2000_ICE_OCEAN_MASK')
+  .select('ice_mask')
+  .eq(2)
+  .rename('gimp_ice_mask');
+
+var latitude = ee.Image.pixelLonLat().select('latitude');
+
+var modelDomain = gimpIceMask
+  .and(elevation.lt(2500).or(latitude.lt(64)))
+  .rename('model_domain');
+
+var iceSheetContext = gimpIceMask
+  .and(modelDomain.not())
+  .rename('ice_sheet_context');
+
+var northIceContext = gimpIceMask
+  .and(latitude.gte(78))
+  .rename('north_ice_context');
+```
+
+### 2. Interactive Visualization and Analysis
+
+The final app loads the exported analysis and context assets directly. The left map shows approximate 2000 glacier extent; the right map shows 2024 extent, observed retreat, warming, mining/settlement overlays, and Random Forest susceptibility.
+
+```js
+var precomputed = ee.Image(
+  'projects/ee-k24081637/assets/0025/greenland_glacier_mining_precomputed'
+);
+
+var contextPrecomputed = ee.Image(
+  'projects/ee-k24081637/assets/0025/greenland_display_context_precomputed'
+);
+
+var glacier_2000 = precomputed.select('glacier_2000');
+var glacier_2024 = precomputed.select('glacier_2024');
+var retreatOnly  = precomputed.select('retreat').selfMask();
+var warmingRate  = precomputed.select('warming_rate');
+var susceptibilityMap = precomputed.select('susceptibility');
+
+var modelDomain = contextPrecomputed.select('model_domain').selfMask();
+var centralIceContext = contextPrecomputed
+  .select('ice_sheet_context')
+  .selfMask();
+```
+
+The two maps are linked and placed in a swipe panel for direct visual comparison.
+
+```js
+var leftMap  = ui.Map();
+var rightMap = ui.Map();
+
+leftMap.setOptions('SATELLITE');
+rightMap.setOptions('SATELLITE');
+leftMap.setCenter(-42, 72, 4);
+
+var linker = ui.Map.Linker([leftMap, rightMap]);
+
+leftMap.addLayer(glacier_2000.selfMask(), glacierVis2000,
+  'Glacier Extent ~2000', true);
+
+rightMap.addLayer(glacier_2024.selfMask(), glacierVis2024,
+  'Glacier Extent ~2024', true);
+rightMap.addLayer(retreatOnly, retreatVis,
+  'Glacier Retreat (ice lost)', false);
+rightMap.addLayer(susceptibilityMap, susceptibilityVis,
+  'Retreat Susceptibility Prediction', true);
+
+var splitPanel = ui.SplitPanel({
+  firstPanel: leftMap,
+  secondPanel: rightMap,
+  wipe: true,
+  style: {stretch: 'both'}
+});
+
+ui.root.clear();
+ui.root.add(splitPanel);
+```
+
+The side panel displays model diagnostics from asset metadata, so users can inspect performance without rerunning the model.
+
+```js
+ee.Dictionary({
+  accuracy: precomputed.get('accuracy'),
+  kappa: precomputed.get('kappa'),
+  precision: precomputed.get('precision'),
+  recall: precomputed.get('recall'),
+  f1: precomputed.get('f1'),
+  nTrain: precomputed.get('n_train'),
+  nTest: precomputed.get('n_test'),
+  scale: precomputed.get('export_scale_m'),
+  split: precomputed.get('validation_split')
+}).evaluate(function(st) {
+  modelStatsPanel.clear();
+  modelStatsPanel.add(ui.Label(
+    'Accuracy: ' + (st.accuracy * 100).toFixed(1) + '%'
+  ));
+  modelStatsPanel.add(ui.Label(
+    'Precision: ' + st.precision.toFixed(3) +
+    ' | Recall: ' + st.recall.toFixed(3)
+  ));
+  modelStatsPanel.add(ui.Label(
+    'F1 score: ' + st.f1.toFixed(3)
+  ));
+});
+```
+
+A variable-importance chart summarises which predictors contributed most to the Random Forest.
+
+```js
+var importanceFeatures = ee.FeatureCollection([
+  ee.Feature(null, {
+    variable: 'elevation',
+    importance: ee.Number(precomputed.get('importance_elevation'))
+  }),
+  ee.Feature(null, {
+    variable: 'slope',
+    importance: ee.Number(precomputed.get('importance_slope'))
+  }),
+  ee.Feature(null, {
+    variable: 'warming_rate',
+    importance: ee.Number(precomputed.get('importance_warming_rate'))
+  }),
+  ee.Feature(null, {
+    variable: 'mine_proximity',
+    importance: ee.Number(precomputed.get('importance_mine_proximity'))
+  })
+]);
+
+var importanceChart = ui.Chart.feature.byFeature(
+  importanceFeatures, 'variable', 'importance'
+).setChartType('BarChart');
+```
+
+The click tool turns the map into a local statistics dashboard. A 25 km buffer is used to calculate glacier area change, mean warming, elevation, domain status, and mean susceptibility.
+
+```js
+function handleMapClick(coords) {
+  var point  = ee.Geometry.Point([coords.lon, coords.lat]);
+  var region = point.buffer(25000);
+  var pxArea = ee.Image.pixelArea();
+
+  ee.Dictionary({
+    area2000: glacier_2000.multiply(pxArea).reduceRegion({
+      reducer: ee.Reducer.sum(),
+      geometry: region,
+      scale: clickStatsScale,
+      maxPixels: 1e9
+    }).get('glacier_2000'),
+
+    area2024: glacier_2024.multiply(pxArea).reduceRegion({
+      reducer: ee.Reducer.sum(),
+      geometry: region,
+      scale: clickStatsScale,
+      maxPixels: 1e9
+    }).get('glacier_2024'),
+
+    susceptibility: susceptibilityMap.reduceRegion({
+      reducer: ee.Reducer.mean(),
+      geometry: region,
+      scale: clickStatsScale,
+      maxPixels: 1e9
+    }).get('susceptibility')
+  }).evaluate(function(s) {
+    // The returned dictionary is formatted into the click-stats panel.
+    updateClickPanel(s);
+  });
+}
+```
+
+The app reports whether the clicked location is inside the modelled peripheral zone or only an ice-sheet context area.
+
+```js
+var inModelDomain = s.domain !== null && s.domain > 0;
+var inContextOnly = !inModelDomain && s.context !== null && s.context > 0;
+
+var domainText = inModelDomain ? 'Modelled peripheral glacier zone' :
+                 inContextOnly ? 'Ice-sheet context only' :
+                 'Outside model domain';
+
+clickStatsPanel.add(ui.Label(
+  'Map domain: ' + domainText,
+  {fontWeight: 'bold'}
+));
+```
+
+### 3. Insights and Objectives
+
+The app supports exploratory decision-making around glacier change and mining activity. It provides four main outputs: observed glacier change, Random Forest retreat susceptibility, variable importance, and click-based local statistics. The output is a screening map for further monitoring, not proof that mining caused glacier retreat.
+
+```js
+var a0  = (s.area2000 / 1e6).toFixed(1);
+var a1  = (s.area2024 / 1e6).toFixed(1);
+var dA  = (a1 - a0).toFixed(1);
+var pct = a0 > 0 ? ((dA / a0) * 100).toFixed(1) : 'N/A';
+
+clickStatsPanel.add(ui.Label(
+  '~2000: ' + a0 + ' km2   ~2024: ' + a1 + ' km2'
+));
+
+clickStatsPanel.add(ui.Label(
+  'Change: ' + dA + ' km2 (' + pct + '%)'
+));
+```
+
+The continuous susceptibility value is converted into a simple label for communication.
+
+```js
+var rPct = (s.susceptibility * 100).toFixed(0);
+var rLabel = s.susceptibility > 0.7 ? 'HIGH' :
+             s.susceptibility > 0.4 ? 'MODERATE' : 'LOW';
+
+clickStatsPanel.add(ui.Label(
+  rLabel + ' (' + rPct + '%)',
+  {fontWeight: 'bold'}
+));
+```
+
+### 4. Limitations and Potential Expansion
+
+The main limitations come from the datasets and modelling design. Landsat NDSI can confuse seasonal snow, cloud, shadow, and glacier ice, and Landsat 7 baseline imagery may contain scan-line gaps. Very high northern Greenland has weaker routine Landsat coverage, so northern context is treated cautiously. ArcticDEM is a high-resolution mosaic but not a single-date surface, so elevation and slope do not exactly match every Landsat year. GIMP is a static 2000 ice/ocean mask and cannot represent all later ice-front changes. Mining licences and drillholes indicate legal/exploration activity, not necessarily active production, and the licence dataset is a recent snapshot compared with the 2000-2024 glacier period. Settlement points are simplified accessibility indicators rather than detailed population exposure. Finally, 300 m resampling improves feasibility but smooths narrow outlet glaciers.
+
+The model learns spatial association, not causation. Mining proximity should therefore be read as an exploratory pressure indicator. Updating the app requires rerunning the two export scripts.
+
+```js
+// Workflow limitation:
+// 1. Run gee_preprocess_export.js
+// 2. Wait for greenland_glacier_mining_precomputed to finish
+// 3. Run gee_context_export.js
+// 4. Wait for greenland_display_context_precomputed to finish
+// 5. Run or publish gee_glacier_mining_app 2.js
+```
+
+Future work could compare a natural-only model with a full model including mining and settlement proximity. If the full model performs better under spatial validation, mining proximity would have stronger explanatory value, while still avoiding causal overclaiming.
+
+```js
+var naturalBands = [
+  'elevation', 'slope', 'warming_rate', 'lst_mean', 'coast_proximity'
+];
+
+var fullBands = [
+  'elevation', 'slope', 'warming_rate', 'lst_mean',
+  'coast_proximity', 'mine_proximity', 'settlement_proximity'
+];
+
+// Future extension:
+// Train Model A with naturalBands.
+// Train Model B with fullBands.
+// Compare F1, AUC, recall, and spatial transfer performance.
+```
+
+## References
+
+- CASA25 Rasternauts. Nepal Landslides Risk Application. Used as a website-structure reference for the "How it Works" section. <https://maheer-maps.github.io/CASA25_Rasternauts/>
+- Breiman, L. (2001). Random Forests. *Machine Learning*, 45, 5-32. <https://doi.org/10.1023/A:1010933404324>
+- GEUS. Greenland Portal. Used as the institutional basis for Greenland mineral-resource and licence data context. <https://eng.geus.dk/products-services-facilities/data-and-maps/greenland-portal>
+- Google Earth Engine Data Catalog. ArcticDEM Mosaic V4.1. Used for elevation and slope predictors. <https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic>
+- Google Earth Engine Data Catalog. GIMP Greenland Ice and Ocean Mask. Used for land-ice context and model-domain masking. <https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK>
+- Roberts, D. R. et al. (2017). Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. *Ecography*, 40(8), 913-929. <https://doi.org/10.1111/ecog.02881>
+- USGS. Landsat Collection 2 Surface Temperature. Used for LST scaling and summer temperature-trend analysis. <https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature>
+- USGS. Normalized Difference Snow Index. Used for the NDSI snow/ice mapping formula and Landsat band choices. <https://www.usgs.gov/landsat-missions/normalized-difference-snow-index>
+- USGS. Landsat Shapefiles and KML Files. Used to justify caution around routine WRS-2 coverage near very high latitudes. <https://www.usgs.gov/landsat-missions/landsat-shapefiles-and-kml-files>
