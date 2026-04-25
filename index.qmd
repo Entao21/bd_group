@@ -19,7 +19,6 @@ The workflow consists of two components. First, a preprocessing pipeline compute
 By integrating environmental change and mining-related pressures into a single exploratory platform, the project supports policy discussions around Arctic climate adaptation, resource development, and environmental governance.
 
 
-
 (Fill in the sections below to provide a brief summary of your project. Each section should have no more than 100 words. Do not edit any of the headings.)
 
 ### Problem Statement 
