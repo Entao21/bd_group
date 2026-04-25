@@ -1,0 +1,31 @@
+---
+title: "Greenland Glacier-Mining Nexus Explorer"
+format:
+  html:
+    css: tools/style.css
+    toc: true
+    toc-depth: 4
+    toc-location: right
+    page-layout: article
+    title-block-banner: images/Greenland_title.png
+---
+
+## study_area_justification
+Existing research generally agrees that the impacts of mining activities exhibit a distinct distance-dependent decay. Long-term environmental monitoring in Greenland indicates that mining impacts do indeed spread outwards, with metal pollution from former mining sites remaining significant at distances of at least 12 kilometres from the site (Søndergaard *et al.*, 2022). However, other studies on point-source dust also indicate that this impact does not extend indefinitely, but typically attenuates rapidly within a range of several to over ten kilometres (Cattle et al., 2012). Research in cold regions further suggests that, although changes in snow surface albedo caused by mine dust may still be detected at greater distances, the zone of strong impact remains concentrated in the vicinity of the mining site (He, White and Chen, 2023). Consequently, this study defines the 10–12 km radius as the primary analysis zone, characterising it as a local impact zone rather than the full extent of the impact.
+
+Based on this, monitoring solely around the mine site is feasible, provided it is understood as a primary analysis window rather than an absolute boundary where ‘there is an impact within the zone and none outside’. Greenland’s mining environmental monitoring framework itself emphasises that ‘monitoring should be site-specific and mine-specific’, indicating that wind patterns, topography and Arctic environmental conditions at different mining sites will alter the actual extent of impact. Consequently, a single buffer zone should not be regarded as a natural boundary, but rather as an analytical tool for identifying localised impacts.
+
+There is also clear justification for focusing research on Greenland’s coastal and marginal glacial zones rather than the central ice sheet. The Greenland ice sheet covers approximately 81% of the country’s land area, whilst the population and infrastructure are primarily concentrated in the narrow ice-free coastal zone (Straneo *et al.*, 2022). In reality, mining activities are mainly distributed in accessible coastal areas, rather than within the high-altitude interior of the central ice sheet. Meanwhile, studies of the dry snow zone in Greenland indicate that the role of dust and black carbon in reducing albedo is generally weak, whilst significant ‘darkening’ phenomena occur primarily in the western marginal melt zones (Polashenski *et al.*, 2015). This suggests that mining-related impacts are more likely to be concentrated in coastal ice-free areas and their adjacent marginal melt zones, rather than within the central ice sheet.
+
+
+## References
+
+Cattle, S.R., Hemi, K., Pearson, G.L. and Sanderson, T. (2012) ‘Distinguishing and characterising point-source mining dust and diffuse-source dust deposits in a semi-arid district of eastern Australia’, *Aeolian Research*, 6, pp. 21–29.<https://doi.org/10.1016/j.aeolia.2012.07.001>
+
+He, L., White, H.P. and Chen, W. (2023) ‘Compounded Impacts of Global Warming and Anthropogenic Disturbances on Snowmelt in Northern Baffin Island’, *Remote Sensing*, 15(2), 313. <https://doi.org/10.3390/rs15020313>
+
+Polashenski, C.M., Dibb, J.E., Flanner, M.G., Chen, J.Y., Courville, Z.R., Lai, A.M., Schauer, J.J., Shafer, M.M. and Bergin, M. (2015) ‘Neither dust nor black carbon causing apparent albedo decline in Greenland’s dry snow zone: Implications for MODIS C5 surface reflectance’, *Geophysical Research Letters*, 42(21), pp. 9319–9327.<https://doi.org/10.1002/2015GL065912Digital>
+
+Straneo, F. *et al*. (2022) ‘An interdisciplinary perspective on Greenland’s changing coastal margins’, *Oceanography*.<https://www.jstor.org/stable/27182703>
+
+Søndergaard, J., Mosbech, A., Asmund, G., Khan, F.R., Johansen, P. and Blicher, M.E. (2022) ‘Mining pollution in Greenland – the lesson learned: A review of 50 years of environmental studies and monitoring’, *Science of the Total Environment*, 802, 149833.<https://doi.org/10.1016/j.scitotenv.2021.152373>
