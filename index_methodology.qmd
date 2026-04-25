@@ -1,0 +1,193 @@
+---
+title: "Greenland Glacier Retreat Susceptibility Application"
+format:
+  html:
+    css: tools/style.css
+    toc: true
+    toc-depth: 4
+    toc-location: right
+    page-layout: article
+    title-block-banner: images/Greenland_title.png
+---
+
+## Methodology
+
+The analysis is implemented across three Google Earth Engine scripts executed in sequence. `gee_preprocess_export.js` runs once to compute all raster layers — glacier extents, surface temperature trends, proximity surfaces, and the Random Forest susceptibility model — exporting everything as a single multi-band Image Asset. `gee_context_export.js` exports lightweight mask layers that separate the peripheral glacier model domain from the central ice-sheet display context. `gee_glacier_mining_app 2.js` loads these precomputed assets at application startup, enabling near-instant rendering without repeating any heavy computation.
+
+#### Glacier Change Detection and Preprocessing
+
+```{=html}
+<div style="background:#e1f3fb;padding:22px 24px;border-radius:8px;font-family:Arial,sans-serif;font-size:13px;margin:14px 0;overflow-x:auto;border:1px solid #b3e0f7;">
+  <div style="display:flex;align-items:center;gap:8px;min-width:700px;">
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 7<br>L2 Scenes</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 8<br>L2 Scenes</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 9<br>L2 Scenes</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:128px;display:flex;align-items:center;justify-content:center;text-align:center;">Cloud Mask<br>(QA_PIXEL)</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0277bd;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:128px;display:flex;align-items:center;justify-content:center;text-align:center;">NDSI<br>Calculation</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;font-weight:bold;">&gt; 0.4</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:110px;">Glacier Mask<br>~2000</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:110px;">Glacier Mask<br>~2024</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:128px;display:flex;align-items:center;justify-content:center;text-align:center;">Patch<br>Filter<br>(≥ 3 px)</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;padding:14px 14px;border-radius:5px;text-align:center;min-width:100px;">Retreat<br>Extent<br>(Δ ice)</div>
+  </div>
+</div>
+```
+
+Glacier extent was mapped from cloud-masked Landsat summer composites (June–August) for two epochs: ~2000 (1999–2002) and ~2024 (2022–2024). The **Normalized Difference Snow Index (NDSI)** was computed from the green and SWIR bands of each sensor — Bands 2 & 5 for Landsat 7; Bands 3 & 6 for Landsat 8/9 — and thresholded at > 0.4 to classify ice-covered pixels. Retreat was identified as any pixel glaciated in ~2000 but bare in ~2024. To remove classification noise from cloud remnants, seasonal snow, and Landsat 7 SLC-off striping, connected-component filtering was applied to exclude isolated patches smaller than three contiguous pixels from both retreat and stable-ice labels. Terrain variables (elevation, slope) were derived from ArcticDEM v4 and all layers were standardized to a 300 m polar grid (EPSG:3413).
+
+```js
+function ndsiL8(img) {
+  return img.addBands(
+    img.normalizedDifference(['SR_B3', 'SR_B6']).rename('NDSI'));
+}
+
+var glacier_2000 = getGlacierExtent(1999, 2002).rename('glacier_2000');
+var glacier_2024 = getGlacierExtent(2022, 2024).rename('glacier_2024');
+
+// Filter isolated noise patches from retreat and stable labels
+var cleanRetreat = retreatCandidate.selfMask()
+  .connectedPixelCount(8, true).gte(minPatchPixels)
+  .unmask(0).toByte().rename('retreat');
+```
+
+#### Climate Trend and Predictor Modelling
+
+```{=html}
+<div style="background:#e1f3fb;padding:22px 24px;border-radius:8px;font-family:Arial,sans-serif;font-size:13px;margin:14px 0;overflow-x:auto;border:1px solid #b3e0f7;">
+  <div style="display:flex;align-items:center;gap:8px;min-width:680px;">
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 7/8/9<br>ST Bands</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">2001–2024<br>Summers</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:100px;display:flex;align-items:center;justify-content:center;text-align:center;">K → °C<br>Calibration</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0277bd;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:100px;display:flex;align-items:center;justify-content:center;text-align:center;">Annual<br>Compositing</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#1565c0;color:#fff;padding:14px 14px;border-radius:5px;text-align:center;min-width:100px;">24 Annual<br>LST Means</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:100px;display:flex;align-items:center;justify-content:center;text-align:center;">Per-pixel<br>Linear<br>Fit (OLS)</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;padding:14px 14px;border-radius:5px;text-align:center;min-width:100px;">Warming Rate<br>(°C / yr)</div>
+  </div>
+</div>
+```
+
+Summer land surface temperature (LST) trends were estimated from Landsat ST bands spanning 24 boreal summers (2001–2024). For each year, cloud-screened June–August scenes from Landsat 7, 8, and 9 were converted from raw digital numbers to degrees Celsius (scale factor 0.00341802; offset 149.0 − 273.15 K), then averaged into an annual composite. A **per-pixel ordinary least squares linear regression** across all 24 annual means produced a warming rate map in °C per year. Snapshot composites for ~2000 and ~2024 were additionally retained as absolute LST layers for direct visual comparison in the split-panel interface. These climate variables, together with terrain and anthropogenic proximity predictors, form the seven-variable stack used by the susceptibility model:
+
+| Predictor | Source |
+|-----------|--------|
+| Elevation | ArcticDEM v4 |
+| Slope | Derived from ArcticDEM |
+| Warming rate | Landsat ST linear trend |
+| Mean summer LST | Landsat ST ~2000 composite |
+| Mine proximity | Drillholes + licence centroids |
+| Settlement proximity | Settlements + cities |
+| Coast proximity | Greenland boundary |
+
+```js
+function lstL8(image) {
+  return image.select('ST_B10')
+    .multiply(0.00341802).add(149.0).subtract(273.15)
+    .rename('LST_C')
+    .copyProperties(image, ['system:time_start']);
+}
+
+// Per-pixel OLS trend across 24 annual summer composites
+var warmingRate = withTime.select(['time', 'LST_C'])
+  .reduce(ee.Reducer.linearFit())
+  .select('scale')
+  .rename('warming_rate');
+```
+
+#### Random Forest Retreat Susceptibility Model
+
+```{=html}
+<div style="background:#e1f3fb;padding:22px 24px 18px;border-radius:8px;font-family:Arial,sans-serif;font-size:13px;margin:14px 0;overflow-x:auto;border:1px solid #b3e0f7;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding-left:200px;">
+    <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Retreat<br>Labels</div>
+    <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Stable Ice<br>Labels</div>
+    <div style="font-size:20px;color:#4fc3f7;">→</div>
+    <div style="background:#0277bd;color:#fff;padding:7px 14px;border-radius:5px;text-align:center;">Spatial Block Cross-Validation<br>(folds 0–6 train · 7–9 test)</div>
+  </div>
+  <div style="padding-left:480px;margin-bottom:4px;font-size:20px;color:#4fc3f7;">↓</div>
+  <div style="display:flex;align-items:center;gap:8px;min-width:700px;">
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;min-width:130px;">Elevation</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Slope</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Warming Rate</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Mean Summer LST</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Mine Proximity</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Settlement Proximity</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Coast Proximity</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:238px;display:flex;align-items:center;justify-content:center;text-align:center;">Mask to<br>Peripheral<br>Zone</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;padding:38px 16px;border-radius:5px;text-align:center;min-width:160px;">Random Forest<br>(100 Trees)<br><br>setOutputMode<br>('REGRESSION')</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#00bcd4;color:#fff;padding:22px 14px;border-radius:5px;text-align:center;min-width:100px;">Susceptibility<br>Score<br>(0–1)</div>
+  </div>
+</div>
+```
+
+A **Random Forest regression model** (100 trees) was trained to predict the susceptibility of present-day glaciers to retreat using the seven-variable predictor stack. The model domain was restricted to GIMP-identified land ice below 2500 m elevation, with an explicit inclusion of all ice south of 64°N to capture the southern Greenland ice cap, which behaves as peripheral glacier rather than interior ice sheet. Training labels were drawn exclusively from cleaned retreat and stable-ice pixels, excluding ambiguous intermediate areas.
+
+To reduce spatial autocorrelation leakage between training and test samples, **spatial block cross-validation** was applied: the bounding box was tessellated into 10 geographic folds, with folds 0–6 (70 %) used for training and folds 7–9 (30 %) as the held-out test set. A separate classification-mode Random Forest was run on the same split for performance evaluation (accuracy, kappa, precision, recall, F1). The final susceptibility surface (0–1) represents the proportion of decision trees voting for retreat, applied exclusively to current (2022–2024) glacier pixels.
+
+```js
+// Regression RF for continuous susceptibility prediction
+var rfPredict = ee.Classifier.smileRandomForest({
+  numberOfTrees: 100, seed: 42
+}).setOutputMode('REGRESSION').train({
+  features: trainSet,
+  classProperty: 'retreat',
+  inputProperties: ['elevation', 'slope', 'warming_rate', 'lst_mean',
+                    'mine_proximity', 'settlement_proximity', 'coast_proximity']
+});
+
+var susceptibilityMap = predictors
+  .updateMask(currentGlacierMask)
+  .classify(rfPredict)
+  .rename('susceptibility')
+  .max(0).min(1);
+```
+
+#### Precomputed Asset Architecture
+
+Because Landsat compositing, distance raster computation, and machine learning inference are all computationally expensive at Greenland scale, all analytical outputs are exported once as a multi-band Earth Engine Image Asset. This approach decouples the heavy computation from the interactive application, allowing the app to load pre-calculated results at startup rather than recomputing them on every visit.
+
+The exported asset stores the following bands, along with embedded model performance metadata (accuracy, kappa, F1, variable importance):
+
+| Band | Content |
+|------|---------|
+| `glacier_2000` | Binary glacier mask ~2000 |
+| `glacier_2024` | Binary glacier mask ~2024 |
+| `retreat` | Cleaned retreat pixels |
+| `warming_rate` | LST trend (°C/yr, 2001–2024) |
+| `lst_early` | Mean summer LST ~2000 |
+| `lst_recent` | Mean summer LST ~2024 |
+| `susceptibility` | RF retreat susceptibility (0–1) |
+| `elevation` | ArcticDEM elevation (m) |
+
+#### Interactive Regional Statistics
+
+The application supports click-based regional analysis to make susceptibility outputs actionable for end users. For any selected location, the system computes statistics within a 25 km radius buffer:
+
+- Glacier area change (km², ~2000 vs ~2024)
+- Surface temperature change (~2000 vs ~2024)
+- Decadal warming trend (°C/decade)
+- Mean elevation (m)
+- Mean retreat susceptibility score
+
+This capability transforms the model from a static prediction surface into an exploratory decision-support tool, enabling policymakers and researchers to interrogate local conditions at any point across Greenland's peripheral glacier zone.
