@@ -1,14 +1,18 @@
 ---
 title: "Greenland’s Glacier Retreat Susceptibility Application"
+language: 
+  en:
+    toc-title-document: "Contents"
 format:
   html:
     css: style.css
     toc: true
     toc-depth: 3
-    title-block-banner: images/Greenland_title.png  
-    title-block-banner-color: "#1a4a75"
-    theme: cosmo
+    toc-location: right
+    page-layout: full   
+    title-block-banner: true
 ---
+
 
 ## Project Summary 
 
