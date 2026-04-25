@@ -37,7 +37,6 @@ predictive glacier retreat susceptibility modelling
 Rather than modelling causal mining impacts directly, the platform identifies areas where these environmental and anthropogenic factors coincide, supporting exploratory analysis of potential glacier vulnerability hotspots.
 
 
-
 What is the problem you’re trying to address using this application? 
 
 ### End User 
