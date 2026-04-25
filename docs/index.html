@@ -73,12 +73,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e19f81c97bc45f6835df6be9cce9fdc9.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-e19f81c97bc45f6835df6be9cce9fdc9.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-23bbe8b5e4efc1e257f6d59dce478b08.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-deb901b02078fb902c6e1ae515dd94cd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-165756a7da4f6a4eff214c1ae5448f53.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-36cd757a48f70156034ad6e03107a1bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ae4d374d64393fe1f2b1f4026bcc48cd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -113,9 +113,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 background-size: cover;
       }
 </style>
-<script src="site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -346,11 +343,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
   <ul>
-  <li><a href="#glacier-change-detection" id="toc-glacier-change-detection" class="nav-link" data-scroll-target="#glacier-change-detection">Glacier Change Detection</a></li>
-  <li><a href="#predictor-engineering" id="toc-predictor-engineering" class="nav-link" data-scroll-target="#predictor-engineering">Predictor Engineering</a></li>
-  <li><a href="#random-forest-susceptibility-model" id="toc-random-forest-susceptibility-model" class="nav-link" data-scroll-target="#random-forest-susceptibility-model">Random Forest Susceptibility Model</a></li>
-  <li><a href="#model-domain" id="toc-model-domain" class="nav-link" data-scroll-target="#model-domain">Model Domain</a></li>
+  <li><a href="#glacier-change-detection-and-preprocessing" id="toc-glacier-change-detection-and-preprocessing" class="nav-link" data-scroll-target="#glacier-change-detection-and-preprocessing">Glacier Change Detection and Preprocessing</a></li>
+  <li><a href="#climate-trend-and-predictor-modelling" id="toc-climate-trend-and-predictor-modelling" class="nav-link" data-scroll-target="#climate-trend-and-predictor-modelling">Climate Trend and Predictor Modelling</a></li>
+  <li><a href="#random-forest-retreat-susceptibility-model" id="toc-random-forest-retreat-susceptibility-model" class="nav-link" data-scroll-target="#random-forest-retreat-susceptibility-model">Random Forest Retreat Susceptibility Model</a></li>
   <li><a href="#precomputed-asset-architecture" id="toc-precomputed-asset-architecture" class="nav-link" data-scroll-target="#precomputed-asset-architecture">Precomputed Asset Architecture</a></li>
+  <li><a href="#interactive-regional-statistics" id="toc-interactive-regional-statistics" class="nav-link" data-scroll-target="#interactive-regional-statistics">Interactive Regional Statistics</a></li>
   <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
   </ul></li>
   <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a></li>
@@ -358,7 +355,7 @@ window.Quarto = {
   <ul>
   <li><a href="#data-preparation-and-precomputations" id="toc-data-preparation-and-precomputations" class="nav-link" data-scroll-target="#data-preparation-and-precomputations">1. Data Preparation and Precomputations</a></li>
   <li><a href="#interactive-visualization-and-analysis" id="toc-interactive-visualization-and-analysis" class="nav-link" data-scroll-target="#interactive-visualization-and-analysis">2. Interactive Visualization and Analysis</a></li>
-  <li><a href="#insights-and-objectives" id="toc-insights-and-objectives" class="nav-link" data-scroll-target="#insights-and-objectives">3. Insights and Objectives</a></li>
+  <li><a href="#click-based-regional-statistics" id="toc-click-based-regional-statistics" class="nav-link" data-scroll-target="#click-based-regional-statistics">3. Click-Based Regional Statistics</a></li>
   <li><a href="#limitations-and-potential-expansion" id="toc-limitations-and-potential-expansion" class="nav-link" data-scroll-target="#limitations-and-potential-expansion">4. Limitations and Potential Expansion</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
@@ -454,135 +451,351 @@ window.Quarto = {
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>The methodology follows a three-script workflow. Heavy raster processing and model training are run first, display-context masks are exported second, and the final application only loads precomputed assets. This architecture makes the app faster and avoids repeated large computations at start-up.</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-  A["Input data"] --&gt; B["gee_preprocess_export.js"]
-  B --&gt; B1["Landsat NDSI glacier extent&lt;br/&gt;1999-2002 vs 2022-2024"]
-  B --&gt; B2["Landsat summer LST trend&lt;br/&gt;2001-2024"]
-  B --&gt; B3["ArcticDEM terrain&lt;br/&gt;elevation and slope"]
-  B --&gt; B4["Mining, settlement, coast&lt;br/&gt;proximity rasters"]
-  B1 --&gt; C["Retreat / stable-ice labels"]
-  B2 --&gt; D["Predictor stack"]
-  B3 --&gt; D
-  B4 --&gt; D
-  C --&gt; E["Random Forest model"]
-  D --&gt; E
-  E --&gt; F["Precomputed model asset"]
-  A --&gt; G["gee_context_export.js"]
-  G --&gt; H["Model domain and ice-sheet context asset"]
-  F --&gt; I["gee_glacier_mining_app 2.js"]
-  H --&gt; I
-  I --&gt; J["Interactive split-map application"]
-</pre>
+<p>The core analytical challenge is translating decades of raw satellite observations into a spatially consistent, interpretable susceptibility signal across Greenland’s peripheral glacier zone. Rather than relying on a single data source or a pre-classified product, this project combines multi-sensor remote sensing, per-pixel trend estimation, and machine learning to build a predictor stack that captures climate, terrain, and human-environment interactions simultaneously. Each methodological choice — from the NDSI threshold to the spatial block validation scheme — is designed to minimise label noise and reduce the risk of overfitting to spatially autocorrelated observations, so that the final susceptibility surface reflects genuine environmental gradients rather than artefacts of the training sample.</p>
+<section id="glacier-change-detection-and-preprocessing" class="level4">
+<h4 class="anchored" data-anchor-id="glacier-change-detection-and-preprocessing">Glacier Change Detection and Preprocessing</h4>
+<div style="background:#e1f3fb;padding:22px 24px;border-radius:8px;font-family:Arial,sans-serif;font-size:13px;margin:14px 0;overflow-x:auto;border:1px solid #b3e0f7;">
+  <div style="display:flex;align-items:center;gap:8px;min-width:700px;">
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 7<br>L2 Scenes</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 8<br>L2 Scenes</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 9<br>L2 Scenes</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:128px;display:flex;align-items:center;justify-content:center;text-align:center;">Cloud Mask<br>(QA_PIXEL)</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0277bd;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:128px;display:flex;align-items:center;justify-content:center;text-align:center;">NDSI<br>Calculation</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;font-weight:bold;">&gt; 0.4</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:110px;">Glacier Mask<br>~2000</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:110px;">Glacier Mask<br>~2024</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:128px;display:flex;align-items:center;justify-content:center;text-align:center;">Patch<br>Filter<br>(≥ 3 px)</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;padding:14px 14px;border-radius:5px;text-align:center;min-width:100px;">Retreat<br>Extent<br>(Δ ice)</div>
+  </div>
 </div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<section id="glacier-change-detection" class="level3">
-<h3 class="anchored" data-anchor-id="glacier-change-detection">Glacier Change Detection</h3>
-<p>Glacier extent is estimated from Landsat summer composites using the Normalized Difference Snow Index (NDSI). NDSI separates snow and ice from darker land surfaces because snow has high green reflectance and low shortwave-infrared reflectance.</p>
-<p><span class="math display">\[
-NDSI = \frac{Green - SWIR1}{Green + SWIR1}
-\]</span></p>
-<p>Landsat 7 uses bands <code>SR_B2</code> and <code>SR_B5</code>, while Landsat 8/9 use <code>SR_B3</code> and <code>SR_B6</code>. Pixels with <code>NDSI &gt; 0.4</code> are treated as glacier/snow-ice pixels. Two multi-year windows are compared: 1999-2002 as the baseline and 2022-2024 as the recent period. The multi-year windows reduce the influence of single-year cloud, snow, or sensor noise.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2000 <span class="op">=</span> <span class="fu">getGlacierExtent</span>(<span class="dv">1999</span><span class="op">,</span> <span class="dv">2002</span>)<span class="op">;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2024 <span class="op">=</span> <span class="fu">getGlacierExtent</span>(<span class="dv">2022</span><span class="op">,</span> <span class="dv">2024</span>)<span class="op">;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rawRetreat <span class="op">=</span> glacier_2000<span class="op">.</span><span class="fu">subtract</span>(glacier_2024)<span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> retreatCandidate <span class="op">=</span> rawRetreat<span class="op">.</span><span class="fu">gt</span>(<span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> stableCandidate <span class="op">=</span> glacier_2000<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">and</span>(glacier_2024<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The model labels are deliberately simple but cleaned: “retreat” means a pixel was mapped as glacier in the baseline window and not in the recent window; “stable” means it remained glacier in both windows. Small isolated patches are removed using connected-pixel filtering, reducing salt-and-pepper noise before sampling.</p>
+<p>Glacier extent was mapped from cloud-masked Landsat summer composites (June–August) for two epochs: ~2000 (1999–2002) and ~2024 (2022–2024). The <strong>Normalized Difference Snow Index (NDSI)</strong> was computed from the green and SWIR bands of each sensor — Bands 2 &amp; 5 for Landsat 7; Bands 3 &amp; 6 for Landsat 8/9 — and thresholded at &gt; 0.4 to classify ice-covered pixels. Retreat was identified as any pixel glaciated in ~2000 but bare in ~2024. To remove classification noise from cloud remnants, seasonal snow, and Landsat 7 SLC-off striping, connected-component filtering was applied to exclude isolated patches smaller than three contiguous pixels from both retreat and stable-ice labels. Terrain variables (elevation, slope) were derived from ArcticDEM v4 and all layers were standardized to a 300 m polar grid (EPSG:3413).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Cloud masking using QA_PIXEL for Landsat 8/9</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">maskL8</span>(image) {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> qa <span class="op">=</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'QA_PIXEL'</span>)<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">updateMask</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    qa<span class="op">.</span><span class="fu">bitwiseAnd</span>(<span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="dv">3</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>)   <span class="co">// cloud</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">and</span>(qa<span class="op">.</span><span class="fu">bitwiseAnd</span>(<span class="dv">1</span> <span class="op">&lt;&lt;</span> <span class="dv">4</span>)<span class="op">.</span><span class="fu">eq</span>(<span class="dv">0</span>))  <span class="co">// cloud shadow</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">// NDSI from green and SWIR bands (Landsat 8/9)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ndsiL8</span>(img) {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> img<span class="op">.</span><span class="fu">addBands</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    img<span class="op">.</span><span class="fu">normalizedDifference</span>([<span class="st">'SR_B3'</span><span class="op">,</span> <span class="st">'SR_B6'</span>])<span class="op">.</span><span class="fu">rename</span>(<span class="st">'NDSI'</span>))<span class="op">;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">// Build median NDSI composite and threshold at 0.4</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">getGlacierExtent</span>(startYear<span class="op">,</span> endYear) {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> t0 <span class="op">=</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(startYear<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> t1 <span class="op">=</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(endYear<span class="op">,</span> <span class="dv">12</span><span class="op">,</span> <span class="dv">31</span>)<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> summer <span class="op">=</span> ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">calendarRange</span>(<span class="dv">6</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="st">'month'</span>)<span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> l8 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC08/C02/T1_L2'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)<span class="op">.</span><span class="fu">filterDate</span>(t0<span class="op">,</span> t1)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filter</span>(summer)<span class="op">.</span><span class="fu">map</span>(maskL8)<span class="op">.</span><span class="fu">map</span>(ndsiL8)<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> l9 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC09/C02/T1_L2'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)<span class="op">.</span><span class="fu">filterDate</span>(t0<span class="op">,</span> t1)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filter</span>(summer)<span class="op">.</span><span class="fu">map</span>(maskL8)<span class="op">.</span><span class="fu">map</span>(ndsiL8)<span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> l8<span class="op">.</span><span class="fu">merge</span>(l9)<span class="op">.</span><span class="fu">select</span>(<span class="st">'NDSI'</span>)<span class="op">.</span><span class="fu">median</span>()</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">gt</span>(<span class="fl">0.4</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'ice'</span>)<span class="op">.</span><span class="fu">clip</span>(AOI_geom)<span class="op">.</span><span class="fu">unmask</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2000 <span class="op">=</span> <span class="fu">getGlacierExtent</span>(<span class="dv">1999</span><span class="op">,</span> <span class="dv">2002</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'glacier_2000'</span>)<span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2024 <span class="op">=</span> <span class="fu">getGlacierExtent</span>(<span class="dv">2022</span><span class="op">,</span> <span class="dv">2024</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'glacier_2024'</span>)<span class="op">;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">// Retreat = ice in 2000 but not in 2024</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> retreatCandidate <span class="op">=</span> glacier_2000<span class="op">.</span><span class="fu">subtract</span>(glacier_2024)<span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">gt</span>(<span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> stableCandidate  <span class="op">=</span> glacier_2000<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">and</span>(glacier_2024<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">// Remove isolated patches smaller than minPatchPixels (set to 3)</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cleanRetreat <span class="op">=</span> retreatCandidate<span class="op">.</span><span class="fu">selfMask</span>()</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">connectedPixelCount</span>(<span class="dv">8</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">.</span><span class="fu">gte</span>(minPatchPixels)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">unmask</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">toByte</span>()<span class="op">.</span><span class="fu">rename</span>(<span class="st">'retreat'</span>)<span class="op">;</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cleanStable <span class="op">=</span> stableCandidate<span class="op">.</span><span class="fu">selfMask</span>()</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">connectedPixelCount</span>(<span class="dv">8</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">.</span><span class="fu">gte</span>(minPatchPixels)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">unmask</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">toByte</span>()<span class="op">.</span><span class="fu">rename</span>(<span class="st">'stable'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="predictor-engineering" class="level3">
-<h3 class="anchored" data-anchor-id="predictor-engineering">Predictor Engineering</h3>
-<p>Seven predictor variables are sampled to a common modelling scale. This does not mean all source datasets have the same native resolution. Landsat and ArcticDEM have different original resolutions, but Earth Engine samples them consistently at the modelling scale during training and export.</p>
-<p>The predictor stack includes:</p>
-<ul>
-<li>elevation from ArcticDEM;</li>
-<li>slope derived from ArcticDEM;</li>
-<li>Landsat summer LST warming rate from 2001-2024;</li>
-<li>early-period mean LST;</li>
-<li>proximity to mining licences and drillholes;</li>
-<li>proximity to settlements and cities;</li>
-<li>proximity to the coastline.</li>
-</ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> predictors <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">cat</span>([</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  elevation<span class="op">.</span><span class="fu">rename</span>(<span class="st">'elevation'</span>)<span class="op">,</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  slope<span class="op">.</span><span class="fu">rename</span>(<span class="st">'slope'</span>)<span class="op">,</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  warmingRate<span class="op">.</span><span class="fu">rename</span>(<span class="st">'warming_rate'</span>)<span class="op">,</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  lstEarly<span class="op">.</span><span class="fu">rename</span>(<span class="st">'lst_mean'</span>)<span class="op">,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  mineProximity<span class="op">.</span><span class="fu">rename</span>(<span class="st">'mine_proximity'</span>)<span class="op">,</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  settlementProximity<span class="op">.</span><span class="fu">rename</span>(<span class="st">'settlement_proximity'</span>)<span class="op">,</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  coastProximity<span class="op">.</span><span class="fu">rename</span>(<span class="st">'coast_proximity'</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>])<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Mining is represented as a proximity variable rather than a direct impact radius. This is more defensible: it lets the model test whether distance to known mining activity helps explain retreat susceptibility after climate and terrain variables are included, without claiming a causal mining effect.</p>
+<section id="climate-trend-and-predictor-modelling" class="level4">
+<h4 class="anchored" data-anchor-id="climate-trend-and-predictor-modelling">Climate Trend and Predictor Modelling</h4>
+<div style="background:#e1f3fb;padding:22px 24px;border-radius:8px;font-family:Arial,sans-serif;font-size:13px;margin:14px 0;overflow-x:auto;border:1px solid #b3e0f7;">
+  <div style="display:flex;align-items:center;gap:8px;min-width:680px;">
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">Landsat 7/8/9<br>ST Bands</div>
+      <div style="background:#1565c0;color:#fff;padding:9px 14px;border-radius:5px;text-align:center;min-width:120px;">2001–2024<br>Summers</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:100px;display:flex;align-items:center;justify-content:center;text-align:center;">K → °C<br>Calibration</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0277bd;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:100px;display:flex;align-items:center;justify-content:center;text-align:center;">Annual<br>Compositing</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#1565c0;color:#fff;padding:14px 14px;border-radius:5px;text-align:center;min-width:100px;">24 Annual<br>LST Means</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:100px;display:flex;align-items:center;justify-content:center;text-align:center;">Per-pixel<br>Linear<br>Fit (OLS)</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;padding:14px 14px;border-radius:5px;text-align:center;min-width:100px;">Warming Rate<br>(°C / yr)</div>
+  </div>
+</div>
+<p>Summer land surface temperature (LST) trends were estimated from Landsat ST bands spanning 24 boreal summers (2001–2024). For each year, cloud-screened June–August scenes from Landsat 7, 8, and 9 were converted from raw digital numbers to degrees Celsius (scale factor 0.00341802; offset 149.0 − 273.15 K), then averaged into an annual composite. A <strong>per-pixel ordinary least squares linear regression</strong> across all 24 annual means produced a warming rate map in °C per year. Snapshot composites for ~2000 and ~2024 were additionally retained as absolute LST layers for direct visual comparison in the split-panel interface. These climate variables, together with terrain and anthropogenic proximity predictors, form the seven-variable stack used by the susceptibility model:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Predictor</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Elevation</td>
+<td>ArcticDEM v4</td>
+</tr>
+<tr class="even">
+<td>Slope</td>
+<td>Derived from ArcticDEM</td>
+</tr>
+<tr class="odd">
+<td>Warming rate</td>
+<td>Landsat ST linear trend</td>
+</tr>
+<tr class="even">
+<td>Mean summer LST</td>
+<td>Landsat ST ~2000 composite</td>
+</tr>
+<tr class="odd">
+<td>Mine proximity</td>
+<td>Drillholes + licence centroids</td>
+</tr>
+<tr class="even">
+<td>Settlement proximity</td>
+<td>Settlements + cities</td>
+</tr>
+<tr class="odd">
+<td>Coast proximity</td>
+<td>Greenland boundary</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Convert Landsat ST_B10 DN to Celsius</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lstL8</span>(image) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'ST_B10'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">multiply</span>(<span class="fl">0.00341802</span>)<span class="op">.</span><span class="fu">add</span>(<span class="fl">149.0</span>)<span class="op">.</span><span class="fu">subtract</span>(<span class="fl">273.15</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">rename</span>(<span class="st">'LST_C'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">copyProperties</span>(image<span class="op">,</span> [<span class="st">'system:time_start'</span>])<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">// Build annual summer LST composites for 2001-2024</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> years <span class="op">=</span> ee<span class="op">.</span><span class="at">List</span><span class="op">.</span><span class="fu">sequence</span>(<span class="dv">2001</span><span class="op">,</span> <span class="dv">2024</span>)<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> annualLST <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(years<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(year) {</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  year <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(year)<span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> s <span class="op">=</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(year<span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> e <span class="op">=</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(year<span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">31</span>)<span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> l8 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC08/C02/T1_L2'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)<span class="op">.</span><span class="fu">filterDate</span>(s<span class="op">,</span> e)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(maskL8)<span class="op">.</span><span class="fu">map</span>(lstL8)<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> l9 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC09/C02/T1_L2'</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)<span class="op">.</span><span class="fu">filterDate</span>(s<span class="op">,</span> e)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">map</span>(maskL8)<span class="op">.</span><span class="fu">map</span>(lstL8)<span class="op">;</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> l8<span class="op">.</span><span class="fu">merge</span>(l9)<span class="op">.</span><span class="fu">mean</span>()</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span>(<span class="st">'year'</span><span class="op">,</span> year)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">set</span>(<span class="st">'system:time_start'</span><span class="op">,</span> s<span class="op">.</span><span class="fu">millis</span>())<span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}))<span class="op">;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="co">// Attach numeric time band for OLS regression</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> withTime <span class="op">=</span> annualLST<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(img) {</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> yr <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(img<span class="op">.</span><span class="fu">get</span>(<span class="st">'year'</span>))<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> img<span class="op">.</span><span class="fu">addBands</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">constant</span>(yr)<span class="op">.</span><span class="fu">float</span>()<span class="op">.</span><span class="fu">rename</span>(<span class="st">'time'</span>))<span class="op">;</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">// Per-pixel OLS slope = warming rate in °C/yr</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> warmingRate <span class="op">=</span> withTime<span class="op">.</span><span class="fu">select</span>([<span class="st">'time'</span><span class="op">,</span> <span class="st">'LST_C'</span>])</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">reduce</span>(ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">linearFit</span>())</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">select</span>(<span class="st">'scale'</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">clip</span>(AOI_geom)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'warming_rate'</span>)<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">// Proximity rasters: inverse cumulative cost distance, scaled 0-1</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">distanceToFC</span>(fc<span class="op">,</span> maxDist) {</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> source <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">byte</span>()<span class="op">.</span><span class="fu">paint</span>(fc<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(f) {</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> f<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">1000</span>)<span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  })<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">cumulativeCost</span>(source<span class="op">,</span> maxDist)<span class="op">.</span><span class="fu">unmask</span>(maxDist)<span class="op">;</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> mineProximity <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="dv">1</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">subtract</span>(<span class="fu">distanceToFC</span>(allMines<span class="op">,</span> <span class="dv">100000</span>)<span class="op">.</span><span class="fu">divide</span>(<span class="dv">100000</span>))</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'mine_proximity'</span>)<span class="op">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> settlementProximity <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="dv">1</span>)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">subtract</span>(<span class="fu">distanceToFC</span>(allSettlements<span class="op">,</span> <span class="dv">100000</span>)<span class="op">.</span><span class="fu">divide</span>(<span class="dv">100000</span>))</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'settlement_proximity'</span>)<span class="op">;</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> coastProximity <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="dv">1</span>)</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">subtract</span>(distToCoast<span class="op">.</span><span class="fu">divide</span>(<span class="dv">300000</span>))</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'coast_proximity'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="random-forest-susceptibility-model" class="level3">
-<h3 class="anchored" data-anchor-id="random-forest-susceptibility-model">Random Forest Susceptibility Model</h3>
-<p>The Random Forest model is trained to distinguish cleaned retreat pixels from stable glacier pixels. Sampling is stratified so both classes are represented, and a spatial block split is used for validation so nearby pixels are less likely to appear in both the training and testing sets.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> samples <span class="op">=</span> predictors<span class="op">.</span><span class="fu">addBands</span>(target)<span class="op">.</span><span class="fu">stratifiedSample</span>({</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numPoints</span><span class="op">:</span> <span class="dv">2000</span><span class="op">,</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classBand</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">region</span><span class="op">:</span> AOI_geom<span class="op">,</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometries</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">tileScale</span><span class="op">:</span> <span class="dv">4</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<section id="random-forest-retreat-susceptibility-model" class="level4">
+<h4 class="anchored" data-anchor-id="random-forest-retreat-susceptibility-model">Random Forest Retreat Susceptibility Model</h4>
+<div style="background:#e1f3fb;padding:22px 24px 18px;border-radius:8px;font-family:Arial,sans-serif;font-size:13px;margin:14px 0;overflow-x:auto;border:1px solid #b3e0f7;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;padding-left:200px;">
+    <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Retreat<br>Labels</div>
+    <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Stable Ice<br>Labels</div>
+    <div style="font-size:20px;color:#4fc3f7;">→</div>
+    <div style="background:#0277bd;color:#fff;padding:7px 14px;border-radius:5px;text-align:center;">Spatial Block Cross-Validation<br>(folds 0–6 train · 7–9 test)</div>
+  </div>
+  <div style="padding-left:480px;margin-bottom:4px;font-size:20px;color:#4fc3f7;">↓</div>
+  <div style="display:flex;align-items:center;gap:8px;min-width:700px;">
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;min-width:130px;">Elevation</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Slope</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Warming Rate</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Mean Summer LST</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Mine Proximity</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Settlement Proximity</div>
+      <div style="background:#1565c0;color:#fff;padding:7px 12px;border-radius:5px;text-align:center;">Coast Proximity</div>
+    </div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#0097a7;color:#fff;padding:9px 8px;border-radius:5px;writing-mode:vertical-lr;transform:rotate(180deg);height:238px;display:flex;align-items:center;justify-content:center;text-align:center;">Mask to<br>Peripheral<br>Zone</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#01579b;color:#fff;padding:38px 16px;border-radius:5px;text-align:center;min-width:160px;">Random Forest<br>(100 Trees)<br><br>setOutputMode<br>('REGRESSION')</div>
+    <div style="font-size:22px;color:#4fc3f7;">→</div>
+    <div style="background:#00bcd4;color:#fff;padding:22px 14px;border-radius:5px;text-align:center;min-width:100px;">Susceptibility<br>Score<br>(0–1)</div>
+  </div>
+</div>
+<p>A <strong>Random Forest regression model</strong> (100 trees) was trained to predict the susceptibility of present-day glaciers to retreat using the seven-variable predictor stack. The model domain was restricted to GIMP-identified land ice below 2500 m elevation, with an explicit inclusion of all ice south of 64°N to capture the southern Greenland ice cap, which behaves as peripheral glacier rather than interior ice sheet. Training labels were drawn exclusively from cleaned retreat and stable-ice pixels, excluding ambiguous intermediate areas.</p>
+<p>To reduce spatial autocorrelation leakage between training and test samples, <strong>spatial block cross-validation</strong> was applied: the bounding box was tessellated into 10 geographic folds, with folds 0–6 (70 %) used for training and folds 7–9 (30 %) as the held-out test set. A separate classification-mode Random Forest was run on the same split for performance evaluation (accuracy, kappa, precision, recall, F1). The final susceptibility surface (0–1) represents the proportion of decision trees voting for retreat, applied exclusively to current (2022–2024) glacier pixels.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Spatial block folds: divide lon/lat grid into 10 folds</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> lonLat <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelLonLat</span>()<span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> spatialFold <span class="op">=</span> lonLat<span class="op">.</span><span class="fu">select</span>(<span class="st">'longitude'</span>)<span class="op">.</span><span class="fu">add</span>(<span class="dv">180</span>)<span class="op">.</span><span class="fu">divide</span>(<span class="dv">2</span>)<span class="op">.</span><span class="fu">floor</span>()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">add</span>(lonLat<span class="op">.</span><span class="fu">select</span>(<span class="st">'latitude'</span>)<span class="op">.</span><span class="fu">add</span>(<span class="dv">90</span>)<span class="op">.</span><span class="fu">divide</span>(<span class="dv">2</span>)<span class="op">.</span><span class="fu">floor</span>()<span class="op">.</span><span class="fu">multiply</span>(<span class="dv">13</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">mod</span>(<span class="dv">10</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'spatial_fold'</span>)<span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Only sample from cleaned retreat and stable pixels within model domain</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> sampleMask <span class="op">=</span> cleanRetreat<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">or</span>(cleanStable<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>))<span class="op">.</span><span class="fu">and</span>(peripheralMask)<span class="op">;</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> trainSet <span class="op">=</span> samples<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">lt</span>(<span class="st">'fold'</span><span class="op">,</span> <span class="dv">7</span>))<span class="op">;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> testSet  <span class="op">=</span> samples<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">gte</span>(<span class="st">'fold'</span><span class="op">,</span> <span class="dv">7</span>))<span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> trainingImage <span class="op">=</span> predictors<span class="op">.</span><span class="fu">addBands</span>(target)<span class="op">.</span><span class="fu">addBands</span>(spatialFold)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(sampleMask)<span class="op">;</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rf <span class="op">=</span> ee<span class="op">.</span><span class="at">Classifier</span><span class="op">.</span><span class="fu">smileRandomForest</span>({</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numberOfTrees</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">train</span>({</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">features</span><span class="op">:</span> trainSet<span class="op">,</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classProperty</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">inputProperties</span><span class="op">:</span> bandNames</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Model performance is reported using confusion matrix outputs, accuracy, kappa, precision, recall, F1 score, and variable importance. The app reads these diagnostics from asset metadata, so users can see the model quality without rerunning the classifier.</p>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> samples <span class="op">=</span> trainingImage<span class="op">.</span><span class="fu">stratifiedSample</span>({</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numPoints</span><span class="op">:</span> <span class="dv">2000</span><span class="op">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classBand</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">region</span><span class="op">:</span> greenlandBox<span class="op">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> exportScale<span class="op">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometries</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">tileScale</span><span class="op">:</span> <span class="dv">4</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">// 70% train (folds 0-6), 30% test (folds 7-9)</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> trainSet <span class="op">=</span> samples<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">lt</span>(<span class="st">'spatial_fold'</span><span class="op">,</span> <span class="dv">7</span>))<span class="op">;</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> testSet  <span class="op">=</span> samples<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">gte</span>(<span class="st">'spatial_fold'</span><span class="op">,</span> <span class="dv">7</span>))<span class="op">;</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co">// Classification RF for validation metrics</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rfClassify <span class="op">=</span> ee<span class="op">.</span><span class="at">Classifier</span><span class="op">.</span><span class="fu">smileRandomForest</span>({</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numberOfTrees</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">train</span>({</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="dt">features</span><span class="op">:</span> trainSet<span class="op">,</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classProperty</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="dt">inputProperties</span><span class="op">:</span> bandNames</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co">// Regression RF for continuous susceptibility score</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rfPredict <span class="op">=</span> ee<span class="op">.</span><span class="at">Classifier</span><span class="op">.</span><span class="fu">smileRandomForest</span>({</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numberOfTrees</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span> <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">setOutputMode</span>(<span class="st">'REGRESSION'</span>)<span class="op">.</span><span class="fu">train</span>({</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  <span class="dt">features</span><span class="op">:</span> trainSet<span class="op">,</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classProperty</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  <span class="dt">inputProperties</span><span class="op">:</span> bandNames</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co">// Evaluate on held-out spatial blocks</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> testClassified  <span class="op">=</span> testSet<span class="op">.</span><span class="fu">classify</span>(rfClassify)<span class="op">;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> confusionMatrix <span class="op">=</span> testClassified<span class="op">.</span><span class="fu">errorMatrix</span>(<span class="st">'retreat'</span><span class="op">,</span> <span class="st">'classification'</span><span class="op">,</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> precision <span class="op">=</span> tp<span class="op">.</span><span class="fu">divide</span>(tp<span class="op">.</span><span class="fu">add</span>(fp)<span class="op">.</span><span class="fu">max</span>(<span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> recall    <span class="op">=</span> tp<span class="op">.</span><span class="fu">divide</span>(tp<span class="op">.</span><span class="fu">add</span>(fn)<span class="op">.</span><span class="fu">max</span>(<span class="dv">1</span>))<span class="op">;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> f1        <span class="op">=</span> precision<span class="op">.</span><span class="fu">multiply</span>(recall)<span class="op">.</span><span class="fu">multiply</span>(<span class="dv">2</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                  <span class="op">.</span><span class="fu">divide</span>(precision<span class="op">.</span><span class="fu">add</span>(recall)<span class="op">.</span><span class="fu">max</span>(<span class="fl">0.001</span>))<span class="op">;</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="co">// Apply regression model to current glacier pixels only</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> currentGlacierMask <span class="op">=</span> glacier_2024<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">and</span>(peripheralMask)<span class="op">;</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> susceptibilityMap  <span class="op">=</span> predictors</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(currentGlacierMask)</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">classify</span>(rfPredict)</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'susceptibility'</span>)</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="model-domain" class="level3">
-<h3 class="anchored" data-anchor-id="model-domain">Model Domain</h3>
-<p>The susceptibility model is focused on Greenland’s peripheral glacier zone rather than the high-elevation central ice sheet. This is important because peripheral glaciers are more directly comparable to the small coastal glaciers and ice margins where mining access, settlements, and terrain gradients are meaningful. The central ice sheet is still displayed as context, but the app avoids presenting it as a directly modelled susceptibility zone.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> modelDomain <span class="op">=</span> gimpIceMask</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(elevation<span class="op">.</span><span class="fu">lt</span>(<span class="dv">2500</span>)<span class="op">.</span><span class="fu">or</span>(latitude<span class="op">.</span><span class="fu">lt</span>(<span class="dv">64</span>)))</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'model_domain'</span>)<span class="op">;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> iceSheetContext <span class="op">=</span> gimpIceMask</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(elevation<span class="op">.</span><span class="fu">gte</span>(<span class="dv">2500</span>)<span class="op">.</span><span class="fu">and</span>(latitude<span class="op">.</span><span class="fu">gte</span>(<span class="dv">64</span>)))</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'ice_sheet_context'</span>)<span class="op">;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> northIceContext <span class="op">=</span> gimpIceMask</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(latitude<span class="op">.</span><span class="fu">gt</span>(<span class="fl">82.6</span>))</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'north_ice_context'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The northern context layer is included because routine Landsat WRS-2 coverage is limited at very high latitudes. Showing this area as context helps communicate coverage uncertainty instead of silently ignoring it.</p>
+<section id="precomputed-asset-architecture" class="level4">
+<h4 class="anchored" data-anchor-id="precomputed-asset-architecture">Precomputed Asset Architecture</h4>
+<p>Because Landsat compositing, distance raster computation, and machine learning inference are all computationally expensive at Greenland scale, all analytical outputs are exported once as a multi-band Earth Engine Image Asset. This approach decouples the heavy computation from the interactive application, allowing the app to load pre-calculated results at startup rather than recomputing them on every visit.</p>
+<p>The exported asset stores the following bands, along with embedded model performance metadata (accuracy, kappa, F1, variable importance):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Band</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>glacier_2000</code></td>
+<td>Binary glacier mask ~2000</td>
+</tr>
+<tr class="even">
+<td><code>glacier_2024</code></td>
+<td>Binary glacier mask ~2024</td>
+</tr>
+<tr class="odd">
+<td><code>retreat</code></td>
+<td>Cleaned retreat pixels</td>
+</tr>
+<tr class="even">
+<td><code>warming_rate</code></td>
+<td>LST trend (°C/yr, 2001–2024)</td>
+</tr>
+<tr class="odd">
+<td><code>lst_early</code></td>
+<td>Mean summer LST ~2000</td>
+</tr>
+<tr class="even">
+<td><code>lst_recent</code></td>
+<td>Mean summer LST ~2024</td>
+</tr>
+<tr class="odd">
+<td><code>susceptibility</code></td>
+<td>RF retreat susceptibility (0–1)</td>
+</tr>
+<tr class="even">
+<td><code>elevation</code></td>
+<td>ArcticDEM elevation (m)</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="precomputed-asset-architecture" class="level3">
-<h3 class="anchored" data-anchor-id="precomputed-asset-architecture">Precomputed Asset Architecture</h3>
-<p>The final app does not recompute Landsat composites, distance rasters, or Random Forest predictions. Instead, two export scripts create reusable Earth Engine image assets:</p>
+<section id="interactive-regional-statistics" class="level4">
+<h4 class="anchored" data-anchor-id="interactive-regional-statistics">Interactive Regional Statistics</h4>
+<p>The application supports click-based regional analysis to make susceptibility outputs actionable for end users. For any selected location, the system computes statistics within a 25 km radius buffer:</p>
 <ul>
-<li><code>gee_preprocess_export.js</code> exports the analytical model bands, including glacier extent, retreat labels, warming rate, early/recent LST, elevation, and susceptibility.</li>
-<li><code>gee_context_export.js</code> exports lightweight display masks for the modelled peripheral zone, central ice-sheet context, and northern context.</li>
-<li><code>gee_glacier_mining_app 2.js</code> loads those assets and builds the interface.</li>
+<li>Glacier area change (km², ~2000 vs ~2024)</li>
+<li>Surface temperature change (~2000 vs ~2024)</li>
+<li>Decadal warming trend (°C/decade)</li>
+<li>Mean elevation (m)</li>
+<li>Mean retreat susceptibility score</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Export<span class="op">.</span><span class="at">image</span><span class="op">.</span><span class="fu">toAsset</span>({</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">image</span><span class="op">:</span> exportImage<span class="op">,</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">description</span><span class="op">:</span> <span class="st">'greenland_glacier_mining_precomputed'</span><span class="op">,</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">assetId</span><span class="op">:</span> outputAsset<span class="op">,</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">region</span><span class="op">:</span> greenlandBox<span class="op">,</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">crs</span><span class="op">:</span> <span class="st">'EPSG:3413'</span><span class="op">,</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> <span class="dv">300</span><span class="op">,</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This improves app reliability because users interact with already-computed layers rather than triggering large server-side operations every time the web app opens.</p>
+<p>This capability transforms the model from a static prediction surface into an exploratory decision-support tool, enabling policymakers and researchers to interrogate local conditions at any point across Greenland’s peripheral glacier zone.</p>
 </section>
 <section id="interface" class="level3">
 <h3 class="anchored" data-anchor-id="interface">Interface</h3>
@@ -595,23 +808,23 @@ NDSI = \frac{Green - SWIR1}{Green + SWIR1}
 <li>a click-based statistics panel.</li>
 </ul>
 <p>When users click the map, the app summarises a 25 km radius region around the click location. It reports glacier area change, mean temperature, warming trend, elevation, domain status, and mean retreat susceptibility.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> region <span class="op">=</span> point<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">25000</span>)<span class="op">;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> stats <span class="op">=</span> ee<span class="op">.</span><span class="fu">Dictionary</span>({</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">area2000</span><span class="op">:</span> glacier_2000<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">get</span>(<span class="st">'glacier_2000'</span>)<span class="op">,</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">susceptibility</span><span class="op">:</span> susceptibilityMap<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">get</span>(<span class="st">'susceptibility'</span>)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> region <span class="op">=</span> point<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">25000</span>)<span class="op">;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> stats <span class="op">=</span> ee<span class="op">.</span><span class="fu">Dictionary</span>({</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">area2000</span><span class="op">:</span> glacier_2000<span class="op">.</span><span class="fu">multiply</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>())<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">get</span>(<span class="st">'glacier_2000'</span>)<span class="op">,</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">susceptibility</span><span class="op">:</span> susceptibilityMap<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">get</span>(<span class="st">'susceptibility'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="the-application" class="level2 page-columns page-full">
@@ -626,415 +839,135 @@ NDSI = \frac{Green - SWIR1}{Green + SWIR1}
 <h2 class="anchored" data-anchor-id="how-it-works">How it Works</h2>
 <section id="data-preparation-and-precomputations" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation-and-precomputations">1. Data Preparation and Precomputations</h3>
-<p>The app uses a precompute-first workflow. <code>gee_preprocess_export.js</code> runs the expensive Landsat, terrain, proximity, and Random Forest steps once. <code>gee_context_export.js</code> exports lightweight model-domain masks. <code>gee_glacier_mining_app 2.js</code> then loads these assets for interactive display. This avoids recomputing Greenland-wide raster analysis every time the app opens.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> countries    <span class="op">=</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>(<span class="st">'USDOS/LSIB_SIMPLE/2017'</span>)<span class="op">;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> AOI          <span class="op">=</span> countries<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">eq</span>(<span class="st">'country_na'</span><span class="op">,</span> <span class="st">'Greenland'</span>))<span class="op">;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> AOI_geom     <span class="op">=</span> AOI<span class="op">.</span><span class="fu">geometry</span>()<span class="op">;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> greenlandBox <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Rectangle</span>([<span class="op">-</span><span class="dv">73</span><span class="op">,</span> <span class="dv">59</span><span class="op">,</span> <span class="op">-</span><span class="dv">12</span><span class="op">,</span> <span class="dv">84</span>])<span class="op">;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> exportCrs   <span class="op">=</span> <span class="st">'EPSG:3413'</span><span class="op">;</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> exportScale <span class="op">=</span> <span class="dv">300</span><span class="op">;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> minPatchPixels <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Glacier extent is mapped from summer Landsat NDSI, using a baseline window (1999-2002) and a recent window (2022-2024). The NDSI formula is:</p>
+<p>The app is organised as a three-script workflow. The first script, <code>gee_preprocess_export.js</code>, creates the remote-sensing and machine-learning layers described in the Methodology section. The second script, <code>gee_context_export.js</code>, exports lightweight context masks that separate the modelled peripheral glacier zone from the central/northern ice-sheet context. The final script, <code>gee_glacier_mining_app.js</code>, loads these exported assets and builds the user interface.</p>
+<p>This separation is important because Greenland-wide Landsat compositing, distance rasters, and Random Forest inference are too computationally expensive to run whenever a user opens the app. Instead, the app reads a precomputed image asset:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> precomputed <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'projects/ee-k24081637/assets/0025/greenland_glacier_mining_precomputed'</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> contextPrecomputed <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'projects/ee-k24081637/assets/0025/greenland_display_context_precomputed'</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2000 <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'glacier_2000'</span>)<span class="op">;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2024 <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'glacier_2024'</span>)<span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> retreatOnly  <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'retreat'</span>)<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> warmingRate  <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'warming_rate'</span>)<span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> susceptibilityMap <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'susceptibility'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The key glacier-change calculation behind the asset is based on NDSI:</p>
 <p><span class="math display">\[
 NDSI = \frac{Green - SWIR1}{Green + SWIR1}
 \]</span></p>
-<p>Pixels with <code>NDSI &gt; 0.4</code> are treated as glacier/snow-ice pixels. Multi-year summer composites reduce the influence of cloud, seasonal snow, and single-image noise.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ndsiL7</span>(image) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">normalizedDifference</span>([<span class="st">'SR_B2'</span><span class="op">,</span> <span class="st">'SR_B5'</span>])<span class="op">.</span><span class="fu">rename</span>(<span class="st">'NDSI'</span>)<span class="op">;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">ndsiL8</span>(image) {</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">normalizedDifference</span>([<span class="st">'SR_B3'</span><span class="op">,</span> <span class="st">'SR_B6'</span>])<span class="op">.</span><span class="fu">rename</span>(<span class="st">'NDSI'</span>)<span class="op">;</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">getGlacierExtent</span>(startYear<span class="op">,</span> endYear) {</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> t0 <span class="op">=</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(startYear<span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> t1 <span class="op">=</span> ee<span class="op">.</span><span class="at">Date</span><span class="op">.</span><span class="fu">fromYMD</span>(endYear<span class="op">,</span> <span class="dv">12</span><span class="op">,</span> <span class="dv">31</span>)<span class="op">;</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> summer <span class="op">=</span> ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">calendarRange</span>(<span class="dv">6</span><span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="st">'month'</span>)<span class="op">;</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> ndsiComposite<span class="op">;</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (endYear <span class="op">&lt;=</span> <span class="dv">2012</span>) {</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    ndsiComposite <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LE07/C02/T1_L2'</span>)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filterDate</span>(t0<span class="op">,</span> t1)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filter</span>(summer)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(maskL7)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(ndsiL7)</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">select</span>(<span class="st">'NDSI'</span>)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">median</span>()<span class="op">;</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> l8 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC08/C02/T1_L2'</span>)</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)</span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filterDate</span>(t0<span class="op">,</span> t1)</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filter</span>(summer)</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(maskL8)</span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(ndsiL8)<span class="op">;</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> l9 <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(<span class="st">'LANDSAT/LC09/C02/T1_L2'</span>)</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filterBounds</span>(greenlandBox)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filterDate</span>(t0<span class="op">,</span> t1)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">filter</span>(summer)</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(maskL8)</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">map</span>(ndsiL8)<span class="op">;</span></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    ndsiComposite <span class="op">=</span> l8<span class="op">.</span><span class="fu">merge</span>(l9)<span class="op">.</span><span class="fu">select</span>(<span class="st">'NDSI'</span>)<span class="op">.</span><span class="fu">median</span>()<span class="op">;</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ndsiComposite<span class="op">.</span><span class="fu">gt</span>(<span class="fl">0.4</span>)<span class="op">;</span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2000 <span class="op">=</span> <span class="fu">getGlacierExtent</span>(<span class="dv">1999</span><span class="op">,</span> <span class="dv">2002</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'glacier_2000'</span>)<span class="op">;</span></span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2024 <span class="op">=</span> <span class="fu">getGlacierExtent</span>(<span class="dv">2022</span><span class="op">,</span> <span class="dv">2024</span>)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'glacier_2024'</span>)<span class="op">;</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rawRetreat <span class="op">=</span> glacier_2000<span class="op">.</span><span class="fu">subtract</span>(glacier_2024)<span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> retreatCandidate <span class="op">=</span> rawRetreat<span class="op">.</span><span class="fu">gt</span>(<span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> stableCandidate <span class="op">=</span> glacier_2000<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>)<span class="op">.</span><span class="fu">and</span>(glacier_2024<span class="op">.</span><span class="fu">eq</span>(<span class="dv">1</span>))<span class="op">;</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cleanRetreat <span class="op">=</span> retreatCandidate</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(retreatCandidate)</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">connectedPixelCount</span>(<span class="dv">8</span><span class="op">,</span> <span class="kw">true</span>)</span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">gte</span>(minPatchPixels)</span>
-<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'retreat'</span>)<span class="op">;</span></span>
-<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cleanStable <span class="op">=</span> stableCandidate</span>
-<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(stableCandidate)</span>
-<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">connectedPixelCount</span>(<span class="dv">8</span><span class="op">,</span> <span class="kw">true</span>)</span>
-<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">gte</span>(minPatchPixels)</span>
-<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'stable'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The retreat label is:</p>
+<p>Retreat is defined as:</p>
 <p><span class="math display">\[
 R = 1 \quad \text{if} \quad I_{2000}=1 \ \text{and} \ I_{2024}=0
 \]</span></p>
-<p>where (I) is the binary glacier mask. Stable ice is defined where (I_{2000}=1) and (I_{2024}=1). Connected-pixel filtering removes isolated noisy labels.</p>
-<p>Temperature trend is calculated from Landsat Surface Temperature. Each summer year is converted to Celsius, then a per-pixel linear fit estimates warming rate from 2001-2024.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lstL8</span>(image) {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> image<span class="op">.</span><span class="fu">select</span>(<span class="st">'ST_B10'</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">multiply</span>(<span class="fl">0.00341802</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">add</span>(<span class="fl">149.0</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">subtract</span>(<span class="fl">273.15</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">rename</span>(<span class="st">'LST_C'</span>)<span class="op">;</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> annualLST <span class="op">=</span> ee<span class="op">.</span><span class="fu">ImageCollection</span>(</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="at">List</span><span class="op">.</span><span class="fu">sequence</span>(<span class="dv">2001</span><span class="op">,</span> <span class="dv">2024</span>)<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(y) {</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> ee<span class="op">.</span><span class="fu">Number</span>(y)<span class="op">;</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> summerMean <span class="op">=</span> <span class="fu">getAnnualSummerLST</span>(y)<span class="op">;</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> summerMean<span class="op">.</span><span class="fu">addBands</span>(ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">constant</span>(y)<span class="op">.</span><span class="fu">rename</span>(<span class="st">'time'</span>))<span class="op">.</span><span class="fu">float</span>()<span class="op">;</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> warmingRate <span class="op">=</span> annualLST</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">select</span>([<span class="st">'time'</span><span class="op">,</span> <span class="st">'LST_C'</span>])</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">reduce</span>(ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">linearFit</span>())</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">select</span>(<span class="st">'scale'</span>)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'warming_rate'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The predictor stack combines terrain, climate, and proximity variables. Mining is represented as proximity, not as a direct causal effect:</p>
-<p><span class="math display">\[
-P = 1 - \frac{\min(d, d_{max})}{d_{max}}
-\]</span></p>
-<p>where (d) is distance to the nearest mining feature. This lets the model test whether mining proximity is associated with retreat susceptibility after terrain and warming are included.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> predictors <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">cat</span>([</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  elevation<span class="op">.</span><span class="fu">rename</span>(<span class="st">'elevation'</span>)<span class="op">,</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  slope<span class="op">.</span><span class="fu">rename</span>(<span class="st">'slope'</span>)<span class="op">,</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  warmingRate<span class="op">.</span><span class="fu">rename</span>(<span class="st">'warming_rate'</span>)<span class="op">,</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  lstEarly<span class="op">.</span><span class="fu">rename</span>(<span class="st">'lst_mean'</span>)<span class="op">,</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  mineProximity<span class="op">.</span><span class="fu">rename</span>(<span class="st">'mine_proximity'</span>)<span class="op">,</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  settlementProximity<span class="op">.</span><span class="fu">rename</span>(<span class="st">'settlement_proximity'</span>)<span class="op">,</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  coastProximity<span class="op">.</span><span class="fu">rename</span>(<span class="st">'coast_proximity'</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>])<span class="op">;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> bandNames <span class="op">=</span> [</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">'elevation'</span><span class="op">,</span> <span class="st">'slope'</span><span class="op">,</span> <span class="st">'warming_rate'</span><span class="op">,</span> <span class="st">'lst_mean'</span><span class="op">,</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">'mine_proximity'</span><span class="op">,</span> <span class="st">'settlement_proximity'</span><span class="op">,</span> <span class="st">'coast_proximity'</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The Random Forest model is trained with stratified retreat/stable samples. A spatial block split is used instead of a purely random split, reducing leakage between nearby pixels.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> trainingImage <span class="op">=</span> predictors</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">addBands</span>(cleanRetreat<span class="op">.</span><span class="fu">rename</span>(<span class="st">'retreat'</span>))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">addBands</span>(spatialFold)</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">updateMask</span>(sampleMask)<span class="op">;</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> samples <span class="op">=</span> trainingImage<span class="op">.</span><span class="fu">stratifiedSample</span>({</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numPoints</span><span class="op">:</span> <span class="dv">2000</span><span class="op">,</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classBand</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">region</span><span class="op">:</span> greenlandBox<span class="op">,</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> exportScale<span class="op">,</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">geometries</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">tileScale</span><span class="op">:</span> <span class="dv">4</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> trainSet <span class="op">=</span> samples<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">lt</span>(<span class="st">'spatial_fold'</span><span class="op">,</span> <span class="dv">7</span>))<span class="op">;</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> testSet  <span class="op">=</span> samples<span class="op">.</span><span class="fu">filter</span>(ee<span class="op">.</span><span class="at">Filter</span><span class="op">.</span><span class="fu">gte</span>(<span class="st">'spatial_fold'</span><span class="op">,</span> <span class="dv">7</span>))<span class="op">;</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rfClassify <span class="op">=</span> ee<span class="op">.</span><span class="at">Classifier</span><span class="op">.</span><span class="fu">smileRandomForest</span>({</span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">numberOfTrees</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">seed</span><span class="op">:</span> <span class="dv">42</span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">train</span>({</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">features</span><span class="op">:</span> trainSet<span class="op">,</span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">classProperty</span><span class="op">:</span> <span class="st">'retreat'</span><span class="op">,</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">inputProperties</span><span class="op">:</span> bandNames</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The validation set is used to calculate accuracy, kappa, precision, recall, F1 score, and variable importance. F1 is included because glacier retreat labels can be imbalanced:</p>
+<p>where (I) is the binary glacier mask. Model performance is summarised using accuracy, kappa, precision, recall and F1:</p>
 <p><span class="math display">\[
 F1 = 2 \times \frac{Precision \times Recall}{Precision + Recall}
 \]</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> validated <span class="op">=</span> testSet<span class="op">.</span><span class="fu">classify</span>(rfClassify)<span class="op">;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> confusion <span class="op">=</span> validated<span class="op">.</span><span class="fu">errorMatrix</span>(<span class="st">'retreat'</span><span class="op">,</span> <span class="st">'classification'</span>)<span class="op">;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> cmArray <span class="op">=</span> ee<span class="op">.</span><span class="fu">Array</span>(confusion<span class="op">.</span><span class="fu">array</span>())<span class="op">;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> TP <span class="op">=</span> cmArray<span class="op">.</span><span class="fu">get</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>])<span class="op">;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> FP <span class="op">=</span> cmArray<span class="op">.</span><span class="fu">get</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>])<span class="op">;</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> FN <span class="op">=</span> cmArray<span class="op">.</span><span class="fu">get</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>])<span class="op">;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> precision <span class="op">=</span> TP<span class="op">.</span><span class="fu">divide</span>(TP<span class="op">.</span><span class="fu">add</span>(FP))<span class="op">;</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> recall <span class="op">=</span> TP<span class="op">.</span><span class="fu">divide</span>(TP<span class="op">.</span><span class="fu">add</span>(FN))<span class="op">;</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> f1 <span class="op">=</span> precision<span class="op">.</span><span class="fu">multiply</span>(recall)<span class="op">.</span><span class="fu">multiply</span>(<span class="dv">2</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">divide</span>(precision<span class="op">.</span><span class="fu">add</span>(recall))<span class="op">;</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> importance <span class="op">=</span> ee<span class="op">.</span><span class="fu">Dictionary</span>(rfClassify<span class="op">.</span><span class="fu">explain</span>()<span class="op">.</span><span class="fu">get</span>(<span class="st">'importance'</span>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The preprocessing output is exported as a multi-band image asset. Model statistics are stored as metadata for the app panel.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> precomputed <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">cat</span>([</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  glacier_2000<span class="op">.</span><span class="fu">toByte</span>()<span class="op">,</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  glacier_2024<span class="op">.</span><span class="fu">toByte</span>()<span class="op">,</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  cleanRetreat<span class="op">.</span><span class="fu">toByte</span>()<span class="op">,</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  warmingRate<span class="op">.</span><span class="fu">float</span>()<span class="op">,</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  lstEarly<span class="op">.</span><span class="fu">float</span>()<span class="op">,</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  lstRecent<span class="op">.</span><span class="fu">float</span>()<span class="op">,</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  susceptibilityMap<span class="op">.</span><span class="fu">float</span>()<span class="op">,</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  elevation<span class="op">.</span><span class="fu">float</span>()</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>])<span class="op">.</span><span class="fu">set</span>({</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="dt">accuracy</span><span class="op">:</span> confusion<span class="op">.</span><span class="fu">accuracy</span>()<span class="op">,</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">kappa</span><span class="op">:</span> confusion<span class="op">.</span><span class="fu">kappa</span>()<span class="op">,</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">precision</span><span class="op">:</span> precision<span class="op">,</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">recall</span><span class="op">:</span> recall<span class="op">,</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">f1</span><span class="op">:</span> f1<span class="op">,</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">n_train</span><span class="op">:</span> trainSet<span class="op">.</span><span class="fu">size</span>()<span class="op">,</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">n_test</span><span class="op">:</span> testSet<span class="op">.</span><span class="fu">size</span>()<span class="op">,</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">export_scale_m</span><span class="op">:</span> exportScale<span class="op">,</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">validation_split</span><span class="op">:</span> <span class="st">'spatial block split: folds 0-6 train, 7-9 test'</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>Export<span class="op">.</span><span class="at">image</span><span class="op">.</span><span class="fu">toAsset</span>({</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">image</span><span class="op">:</span> precomputed<span class="op">,</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">description</span><span class="op">:</span> <span class="st">'greenland_glacier_mining_precomputed'</span><span class="op">,</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">assetId</span><span class="op">:</span> outputAsset<span class="op">,</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">region</span><span class="op">:</span> greenlandBox<span class="op">,</span></span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="dt">crs</span><span class="op">:</span> exportCrs<span class="op">,</span></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> exportScale<span class="op">,</span></span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e13</span></span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The context export separates the modelled peripheral glacier zone from central/high-elevation ice-sheet context. This helps users see Greenland as a whole while avoiding over-interpretation outside the intended model domain.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> gimpIceMask <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(<span class="st">'OSU/GIMP/2000_ICE_OCEAN_MASK'</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">select</span>(<span class="st">'ice_mask'</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">eq</span>(<span class="dv">2</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'gimp_ice_mask'</span>)<span class="op">;</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> latitude <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelLonLat</span>()<span class="op">.</span><span class="fu">select</span>(<span class="st">'latitude'</span>)<span class="op">;</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> modelDomain <span class="op">=</span> gimpIceMask</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">and</span>(elevation<span class="op">.</span><span class="fu">lt</span>(<span class="dv">2500</span>)<span class="op">.</span><span class="fu">or</span>(latitude<span class="op">.</span><span class="fu">lt</span>(<span class="dv">64</span>)))</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'model_domain'</span>)<span class="op">;</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> iceSheetContext <span class="op">=</span> gimpIceMask</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">and</span>(modelDomain<span class="op">.</span><span class="fu">not</span>())</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'ice_sheet_context'</span>)<span class="op">;</span></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> northIceContext <span class="op">=</span> gimpIceMask</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">and</span>(latitude<span class="op">.</span><span class="fu">gte</span>(<span class="dv">78</span>))</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">rename</span>(<span class="st">'north_ice_context'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="interactive-visualization-and-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="interactive-visualization-and-analysis">2. Interactive Visualization and Analysis</h3>
-<p>The final app loads the exported analysis and context assets directly. The left map shows approximate 2000 glacier extent; the right map shows 2024 extent, observed retreat, warming, mining/settlement overlays, and Random Forest susceptibility.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> precomputed <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'projects/ee-k24081637/assets/0025/greenland_glacier_mining_precomputed'</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> contextPrecomputed <span class="op">=</span> ee<span class="op">.</span><span class="fu">Image</span>(</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'projects/ee-k24081637/assets/0025/greenland_display_context_precomputed'</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2000 <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'glacier_2000'</span>)<span class="op">;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> glacier_2024 <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'glacier_2024'</span>)<span class="op">;</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> retreatOnly  <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'retreat'</span>)<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">;</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> warmingRate  <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'warming_rate'</span>)<span class="op">;</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> susceptibilityMap <span class="op">=</span> precomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'susceptibility'</span>)<span class="op">;</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> modelDomain <span class="op">=</span> contextPrecomputed<span class="op">.</span><span class="fu">select</span>(<span class="st">'model_domain'</span>)<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">;</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> centralIceContext <span class="op">=</span> contextPrecomputed</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">select</span>(<span class="st">'ice_sheet_context'</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">selfMask</span>()<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The two maps are linked and placed in a swipe panel for direct visual comparison.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> leftMap  <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rightMap <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>leftMap<span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'SATELLITE'</span>)<span class="op">;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'SATELLITE'</span>)<span class="op">;</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>leftMap<span class="op">.</span><span class="fu">setCenter</span>(<span class="op">-</span><span class="dv">42</span><span class="op">,</span> <span class="dv">72</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> linker <span class="op">=</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Linker</span>([leftMap<span class="op">,</span> rightMap])<span class="op">;</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>leftMap<span class="op">.</span><span class="fu">addLayer</span>(glacier_2000<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">,</span> glacierVis2000<span class="op">,</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Glacier Extent ~2000'</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">addLayer</span>(glacier_2024<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">,</span> glacierVis2024<span class="op">,</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Glacier Extent ~2024'</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">addLayer</span>(retreatOnly<span class="op">,</span> retreatVis<span class="op">,</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Glacier Retreat (ice lost)'</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">addLayer</span>(susceptibilityMap<span class="op">,</span> susceptibilityVis<span class="op">,</span></span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Retreat Susceptibility Prediction'</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> splitPanel <span class="op">=</span> ui<span class="op">.</span><span class="fu">SplitPanel</span>({</span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">firstPanel</span><span class="op">:</span> leftMap<span class="op">,</span></span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">secondPanel</span><span class="op">:</span> rightMap<span class="op">,</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">wipe</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">style</span><span class="op">:</span> {<span class="dt">stretch</span><span class="op">:</span> <span class="st">'both'</span>}</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>ui<span class="op">.</span><span class="at">root</span><span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>ui<span class="op">.</span><span class="at">root</span><span class="op">.</span><span class="fu">add</span>(splitPanel)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The side panel displays model diagnostics from asset metadata, so users can inspect performance without rerunning the model.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ee<span class="op">.</span><span class="fu">Dictionary</span>({</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">accuracy</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'accuracy'</span>)<span class="op">,</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">kappa</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'kappa'</span>)<span class="op">,</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">precision</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'precision'</span>)<span class="op">,</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">recall</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'recall'</span>)<span class="op">,</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">f1</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'f1'</span>)<span class="op">,</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">nTrain</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'n_train'</span>)<span class="op">,</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">nTest</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'n_test'</span>)<span class="op">,</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">scale</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'export_scale_m'</span>)<span class="op">,</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">split</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'validation_split'</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">evaluate</span>(<span class="kw">function</span>(st) {</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Accuracy: '</span> <span class="op">+</span> (st<span class="op">.</span><span class="at">accuracy</span> <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>) <span class="op">+</span> <span class="st">'%'</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Precision: '</span> <span class="op">+</span> st<span class="op">.</span><span class="at">precision</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">' | Recall: '</span> <span class="op">+</span> st<span class="op">.</span><span class="at">recall</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'F1 score: '</span> <span class="op">+</span> st<span class="op">.</span><span class="at">f1</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A variable-importance chart summarises which predictors contributed most to the Random Forest.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> importanceFeatures <span class="op">=</span> ee<span class="op">.</span><span class="fu">FeatureCollection</span>([</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="fu">Feature</span>(<span class="kw">null</span><span class="op">,</span> {</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">variable</span><span class="op">:</span> <span class="st">'elevation'</span><span class="op">,</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">importance</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Number</span>(precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'importance_elevation'</span>))</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  })<span class="op">,</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="fu">Feature</span>(<span class="kw">null</span><span class="op">,</span> {</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">variable</span><span class="op">:</span> <span class="st">'slope'</span><span class="op">,</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">importance</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Number</span>(precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'importance_slope'</span>))</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">,</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="fu">Feature</span>(<span class="kw">null</span><span class="op">,</span> {</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">variable</span><span class="op">:</span> <span class="st">'warming_rate'</span><span class="op">,</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">importance</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Number</span>(precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'importance_warming_rate'</span>))</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  })<span class="op">,</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="fu">Feature</span>(<span class="kw">null</span><span class="op">,</span> {</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">variable</span><span class="op">:</span> <span class="st">'mine_proximity'</span><span class="op">,</span></span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">importance</span><span class="op">:</span> ee<span class="op">.</span><span class="fu">Number</span>(precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'importance_mine_proximity'</span>))</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>])<span class="op">;</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> importanceChart <span class="op">=</span> ui<span class="op">.</span><span class="at">Chart</span><span class="op">.</span><span class="at">feature</span><span class="op">.</span><span class="fu">byFeature</span>(</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  importanceFeatures<span class="op">,</span> <span class="st">'variable'</span><span class="op">,</span> <span class="st">'importance'</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>)<span class="op">.</span><span class="fu">setChartType</span>(<span class="st">'BarChart'</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The click tool turns the map into a local statistics dashboard. A 25 km buffer is used to calculate glacier area change, mean warming, elevation, domain status, and mean susceptibility.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">handleMapClick</span>(coords) {</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> point  <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>([coords<span class="op">.</span><span class="at">lon</span><span class="op">,</span> coords<span class="op">.</span><span class="at">lat</span>])<span class="op">;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> region <span class="op">=</span> point<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">25000</span>)<span class="op">;</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> pxArea <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>()<span class="op">;</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  ee<span class="op">.</span><span class="fu">Dictionary</span>({</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">area2000</span><span class="op">:</span> glacier_2000<span class="op">.</span><span class="fu">multiply</span>(pxArea)<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">get</span>(<span class="st">'glacier_2000'</span>)<span class="op">,</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">area2024</span><span class="op">:</span> glacier_2024<span class="op">.</span><span class="fu">multiply</span>(pxArea)<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">get</span>(<span class="st">'glacier_2024'</span>)<span class="op">,</span></span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">susceptibility</span><span class="op">:</span> susceptibilityMap<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">get</span>(<span class="st">'susceptibility'</span>)</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>  })<span class="op">.</span><span class="fu">evaluate</span>(<span class="kw">function</span>(s) {</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">// The returned dictionary is formatted into the click-stats panel.</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">updateClickPanel</span>(s)<span class="op">;</span></span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The app reports whether the clicked location is inside the modelled peripheral zone or only an ice-sheet context area.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> inModelDomain <span class="op">=</span> s<span class="op">.</span><span class="at">domain</span> <span class="op">!==</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> s<span class="op">.</span><span class="at">domain</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> inContextOnly <span class="op">=</span> <span class="op">!</span>inModelDomain <span class="op">&amp;&amp;</span> s<span class="op">.</span><span class="at">context</span> <span class="op">!==</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> s<span class="op">.</span><span class="at">context</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> domainText <span class="op">=</span> inModelDomain <span class="op">?</span> <span class="st">'Modelled peripheral glacier zone'</span> <span class="op">:</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                 inContextOnly <span class="op">?</span> <span class="st">'Ice-sheet context only'</span> <span class="op">:</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'Outside model domain'</span><span class="op">;</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>clickStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Map domain: '</span> <span class="op">+</span> domainText<span class="op">,</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">fontWeight</span><span class="op">:</span> <span class="st">'bold'</span>}</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The main interface is a linked split map. The left map presents baseline glacier conditions around 2000, while the right map presents recent glacier extent, observed retreat, warming, mining/settlement overlays, and the Random Forest retreat-susceptibility prediction.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> leftMap  <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rightMap <span class="op">=</span> ui<span class="op">.</span><span class="fu">Map</span>()<span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>leftMap<span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'SATELLITE'</span>)<span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">setOptions</span>(<span class="st">'SATELLITE'</span>)<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>leftMap<span class="op">.</span><span class="fu">setCenter</span>(<span class="op">-</span><span class="dv">42</span><span class="op">,</span> <span class="dv">72</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> linker <span class="op">=</span> ui<span class="op">.</span><span class="at">Map</span><span class="op">.</span><span class="fu">Linker</span>([leftMap<span class="op">,</span> rightMap])<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>leftMap<span class="op">.</span><span class="fu">addLayer</span>(glacier_2000<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">,</span> glacierVis2000<span class="op">,</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Glacier Extent ~2000'</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">addLayer</span>(glacier_2024<span class="op">.</span><span class="fu">selfMask</span>()<span class="op">,</span> glacierVis2024<span class="op">,</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Glacier Extent ~2024'</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">addLayer</span>(retreatOnly<span class="op">,</span> retreatVis<span class="op">,</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Glacier Retreat (ice lost)'</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>rightMap<span class="op">.</span><span class="fu">addLayer</span>(susceptibilityMap<span class="op">,</span> susceptibilityVis<span class="op">,</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Retreat Susceptibility Prediction'</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The draggable split panel allows users to compare historical and recent conditions directly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> splitPanel <span class="op">=</span> ui<span class="op">.</span><span class="fu">SplitPanel</span>({</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">firstPanel</span><span class="op">:</span> leftMap<span class="op">,</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">secondPanel</span><span class="op">:</span> rightMap<span class="op">,</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">wipe</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">style</span><span class="op">:</span> {<span class="dt">stretch</span><span class="op">:</span> <span class="st">'both'</span>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>ui<span class="op">.</span><span class="at">root</span><span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>ui<span class="op">.</span><span class="at">root</span><span class="op">.</span><span class="fu">add</span>(splitPanel)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The side panel displays model diagnostics from asset metadata rather than recalculating them in the app session:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ee<span class="op">.</span><span class="fu">Dictionary</span>({</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">accuracy</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'accuracy'</span>)<span class="op">,</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">kappa</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'kappa'</span>)<span class="op">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">precision</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'precision'</span>)<span class="op">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">recall</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'recall'</span>)<span class="op">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">f1</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'f1'</span>)<span class="op">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">nTrain</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'n_train'</span>)<span class="op">,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">nTest</span><span class="op">:</span> precomputed<span class="op">.</span><span class="fu">get</span>(<span class="st">'n_test'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>})<span class="op">.</span><span class="fu">evaluate</span>(<span class="kw">function</span>(st) {</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">clear</span>()<span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Accuracy: '</span> <span class="op">+</span> (st<span class="op">.</span><span class="at">accuracy</span> <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>) <span class="op">+</span> <span class="st">'%'</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  modelStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'F1 score: '</span> <span class="op">+</span> st<span class="op">.</span><span class="at">f1</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">3</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  ))<span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="insights-and-objectives" class="level3">
-<h3 class="anchored" data-anchor-id="insights-and-objectives">3. Insights and Objectives</h3>
-<p>The app supports exploratory decision-making around glacier change and mining activity. It provides four main outputs: observed glacier change, Random Forest retreat susceptibility, variable importance, and click-based local statistics. The output is a screening map for further monitoring, not proof that mining caused glacier retreat.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> a0  <span class="op">=</span> (s<span class="op">.</span><span class="at">area2000</span> <span class="op">/</span> <span class="fl">1e6</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> a1  <span class="op">=</span> (s<span class="op">.</span><span class="at">area2024</span> <span class="op">/</span> <span class="fl">1e6</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> dA  <span class="op">=</span> (a1 <span class="op">-</span> a0)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="op">;</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> pct <span class="op">=</span> a0 <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">?</span> ((dA <span class="op">/</span> a0) <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>) <span class="op">:</span> <span class="st">'N/A'</span><span class="op">;</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>clickStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">'~2000: '</span> <span class="op">+</span> a0 <span class="op">+</span> <span class="st">' km2   ~2024: '</span> <span class="op">+</span> a1 <span class="op">+</span> <span class="st">' km2'</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>))<span class="op">;</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>clickStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Change: '</span> <span class="op">+</span> dA <span class="op">+</span> <span class="st">' km2 ('</span> <span class="op">+</span> pct <span class="op">+</span> <span class="st">'%)'</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The continuous susceptibility value is converted into a simple label for communication.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rPct <span class="op">=</span> (s<span class="op">.</span><span class="at">susceptibility</span> <span class="op">*</span> <span class="dv">100</span>)<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)<span class="op">;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> rLabel <span class="op">=</span> s<span class="op">.</span><span class="at">susceptibility</span> <span class="op">&gt;</span> <span class="fl">0.7</span> <span class="op">?</span> <span class="st">'HIGH'</span> <span class="op">:</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>             s<span class="op">.</span><span class="at">susceptibility</span> <span class="op">&gt;</span> <span class="fl">0.4</span> <span class="op">?</span> <span class="st">'MODERATE'</span> <span class="op">:</span> <span class="st">'LOW'</span><span class="op">;</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>clickStatsPanel<span class="op">.</span><span class="fu">add</span>(ui<span class="op">.</span><span class="fu">Label</span>(</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  rLabel <span class="op">+</span> <span class="st">' ('</span> <span class="op">+</span> rPct <span class="op">+</span> <span class="st">'%)'</span><span class="op">,</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">fontWeight</span><span class="op">:</span> <span class="st">'bold'</span>}</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="click-based-regional-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="click-based-regional-statistics">3. Click-Based Regional Statistics</h3>
+<p>To make the map actionable, users can click any location to generate statistics within a 25 km buffer. The app reports glacier area change, mean temperature, warming trend, elevation, domain status and mean susceptibility.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">handleMapClick</span>(coords) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> point  <span class="op">=</span> ee<span class="op">.</span><span class="at">Geometry</span><span class="op">.</span><span class="fu">Point</span>([coords<span class="op">.</span><span class="at">lon</span><span class="op">,</span> coords<span class="op">.</span><span class="at">lat</span>])<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> region <span class="op">=</span> point<span class="op">.</span><span class="fu">buffer</span>(<span class="dv">25000</span>)<span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> pxArea <span class="op">=</span> ee<span class="op">.</span><span class="at">Image</span><span class="op">.</span><span class="fu">pixelArea</span>()<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> stats <span class="op">=</span> ee<span class="op">.</span><span class="fu">Dictionary</span>({</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">area2000</span><span class="op">:</span> glacier_2000<span class="op">.</span><span class="fu">multiply</span>(pxArea)<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">get</span>(<span class="st">'glacier_2000'</span>)<span class="op">,</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">area2024</span><span class="op">:</span> glacier_2024<span class="op">.</span><span class="fu">multiply</span>(pxArea)<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">sum</span>()<span class="op">,</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">get</span>(<span class="st">'glacier_2024'</span>)<span class="op">,</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">susceptibility</span><span class="op">:</span> susceptibilityMap<span class="op">.</span><span class="fu">reduceRegion</span>({</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">reducer</span><span class="op">:</span> ee<span class="op">.</span><span class="at">Reducer</span><span class="op">.</span><span class="fu">mean</span>()<span class="op">,</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> region<span class="op">,</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">scale</span><span class="op">:</span> clickStatsScale<span class="op">,</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">maxPixels</span><span class="op">:</span> <span class="fl">1e9</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    })<span class="op">.</span><span class="fu">get</span>(<span class="st">'susceptibility'</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The app also checks whether the selected location falls inside the modelled peripheral glacier zone or only in the ice-sheet context layer. This prevents users from over-interpreting susceptibility outside the intended model domain.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> inModelDomain <span class="op">=</span> s<span class="op">.</span><span class="at">domain</span> <span class="op">!==</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> s<span class="op">.</span><span class="at">domain</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> inContextOnly <span class="op">=</span> <span class="op">!</span>inModelDomain <span class="op">&amp;&amp;</span> s<span class="op">.</span><span class="at">context</span> <span class="op">!==</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> s<span class="op">.</span><span class="at">context</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> domainText <span class="op">=</span> inModelDomain <span class="op">?</span> <span class="st">'Modelled peripheral glacier zone'</span> <span class="op">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                 inContextOnly <span class="op">?</span> <span class="st">'Ice-sheet context only'</span> <span class="op">:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">'Outside model domain'</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="limitations-and-potential-expansion" class="level3">
 <h3 class="anchored" data-anchor-id="limitations-and-potential-expansion">4. Limitations and Potential Expansion</h3>
-<p>The main limitations come from the datasets and modelling design. Landsat NDSI can confuse seasonal snow, cloud, shadow, and glacier ice, and Landsat 7 baseline imagery may contain scan-line gaps. Very high northern Greenland has weaker routine Landsat coverage, so northern context is treated cautiously. ArcticDEM is a high-resolution mosaic but not a single-date surface, so elevation and slope do not exactly match every Landsat year. GIMP is a static 2000 ice/ocean mask and cannot represent all later ice-front changes. Mining licences and drillholes indicate legal/exploration activity, not necessarily active production, and the licence dataset is a recent snapshot compared with the 2000-2024 glacier period. Settlement points are simplified accessibility indicators rather than detailed population exposure. Finally, 300 m resampling improves feasibility but smooths narrow outlet glaciers.</p>
-<p>The model learns spatial association, not causation. Mining proximity should therefore be read as an exploratory pressure indicator. Updating the app requires rerunning the two export scripts.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Workflow limitation:</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">// 1. Run gee_preprocess_export.js</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">// 2. Wait for greenland_glacier_mining_precomputed to finish</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">// 3. Run gee_context_export.js</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">// 4. Wait for greenland_display_context_precomputed to finish</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 5. Run or publish gee_glacier_mining_app 2.js</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Future work could compare a natural-only model with a full model including mining and settlement proximity. If the full model performs better under spatial validation, mining proximity would have stronger explanatory value, while still avoiding causal overclaiming.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> naturalBands <span class="op">=</span> [</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'elevation'</span><span class="op">,</span> <span class="st">'slope'</span><span class="op">,</span> <span class="st">'warming_rate'</span><span class="op">,</span> <span class="st">'lst_mean'</span><span class="op">,</span> <span class="st">'coast_proximity'</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> fullBands <span class="op">=</span> [</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'elevation'</span><span class="op">,</span> <span class="st">'slope'</span><span class="op">,</span> <span class="st">'warming_rate'</span><span class="op">,</span> <span class="st">'lst_mean'</span><span class="op">,</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">'coast_proximity'</span><span class="op">,</span> <span class="st">'mine_proximity'</span><span class="op">,</span> <span class="st">'settlement_proximity'</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Future extension:</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">// Train Model A with naturalBands.</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">// Train Model B with fullBands.</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">// Compare F1, AUC, recall, and spatial transfer performance.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The main limitations are data-related. Landsat NDSI may confuse seasonal snow, clouds, shadows and glacier ice; Landsat 7 baseline imagery may contain SLC-off gaps; and very high northern Greenland has weaker routine Landsat coverage. ArcticDEM is a mosaic rather than a single-date surface, so elevation and slope do not exactly match every Landsat year. GIMP is a static 2000 ice/ocean mask, while mining licences and drillholes indicate legal or exploration activity rather than confirmed active production. Settlement points are simplified accessibility indicators, and the 300 m modelling scale may smooth narrow outlet glaciers.</p>
+<p>The susceptibility model therefore identifies spatial association, not causation. Mining proximity should be interpreted as an exploratory pressure indicator. Future work could compare a natural-only model with a full model including mining and settlement proximity:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> naturalBands <span class="op">=</span> [</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">'elevation'</span><span class="op">,</span> <span class="st">'slope'</span><span class="op">,</span> <span class="st">'warming_rate'</span><span class="op">,</span> <span class="st">'lst_mean'</span><span class="op">,</span> <span class="st">'coast_proximity'</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> fullBands <span class="op">=</span> [</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'elevation'</span><span class="op">,</span> <span class="st">'slope'</span><span class="op">,</span> <span class="st">'warming_rate'</span><span class="op">,</span> <span class="st">'lst_mean'</span><span class="op">,</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">'coast_proximity'</span><span class="op">,</span> <span class="st">'mine_proximity'</span><span class="op">,</span> <span class="st">'settlement_proximity'</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="references" class="level2">

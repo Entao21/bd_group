@@ -26,6 +26,6 @@ format:
       dark: darkly
       light: cosmo
     code-copy: true
-    code-overflow: wrap
-    highlight-style: monokai.theme
+    code-overflow: scroll
+    highlight-style: github
     linkcolor: "#34a832"

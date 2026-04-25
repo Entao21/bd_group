@@ -102,3 +102,32 @@ table { width: 100%; border: 1px solid #d4e3f1; background-color: #ffffff; }
 th { background-color: #f0f7fd !important; color: #1a4a75; }
 p { font-size: 1.05rem; margin-bottom: 1.2rem; }
 code { background-color: #edf2f7; color: #e04a5f; padding: 0.2em 0.4em; border-radius: 4px; }
+
+div.sourceCode,
+pre.sourceCode,
+pre code.sourceCode {
+    background-color: #e1f3fb !important;
+}
+
+div.sourceCode {
+    border: 1px solid #b3e0f7 !important;
+    border-radius: 8px !important;
+    margin: 1rem 0 1.4rem 0 !important;
+    max-height: 460px !important;
+    overflow: auto !important;
+}
+
+pre.sourceCode {
+    margin: 0 !important;
+    padding: 1rem 1.1rem !important;
+    max-height: 460px !important;
+    overflow: auto !important;
+    white-space: pre !important;
+}
+
+pre.sourceCode code,
+pre code.sourceCode {
+    white-space: pre !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+}
