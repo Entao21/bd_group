@@ -1,34 +1,44 @@
 /* ============================================================
-   Greenland Project - Full Width & Centered Layout Tuning
+   Greenland Project - Final Precision Layout (Refined)
    ============================================================ */
 
-/* ---------- 1. 布局：全屏撑满并紧凑排版 ---------- */
+/* ---------- 1. 全局布局：精细化居中 ---------- */
 body {
     background-color: #f0f6fa; 
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     color: #2c3e50; 
 }
 
-/* 核心：强制拉伸正文容器宽度 */
+/* 页面总容器：限制最大宽度并居中，这是实现“案例感”的关键 */
 .quarto-container {
-    max-width: 100% !important; /* 允许撑满屏幕 */
-    padding-left: 5% !important;
-    padding-right: 5% !important;
+    max-width: 1300px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
 }
 
-/* 关键：调整正文和导航栏的分配比例，消除中间空隙 */
+/* 正文与导航栏的比例重新分配：消除巨大空隙 */
 @media (min-width: 992px) {
-    main.content {
-        max-width: 1100px !important; /* 显著加宽正文 */
-        margin-right: 40px !important; /* 缩小与导航栏的间距 */
+    #quarto-content {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 40px !important; /* 强制缩小正文和目录的间距 */
     }
-    
+
+    main.content {
+        max-width: 900px !important; /* 设定合适的长文阅读宽度 */
+        flex: 1 !important;
+        margin-left: 0 !important;
+    }
+
+    /* 目录栏：向正文靠拢 */
     .sidebar.sidebar-margin {
-        width: 250px !important; /* 固定导航栏宽度 */
+        width: 220px !important;
+        flex: 0 0 220px !important;
+        margin-left: 0 !important;
     }
 }
 
-/* ---------- 2. 顶部 Banner 样式 (撑满宽度) ---------- */
+/* ---------- 2. 顶部 Banner 样式 (宽度减少 1/9) ---------- */
 div.quarto-title-banner,
 header#title-block-header.quarto-title-block.default .quarto-title-banner {
     background-image: linear-gradient(rgba(26, 74, 117, 0.45), rgba(26, 74, 117, 0.45)), url('../images/Greenland_title.png') !important;
@@ -40,27 +50,25 @@ header#title-block-header.quarto-title-block.default .quarto-title-banner {
     align-items: center !important;
     justify-content: center !important;
     
-    /* 核心修改：撑满页面 */
-    width: 100vw !important; 
-    position: relative !important;
-    left: 50% !important;
-    right: 50% !important;
-    margin-left: -50vw !important;
-    margin-right: -50vw !important;
+    /* 核心修改：宽度设定为约 88.8% (减少了1/9)，并居中 */
+    width: 89% !important; 
+    margin: 0 auto !important; 
+    border-radius: 0 0 20px 20px; /* 底部大圆角增加高级感 */
 }
 
-/* 大标题：自适应大小 */
+/* 大标题：缩小字号并强制不换行 */
 .quarto-title-banner h1.title,
 #title-block-header.quarto-title-block.default .quarto-title .title {
     color: #ffffff !important;
-    font-size: clamp(2rem, 5vw, 3.2rem) !important; /* 字体随屏幕宽度缩放 */
+    font-size: 3.2rem !important; 
     font-weight: 800 !important;
     text-align: center;
     text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6) !important;
     white-space: nowrap !important;
+    letter-spacing: -1px;
 }
 
-/* ---------- 3. 导航栏美化 (Contents) ---------- */
+/* ---------- 3. 导航栏标题 (Contents) ---------- */
 #quarto-toc-label, .toc-title {
     color: transparent !important;
     font-size: 0 !important;
@@ -74,22 +82,28 @@ header#title-block-header.quarto-title-block.default .quarto-title-banner {
     text-transform: uppercase;
     visibility: visible;
     display: block;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 
 .sidebar nav[role=doc-toc] ul > li > a.active {
     color: #3498db !important; 
     border-left: 2px solid #3498db !important; 
     padding-left: 10px;
-    background-color: rgba(52, 152, 219, 0.05);
+    background-color: rgba(52, 152, 219, 0.04);
 }
 
 /* ---------- 4. 蓝色系分层标题 ---------- */
-h2, .h2 { color: #1a4a75; font-size: 2.1rem; font-weight: 700; margin-top: 2.2em; border-bottom: 2px solid #3498db; }
+h2, .h2 { color: #1a4a75; font-size: 2.1rem; font-weight: 700; margin-top: 2.2em; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
 h3, .h3 { color: #2980b9; font-size: 1.6rem; margin-top: 1.5em; }
-h4, .h4 { color: #5dade2; font-size: 1.2rem; }
+h4, .h4 { color: #5dade2; font-size: 1.2rem; font-weight: 600; }
 
-/* ---------- 5. 表格与代码 ---------- */
-table { width: 100%; border: 1px solid #d4e3f1; background-color: #ffffff; }
+/* ---------- 5. 正文段落与细节 ---------- */
+p {
+    font-size: 1.1rem;
+    margin-bottom: 1.3rem;
+}
+
+table { width: 100%; border: 1px solid #d4e3f1; background-color: #ffffff; border-radius: 5px; overflow: hidden; }
 th { background-color: #f0f7fd !important; color: #1a4a75; }
 code { background-color: #edf2f7; color: #e04a5f; padding: 0.2em 0.4em; border-radius: 4px; }
