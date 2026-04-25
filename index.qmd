@@ -14,7 +14,6 @@ format:
 
 This project develops an interactive Google Earth Engine application to explore the nexus between glacier retreat, climate warming, and mining activity in Greenland’s peripheral glacier zone. The platform combines remote sensing change detection, climate trend analysis, proximity-based anthropogenic indicators, and a Random Forest susceptibility model to identify areas where present-day glaciers may be more susceptible to future retreat.
 
-
 The workflow consists of two components. First, a preprocessing pipeline computes Landsat-derived glacier extent change (ca. 2000–2024), summer land surface temperature trends, terrain variables, and anthropogenic proximity indicators, then trains a Random Forest model to predict glacier retreat susceptibility using cleaned historical retreat and stable-ice labels with spatial block validation. These computationally expensive outputs are exported as a multi-band Earth Engine asset. Second, an interactive application loads the precomputed asset into a dual-map interface that allows users to compare glacier conditions between ~2000 and ~2024, explore susceptibility predictions, inspect model diagnostics, and query local glacier-climate statistics through map clicks.
 
 By integrating environmental change and mining-related pressures into a single exploratory platform, the project supports policy discussions around Arctic climate adaptation, resource development, and environmental governance.
