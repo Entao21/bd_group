@@ -1,4 +1,14 @@
-# CASA00025 Group Project Title Here
+---
+title: "Greenland’s Glacier Retreat Susceptibility Application"
+format:
+  html:
+    css: style.css
+    toc: true
+    toc-depth: 3
+    title-block-banner: images/Greenland_title.png  
+    title-block-banner-color: "#1a4a75"
+    theme: cosmo
+---
 
 ## Project Summary 
 
