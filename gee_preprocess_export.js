@@ -47,7 +47,20 @@ var elevation = ee.Image('UMN/PGC/ArcticDEM/V4/2m_mosaic')
   .rename('elevation');
 
 var slope = ee.Terrain.slope(elevation).rename('slope');
-var peripheralMask = elevation.lt(2500);
+
+// Peripheral mask: below 2500 m everywhere, PLUS all ice south of 64°N.
+// The southern Greenland ice cap peaks ~2800 m but is genuinely peripheral
+// glacier, not interior ice sheet. Without the latitude term the entire
+// south cap is excluded from the model domain.
+var latitude = ee.Image.pixelLonLat().select('latitude');
+var peripheralMask = elevation.lt(2500).or(latitude.lt(64));
+
+var gimpIceMask = ee.Image('OSU/GIMP/2000_ICE_OCEAN_MASK')
+  .select('ice_mask')
+  .eq(1)
+  .clip(AOI_geom);
+
+var southernIceMask = gimpIceMask.and(latitude.lt(64));
 
 
 // ============================================================
@@ -341,7 +354,12 @@ var f1 = precision.multiply(recall).multiply(2)
   .divide(precision.add(recall).max(0.001));
 var importance = ee.Dictionary(rfClassify.explain().get('importance'));
 
-var currentGlacierMask = glacier_2024.eq(1).and(peripheralMask);
+// Predict over Landsat-detected current ice, plus the southern ice cap from
+// GIMP where Landsat NDSI can leave a no-data gap despite it being peripheral
+// glacier ice.
+var currentGlacierMask = glacier_2024.eq(1)
+  .or(southernIceMask)
+  .and(peripheralMask);
 var susceptibilityMap = predictors
   .updateMask(currentGlacierMask)
   .classify(rfPredict)

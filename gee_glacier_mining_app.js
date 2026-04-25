@@ -3,10 +3,9 @@
 // Interactive Retreat Susceptibility Application
 // ============================================================
 //
-// Run gee_preprocess_export.js first.
-// This app loads the exported multi-band Image Asset instead of
-// recomputing Landsat composites, distance rasters, and the RF model
-// during app startup.
+// Run gee_preprocess_export.js first, then gee_context_export.js.
+// This app loads exported Image Assets instead of recomputing Landsat
+// composites, distance rasters, RF outputs, and display masks during startup.
 // ============================================================
 
 
@@ -15,6 +14,7 @@
 // ============================================================
 
 var precomputed = ee.Image('projects/ee-k24081637/assets/0025/greenland_glacier_mining_precomputed');
+var contextPrecomputed = ee.Image('projects/ee-k24081637/assets/0025/greenland_display_context_precomputed');
 
 var drillholes     = ee.FeatureCollection('projects/ee-k24081637/assets/0025/drillholes_post2000_gee_upload');
 var miningLicences = ee.FeatureCollection('projects/ee-k24081637/assets/0025/greenland_mineral_licences_active_industrial_2026-04-21_gee_upload');
@@ -41,6 +41,11 @@ var countries    = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
 var AOI          = countries.filter(ee.Filter.eq('country_na', 'Greenland'));
 var AOI_geom     = AOI.geometry();
 
+var modelDomain = contextPrecomputed.select('model_domain').selfMask();
+var centralIceContext = contextPrecomputed
+  .select('ice_sheet_context')
+  .selfMask();
+
 var mineCentroids = miningLicences.map(function(f) {
   return ee.Feature(f.geometry().centroid(), {});
 });
@@ -53,8 +58,10 @@ var allSettlements = settlements.merge(cities);
 // ============================================================
 
 var glacierVis2000 = {min: 1, max: 1, palette: ['#4fc3f7']};
-var glacierVis2024 = {min: 1, max: 1, palette: ['#1565c0']};
+var glacierVis2024 = glacierVis2000;
 var retreatVis     = {min: 0, max: 1, palette: ['#ff1744']};
+var modelDomainVis = {min: 1, max: 1, palette: ['#2e7d33']};
+var centralIceVis  = {min: 1, max: 1, palette: ['#d9edf7']};
 
 var lstVis = {
   min: -15, max: 15,
@@ -89,35 +96,70 @@ leftMap.setCenter(-42, 72, 4);
 var linker = ui.Map.Linker([leftMap, rightMap]);
 
 // ----- 3.2 LEFT map layers (~2000) -----
-leftMap.addLayer(glacier_2000.selfMask(), glacierVis2000,
-  'Glacier Extent ~2000', true);
-leftMap.addLayer(lstEarly, lstVis,
+var leftCentralLayer = ui.Map.Layer(
+  centralIceContext, centralIceVis,
+  'Central/Northern Ice Sheet Context', false, 0.4);
+var leftModelDomainLayer = ui.Map.Layer(
+  modelDomain, modelDomainVis,
+  'Modelled Peripheral Glacier Zone', false, 0.12);
+var leftGlacierLayer = ui.Map.Layer(
+  glacier_2000.selfMask(), glacierVis2000,
+  '2000 Glacier Content', true);
+var leftLstLayer = ui.Map.Layer(
+  lstEarly, lstVis,
   'Summer LST ~2000 (°C)', false);
-leftMap.addLayer(
+var leftGraticulesLayer = ui.Map.Layer(
   graticules.style({color: '#BDBDBD', width: 1}),
   {}, '15° Graticules', true);
+
+leftMap.layers().add(leftCentralLayer);
+leftMap.layers().add(leftModelDomainLayer);
+leftMap.layers().add(leftGlacierLayer);
+leftMap.layers().add(leftLstLayer);
+leftMap.layers().add(leftGraticulesLayer);
 
 // ----- 3.3 RIGHT map layers (~2024 + analysis) -----
-rightMap.addLayer(glacier_2024.selfMask(), glacierVis2024,
-  'Glacier Extent ~2024', true);
-rightMap.addLayer(lstRecent, lstVis,
+var rightCentralLayer = ui.Map.Layer(
+  centralIceContext, centralIceVis,
+  'Central/Northern Ice Sheet Context', false, 0.4);
+var rightModelDomainLayer = ui.Map.Layer(
+  modelDomain, modelDomainVis,
+  'Modelled Peripheral Glacier Zone', false, 1.0);
+var rightGlacierLayer = ui.Map.Layer(
+  glacier_2024.selfMask(), glacierVis2024,
+  '2024 Glacier Content', true);
+var rightLstLayer = ui.Map.Layer(
+  lstRecent, lstVis,
   'Summer LST ~2024 (°C)', false);
-rightMap.addLayer(retreatOnly, retreatVis,
+var rightRetreatLayer = ui.Map.Layer(
+  retreatOnly, retreatVis,
   'Glacier Retreat (ice lost)', false);
-rightMap.addLayer(warmingRate, trendVis,
+var rightWarmingLayer = ui.Map.Layer(
+  warmingRate, trendVis,
   'Warming Rate (°C/yr)', false);
-rightMap.addLayer(susceptibilityMap, susceptibilityVis,
-  'Retreat Susceptibility Prediction', true);
-rightMap.addLayer(
+var rightSusceptibilityLayer = ui.Map.Layer(
+  susceptibilityMap, susceptibilityVis,
+  'Retreat Susceptibility Prediction', false);
+var rightGraticulesLayer = ui.Map.Layer(
   graticules.style({color: '#BDBDBD', width: 1}),
   {}, '15° Graticules', true);
-
-rightMap.addLayer(
+var rightMinesLayer = ui.Map.Layer(
   allMines.style({color: '#FFD600', pointSize: 4}),
-  {}, 'Mining Sites', true);
-rightMap.addLayer(
+  {}, 'Mining Sites', false);
+var rightSettlementsLayer = ui.Map.Layer(
   allSettlements.style({color: '#FFFFFF', pointSize: 3}),
   {}, 'Settlements', false);
+
+rightMap.layers().add(rightCentralLayer);
+rightMap.layers().add(rightModelDomainLayer);
+rightMap.layers().add(rightGlacierLayer);
+rightMap.layers().add(rightLstLayer);
+rightMap.layers().add(rightRetreatLayer);
+rightMap.layers().add(rightWarmingLayer);
+rightMap.layers().add(rightSusceptibilityLayer);
+rightMap.layers().add(rightGraticulesLayer);
+rightMap.layers().add(rightMinesLayer);
+rightMap.layers().add(rightSettlementsLayer);
 
 // ----- 3.4 Map labels -----
 leftMap.add(ui.Label('~2000', {
@@ -139,6 +181,61 @@ var splitPanel = ui.SplitPanel({
   style: {stretch: 'both'}
 });
 
+var activeViewMode = 'default';
+
+function setMarkerShown(shown) {
+  if (markerRegionLayer !== null) {
+    markerRegionLayer.setShown(shown);
+  }
+  if (markerPointLayer !== null) {
+    markerPointLayer.setShown(shown);
+  }
+}
+
+function showGlacierComparisonMode() {
+  activeViewMode = 'comparison';
+
+  leftCentralLayer.setShown(false);
+  leftModelDomainLayer.setShown(false);
+  leftGlacierLayer.setShown(true);
+  leftLstLayer.setShown(false);
+  leftGraticulesLayer.setShown(true);
+
+  rightCentralLayer.setShown(false);
+  rightModelDomainLayer.setShown(false);
+  rightGlacierLayer.setShown(true);
+  rightLstLayer.setShown(false);
+  rightRetreatLayer.setShown(false);
+  rightWarmingLayer.setShown(false);
+  rightSusceptibilityLayer.setShown(false);
+  rightGraticulesLayer.setShown(true);
+  rightMinesLayer.setShown(false);
+  rightSettlementsLayer.setShown(false);
+  setMarkerShown(false);
+}
+
+function showFutureRiskMode() {
+  activeViewMode = 'future';
+
+  leftCentralLayer.setShown(false);
+  leftModelDomainLayer.setShown(false);
+  leftGlacierLayer.setShown(false);
+  leftLstLayer.setShown(false);
+  leftGraticulesLayer.setShown(false);
+
+  rightCentralLayer.setShown(false);
+  rightModelDomainLayer.setShown(true);
+  rightGlacierLayer.setShown(false);
+  rightLstLayer.setShown(false);
+  rightRetreatLayer.setShown(false);
+  rightWarmingLayer.setShown(false);
+  rightSusceptibilityLayer.setShown(true);
+  rightGraticulesLayer.setShown(true);
+  rightMinesLayer.setShown(true);
+  rightSettlementsLayer.setShown(false);
+  setMarkerShown(true);
+}
+
 
 // ============================================================
 // 4. CONTROL PANEL
@@ -147,8 +244,10 @@ var splitPanel = ui.SplitPanel({
 var panel = ui.Panel({
   style: {
     width: '320px',
+    height: '95%',
+    maxHeight: '95%',
     padding: '12px',
-    position: 'bottom-left',
+    position: 'top-left',
     backgroundColor: 'white'
   }
 });
@@ -161,6 +260,18 @@ panel.add(ui.Label(
   'across Greenland\'s peripheral glacier zone.',
   {fontSize: '11px', color: '#666', margin: '0 0 10px 0'}
 ));
+
+panel.add(ui.Button({
+  label: '2000 vs 2024 glacier content',
+  onClick: showGlacierComparisonMode,
+  style: {stretch: 'horizontal', margin: '4px 0'}
+}));
+
+panel.add(ui.Button({
+  label: 'Future Risk of Melting',
+  onClick: showFutureRiskMode,
+  style: {stretch: 'horizontal', margin: '0 0 10px 0'}
+}));
 
 panel.add(ui.Label('How to use:', {fontWeight: 'bold', fontSize: '13px'}));
 panel.add(ui.Label('• Drag the swipe bar to compare 2000 vs 2024',
@@ -297,6 +408,34 @@ for (var i = 0; i < legendPalette.length; i++) {
   panel.add(row);
 }
 
+// ---- Map domain legend ----
+panel.add(ui.Label('— Map Domain —', {
+  fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
+}));
+
+var domainPalette = ['#2e7d33', '#d9edf7'];
+var domainLabels  = [
+  'Modelled peripheral glacier zone',
+  'Central/northern ice context only'
+];
+
+for (var j = 0; j < domainPalette.length; j++) {
+  var domainRow = ui.Panel({
+    layout: ui.Panel.Layout.flow('horizontal'),
+    style: {margin: '1px 0'}
+  });
+  domainRow.add(ui.Label('', {
+    backgroundColor: domainPalette[j],
+    padding: '8px 16px',
+    margin: '0 8px 0 0',
+    border: '1px solid #ccc'
+  }));
+  domainRow.add(ui.Label(domainLabels[j], {
+    fontSize: '11px', margin: '4px 0'
+  }));
+  panel.add(domainRow);
+}
+
 // ---- Click-stats section ----
 panel.add(ui.Label('— Click Stats —', {
   fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
@@ -312,13 +451,17 @@ panel.add(ui.Label('— Methodology —', {
   fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
 }));
 panel.add(ui.Label(
-  'Heavy processing is run once in gee_preprocess_export.js and loaded ' +
-  'here as a multi-band Image Asset. Glacier extent uses Landsat NDSI ' +
+  'Heavy processing is run once in gee_preprocess_export.js, while ' +
+  'central/northern ice-sheet context and the peripheral study-zone mask ' +
+  'are precomputed separately in gee_context_export.js. Glacier extent uses Landsat NDSI ' +
   '(threshold > 0.4). Temperature trend uses Landsat ST via per-pixel ' +
   'linear fit over 2001-2024 summers. Retreat susceptibility is predicted ' +
   'with Random Forest using cleaned retreat/stable labels, spatial block ' +
   'validation, terrain, warming, mining proximity, settlement proximity, ' +
-  'and coastal proximity predictors.',
+  'and coastal proximity predictors. The model domain is limited to GIMP ' +
+  'land ice below 2500 m elevation; the central/high-elevation Greenland ' +
+  'Ice Sheet is shown as context only because its dynamics differ from the ' +
+  'peripheral glacier zone.',
   {fontSize: '10px', color: '#666'}
 ));
 panel.add(ui.Label('CASA0025 Coursework · UCL CASA', {
@@ -332,7 +475,8 @@ leftMap.add(panel);
 // 5. CLICK HANDLER
 // ============================================================
 
-var markerLayer = null;
+var markerRegionLayer = null;
+var markerPointLayer = null;
 
 function handleMapClick(coords) {
   clickStatsPanel.clear();
@@ -364,7 +508,13 @@ function handleMapClick(coords) {
       scale: clickStatsScale, maxPixels: 1e9}).get('susceptibility'),
     elev: elevation.reduceRegion({
       reducer: ee.Reducer.mean(), geometry: region,
-      scale: clickStatsScale, maxPixels: 1e9}).get('elevation')
+      scale: clickStatsScale, maxPixels: 1e9}).get('elevation'),
+    domain: modelDomain.unmask(0).reduceRegion({
+      reducer: ee.Reducer.max(), geometry: region,
+      scale: clickStatsScale, maxPixels: 1e9}).get('model_domain'),
+    context: centralIceContext.unmask(0).reduceRegion({
+      reducer: ee.Reducer.max(), geometry: region,
+      scale: clickStatsScale, maxPixels: 1e9}).get('ice_sheet_context')
   }).evaluate(function(s) {
     clickStatsPanel.clear();
 
@@ -381,6 +531,18 @@ function handleMapClick(coords) {
     clickStatsPanel.add(ui.Label(
       '(25 km radius)',
       {fontSize: '10px', color: 'gray', margin: '0 0 4px 0'}));
+
+    var inModelDomain = s.domain !== null && s.domain > 0;
+    var inContextOnly = !inModelDomain && s.context !== null && s.context > 0;
+    var domainText = inModelDomain ? 'Modelled peripheral glacier zone' :
+                     inContextOnly ? 'Ice-sheet context only' :
+                     'Outside model domain';
+    var domainColor = inModelDomain ? '#00838f' :
+                      inContextOnly ? '#607d8b' : '#999';
+
+    clickStatsPanel.add(ui.Label(
+      'Map domain: ' + domainText,
+      {fontSize: '11px', fontWeight: 'bold', color: domainColor}));
 
     var a0  = (s.area2000 / 1e6).toFixed(1);
     var a1  = (s.area2024 / 1e6).toFixed(1);
@@ -435,18 +597,41 @@ function handleMapClick(coords) {
         rLabel + '  (' + rPct + '%)',
         {fontSize: '14px', fontWeight: 'bold', color: rColor}));
     } else {
-      clickStatsPanel.add(ui.Label('No current glacier at this location.',
+      clickStatsPanel.add(ui.Label(
+        inContextOnly ?
+          'Context ice only — susceptibility is not modelled here.' :
+          'No current glacier at this location.',
         {fontSize: '11px', color: '#999', margin: '6px 0 0 0'}));
     }
 
-    var marker = ui.Map.Layer(
-      ee.FeatureCollection([ee.Feature(region)]),
-      {color: 'yellow'}, 'Selected Region');
-    if (markerLayer !== null) {
-      rightMap.layers().remove(markerLayer);
+    var regionMarker = ui.Map.Layer(
+      ee.FeatureCollection([ee.Feature(region)]).style({
+        color: '#ff0000',
+        fillColor: '#ff000033',
+        width: 2
+      }),
+      {}, 'Selected 25 km Region');
+    var pointMarker = ui.Map.Layer(
+      ee.FeatureCollection([ee.Feature(point)]).style({
+        color: '#ffffff',
+        fillColor: '#ff0000',
+        pointSize: 8,
+        pointShape: 'circle',
+        width: 2
+      }),
+      {}, 'Selected Point');
+
+    if (markerRegionLayer !== null) {
+      rightMap.layers().remove(markerRegionLayer);
     }
-    rightMap.layers().add(marker);
-    markerLayer = marker;
+    if (markerPointLayer !== null) {
+      rightMap.layers().remove(markerPointLayer);
+    }
+    rightMap.layers().add(regionMarker);
+    rightMap.layers().add(pointMarker);
+    markerRegionLayer = regionMarker;
+    markerPointLayer = pointMarker;
+    setMarkerShown(activeViewMode !== 'comparison');
   });
 }
 
@@ -466,7 +651,9 @@ print('════════════════════════�
 print('  Greenland Glacier–Mining Nexus Explorer');
 print('═══════════════════════════════════════════════');
 print('Loaded precomputed asset:', precomputed);
+print('Loaded context asset:', contextPrecomputed);
 print('Band names:', precomputed.bandNames());
+print('Context band names:', contextPrecomputed.bandNames());
 print('Model accuracy:', precomputed.get('accuracy'));
 print('Kappa:', precomputed.get('kappa'));
 print('F1:', precomputed.get('f1'));
