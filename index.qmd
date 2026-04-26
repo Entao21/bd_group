@@ -539,7 +539,7 @@ Replace the placeholder below with the published Earth Engine App link before fi
 
 :::{.column-page}
 
-<iframe src='https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining' width='100%' height='700px'></iframe>
+<iframe src='https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining' width='100%' height='900px'></iframe>
 
 :::
 
