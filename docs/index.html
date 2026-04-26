@@ -540,7 +540,74 @@ GADM Greenland (g1bd) boundaries. Integrated to provide <b>regional context</b> 
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
-<p>Glacier retreat susceptibility was assessed by combining multi-decadal Landsat observations, ArcticDEM terrain data, and proximity indicators for mining activity, settlements, and coastlines. Three processing streams — glacier extent change, land surface temperature trends, and distance rasters — produce a seven-variable predictor stack. A Random Forest model trained on observed retreat and stable-ice labels then scores every current glacier pixel from 0 (low susceptibility) to 1 (high susceptibility). All heavy computation runs once as a preprocessing step and is saved as Earth Engine image assets, keeping the interactive app fast.</p>
+<p>The pipeline runs in three steps. Raw inputs — ArcticDEM terrain, Landsat 7/8/9 imagery, vector assets, and the Greenland AOI — feed four processing streams that produce a seven-variable predictor stack. A Random Forest model is trained on observed retreat and stable-ice labels and exports the results as an 8-band GEE image asset. A second script adds a 4-band context asset covering ice mask and domain boundaries. The interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface — no heavy computation at runtime.</p>
+<div style="background:#f5f5f5;padding:24px 20px;border-radius:8px;border:1px solid #e0e0e0;font-family:Arial,sans-serif;font-size:13px;margin:16px 0;text-align:center;">
+
+  <div style="font-size:11px;color:#888;font-style:italic;margin-bottom:12px;text-align:left;">Step 1 &nbsp;·&nbsp; gee_preprocess_export.js — preprocessing &amp; model training</div>
+
+  <div style="display:inline-flex;gap:10px;justify-content:center;margin-bottom:6px;">
+    <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">ArcticDEM</div>
+    <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">Landsat 7/8/9</div>
+    <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">Vector assets</div>
+    <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">AOI boundary</div>
+  </div>
+
+  <div style="display:inline-flex;gap:10px;justify-content:center;margin-bottom:6px;color:#90a4ae;font-size:16px;">
+    <div style="min-width:110px;">↓</div>
+    <div style="min-width:110px;">↓</div>
+    <div style="min-width:110px;">↓</div>
+    <div style="min-width:110px;">↓</div>
+  </div>
+
+  <div style="display:inline-flex;gap:10px;justify-content:center;margin-bottom:10px;">
+    <div style="background:#1565c0;color:#fff;padding:10px 12px;border-radius:5px;min-width:110px;">Terrain<br><span style="font-size:11px;opacity:0.85;">Elev + slope</span></div>
+    <div style="background:#1565c0;color:#fff;padding:10px 12px;border-radius:5px;min-width:110px;">Glacier NDSI<br><span style="font-size:11px;opacity:0.85;">2000 vs 2024</span></div>
+    <div style="background:#1565c0;color:#fff;padding:10px 12px;border-radius:5px;min-width:110px;">LST trend<br><span style="font-size:11px;opacity:0.85;">Warming rate</span></div>
+    <div style="background:#1565c0;color:#fff;padding:10px 12px;border-radius:5px;min-width:110px;">Proximity<br><span style="font-size:11px;opacity:0.85;">3 distance rasters</span></div>
+  </div>
+
+  <div style="color:#90a4ae;font-size:16px;margin-bottom:8px;">↓</div>
+
+  <div style="display:inline-block;background:#4527a0;color:#fff;padding:12px 40px;border-radius:6px;min-width:320px;margin-bottom:8px;">
+    Random Forest (100 trees)<br><span style="font-size:11px;opacity:0.85;">7 predictors · spatial block CV</span>
+  </div>
+
+  <div style="color:#90a4ae;font-size:16px;margin-bottom:8px;">↓</div>
+
+  <div style="display:inline-block;background:#795548;color:#fff;padding:12px 40px;border-radius:6px;min-width:320px;margin-bottom:14px;">
+    8-band image asset<br><span style="font-size:11px;color:#ffcc80;">Exported to GEE asset</span>
+  </div>
+
+  <div style="color:#90a4ae;font-size:16px;margin-bottom:8px;">↓</div>
+
+  <div style="border:1.5px dashed #bbb;border-radius:6px;padding:14px 20px;margin:0 auto 10px auto;display:inline-block;min-width:500px;">
+    <div style="font-size:11px;color:#888;font-style:italic;margin-bottom:10px;text-align:left;">Step 2 &nbsp;·&nbsp; gee_context_export.js — batch export</div>
+    <div style="display:inline-flex;gap:20px;justify-content:center;margin-bottom:8px;">
+      <div style="background:#455a64;color:#fff;padding:9px 18px;border-radius:5px;">Precomputed elev</div>
+      <div style="background:#455a64;color:#fff;padding:9px 18px;border-radius:5px;">GIMP ice mask</div>
+    </div>
+    <div style="color:#90a4ae;font-size:16px;margin-bottom:8px;">↓</div>
+    <div style="display:inline-block;background:#795548;color:#fff;padding:12px 40px;border-radius:6px;min-width:280px;">
+      4-band context asset
+    </div>
+  </div>
+
+  <div style="color:#90a4ae;font-size:16px;margin-bottom:8px;">↓</div>
+
+  <div style="border:1.5px dashed #bbb;border-radius:6px;padding:14px 20px;margin:0 auto;display:inline-block;min-width:500px;">
+    <div style="font-size:11px;color:#888;font-style:italic;margin-bottom:10px;text-align:left;">Step 3 &nbsp;·&nbsp; gee_glacier_mining_app.js — interactive app</div>
+    <div style="display:inline-flex;gap:12px;justify-content:center;margin-bottom:8px;">
+      <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">Precomputed asset<br><span style="font-size:10px;opacity:0.8;">from Step 1</span></div>
+      <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">Context asset<br><span style="font-size:10px;opacity:0.8;">from Step 2</span></div>
+      <div style="background:#455a64;color:#fff;padding:9px 14px;border-radius:5px;min-width:110px;">Vector layers<br><span style="font-size:10px;opacity:0.8;">GEE uploads</span></div>
+    </div>
+    <div style="color:#90a4ae;font-size:16px;margin-bottom:8px;">↓</div>
+    <div style="display:inline-block;background:#7f1d1d;color:#fff;padding:12px 40px;border-radius:6px;min-width:280px;">
+      Interactive split panel<br><span style="font-size:11px;color:#ffb3b3;">Swipe · click · analyse</span>
+    </div>
+  </div>
+
+</div>
 <p>The sections below describe each processing step in detail.</p>
 <section id="glacier-change-detection-and-preprocessing" class="level4">
 <h4 class="anchored" data-anchor-id="glacier-change-detection-and-preprocessing">Glacier Change Detection and Preprocessing</h4>
