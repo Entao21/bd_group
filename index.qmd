@@ -157,7 +157,7 @@ The interface supports these users by combining technical model outputs with acc
   </tbody>
 </table>
 
-## Methodology
+### Methodology
 
 The pipeline runs in three steps. Raw inputs — ArcticDEM terrain, Landsat 7/8/9 imagery, vector assets, and the Greenland AOI — feed four processing streams that produce a seven-variable predictor stack. A Random Forest model is trained on observed retreat and stable-ice labels and exports the results as an 8-band GEE image asset. A second script adds a 4-band context asset covering ice mask and domain boundaries. The interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface — no heavy computation at runtime.
 
@@ -695,12 +695,4 @@ var fullBands = [
 
 ## References
 
-- CASA25 Rasternauts. Nepal Landslides Risk Application. Used as a website-structure reference for the "How it Works" section. <https://maheer-maps.github.io/CASA25_Rasternauts/>
-- Breiman, L. (2001). Random Forests. *Machine Learning*, 45, 5-32. <https://doi.org/10.1023/A:1010933404324>
-- GEUS. Greenland Portal. Used as the institutional basis for Greenland mineral-resource and licence data context. <https://eng.geus.dk/products-services-facilities/data-and-maps/greenland-portal>
-- Google Earth Engine Data Catalog. ArcticDEM Mosaic V4.1. Used for elevation and slope predictors. <https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic>
-- Google Earth Engine Data Catalog. GIMP Greenland Ice and Ocean Mask. Used for land-ice context and model-domain masking. <https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK>
-- Roberts, D. R. et al. (2017). Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. *Ecography*, 40(8), 913-929. <https://doi.org/10.1111/ecog.02881>
-- USGS. Landsat Collection 2 Surface Temperature. Used for LST scaling and summer temperature-trend analysis. <https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature>
-- USGS. Normalized Difference Snow Index. Used for the NDSI snow/ice mapping formula and Landsat band choices. <https://www.usgs.gov/landsat-missions/normalized-difference-snow-index>
-- USGS. Landsat Shapefiles and KML Files. Used to justify caution around routine WRS-2 coverage near very high latitudes. <https://www.usgs.gov/landsat-missions/landsat-shapefiles-and-kml-files>
+- 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,8 +73,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-acf12a64177840b8d86f2d4f01b2e9fb.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-23bbe8b5e4efc1e257f6d59dce478b08.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-36cd757a48f70156034ad6e03107a1bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -311,13 +311,13 @@ background-size: cover;
   <li><a href="#problem-statement" id="toc-problem-statement" class="nav-link" data-scroll-target="#problem-statement">Problem Statement</a></li>
   <li><a href="#end-user" id="toc-end-user" class="nav-link" data-scroll-target="#end-user">End User</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  </ul></li>
   <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a>
-  <ul>
+  <ul class="collapse">
   <li><a href="#glacier-change-detection-and-preprocessing" id="toc-glacier-change-detection-and-preprocessing" class="nav-link" data-scroll-target="#glacier-change-detection-and-preprocessing">Glacier Change Detection and Preprocessing</a></li>
   <li><a href="#climate-trend-and-predictor-modelling" id="toc-climate-trend-and-predictor-modelling" class="nav-link" data-scroll-target="#climate-trend-and-predictor-modelling">Climate Trend and Predictor Modelling</a></li>
   <li><a href="#random-forest-retreat-susceptibility-model" id="toc-random-forest-retreat-susceptibility-model" class="nav-link" data-scroll-target="#random-forest-retreat-susceptibility-model">Random Forest Retreat Susceptibility Model</a></li>
   <li><a href="#precomputed-asset-architecture" id="toc-precomputed-asset-architecture" class="nav-link" data-scroll-target="#precomputed-asset-architecture">Precomputed Asset Architecture</a></li>
+  </ul></li>
   <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
   </ul></li>
   <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a></li>
@@ -539,9 +539,8 @@ GADM Greenland (g1bd) boundaries. Integrated to provide <b>regional context</b> 
 </tbody>
 </table>
 </section>
-</section>
-<section id="methodology" class="level2">
-<h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
+<section id="methodology" class="level3">
+<h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
 <p>The pipeline runs in three steps. Raw inputs — ArcticDEM terrain, Landsat 7/8/9 imagery, vector assets, and the Greenland AOI — feed four processing streams that produce a seven-variable predictor stack. A Random Forest model is trained on observed retreat and stable-ice labels and exports the results as an 8-band GEE image asset. A second script adds a 4-band context asset covering ice mask and domain boundaries. The interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface — no heavy computation at runtime.</p>
 <div style="background:#f5f5f5;padding:24px 20px;border-radius:8px;border:1px solid #e0e0e0;font-family:Arial,sans-serif;font-size:13px;margin:16px 0;text-align:center;">
 
@@ -918,6 +917,7 @@ GADM Greenland (g1bd) boundaries. Integrated to provide <b>regional context</b> 
 </tbody>
 </table>
 </section>
+</section>
 <section id="interface" class="level3">
 <h3 class="anchored" data-anchor-id="interface">Interface</h3>
 <p>The interface uses a linked split map. The left map shows the approximate 2000 glacier extent and early-period temperature context. The right map shows the approximate 2024 glacier extent, observed retreat, warming rate, susceptibility prediction, mining sites, and settlements. A swipe divider allows direct visual comparison between baseline and recent glacier conditions.</p>
@@ -952,7 +952,7 @@ GADM Greenland (g1bd) boundaries. Integrated to provide <b>regional context</b> 
 <h2 class="anchored" data-anchor-id="the-application">The Application</h2>
 <p>Replace the placeholder below with the published Earth Engine App link before final submission.</p>
 <div class="column-page">
-<iframe src="https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining" width="100%" height="700px">
+<iframe src="https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining" width="100%" height="900px">
 </iframe>
 </div>
 </section>
@@ -1083,15 +1083,7 @@ GADM Greenland (g1bd) boundaries. Integrated to provide <b>regional context</b> 
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
-<li>CASA25 Rasternauts. Nepal Landslides Risk Application. Used as a website-structure reference for the “How it Works” section. <a href="https://maheer-maps.github.io/CASA25_Rasternauts/" class="uri">https://maheer-maps.github.io/CASA25_Rasternauts/</a></li>
-<li>Breiman, L. (2001). Random Forests. <em>Machine Learning</em>, 45, 5-32. <a href="https://doi.org/10.1023/A:1010933404324" class="uri">https://doi.org/10.1023/A:1010933404324</a></li>
-<li>GEUS. Greenland Portal. Used as the institutional basis for Greenland mineral-resource and licence data context. <a href="https://eng.geus.dk/products-services-facilities/data-and-maps/greenland-portal" class="uri">https://eng.geus.dk/products-services-facilities/data-and-maps/greenland-portal</a></li>
-<li>Google Earth Engine Data Catalog. ArcticDEM Mosaic V4.1. Used for elevation and slope predictors. <a href="https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic" class="uri">https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic</a></li>
-<li>Google Earth Engine Data Catalog. GIMP Greenland Ice and Ocean Mask. Used for land-ice context and model-domain masking. <a href="https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK" class="uri">https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK</a></li>
-<li>Roberts, D. R. et al.&nbsp;(2017). Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. <em>Ecography</em>, 40(8), 913-929. <a href="https://doi.org/10.1111/ecog.02881" class="uri">https://doi.org/10.1111/ecog.02881</a></li>
-<li>USGS. Landsat Collection 2 Surface Temperature. Used for LST scaling and summer temperature-trend analysis. <a href="https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature" class="uri">https://www.usgs.gov/landsat-missions/landsat-collection-2-surface-temperature</a></li>
-<li>USGS. Normalized Difference Snow Index. Used for the NDSI snow/ice mapping formula and Landsat band choices. <a href="https://www.usgs.gov/landsat-missions/normalized-difference-snow-index" class="uri">https://www.usgs.gov/landsat-missions/normalized-difference-snow-index</a></li>
-<li>USGS. Landsat Shapefiles and KML Files. Used to justify caution around routine WRS-2 coverage near very high latitudes. <a href="https://www.usgs.gov/landsat-missions/landsat-shapefiles-and-kml-files" class="uri">https://www.usgs.gov/landsat-missions/landsat-shapefiles-and-kml-files</a></li>
+<li></li>
 </ul>
 
 
