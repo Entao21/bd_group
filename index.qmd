@@ -16,19 +16,13 @@ format:
 
 This project develops an interactive Google Earth Engine application to explore glacier retreat susceptibility across Greenland's peripheral glacier zone. The app combines Landsat-derived glacier change, Landsat land surface temperature trends, ArcticDEM terrain variables, and proximity indicators for mining activity, settlements, and coastlines. A Random Forest model is trained on observed retreat and stable-ice labels to map where current glaciers are more susceptible to retreat.
 
-The purpose is not to prove that mining caused glacier retreat. Instead, the application provides a screening tool for identifying places where observed retreat, climate warming, terrain conditions, and mining-related proximity overlap. This supports more transparent discussion around Arctic resource development, environmental monitoring, and glacier vulnerability.
+The application provides a screening tool for identifying places where observed retreat, climate warming, terrain conditions, and mining-related proximity overlap. This supports more transparent discussion around Arctic resource development, environmental monitoring, and glacier vulnerability.
 
 ### Problem Statement
 
 Greenland's peripheral glaciers are changing rapidly under Arctic warming, while renewed mineral exploration creates planning questions in sensitive cryospheric environments. Existing glacier products and mining datasets are usually viewed separately, making it difficult for non-specialist users to compare climate-driven change with human activity indicators.
 
-This project addresses that gap by building a web-based decision-support tool that:
-
-- maps glacier extent change from approximately 2000 to 2024;
-- estimates summer land surface temperature trends;
-- integrates elevation, slope, mining proximity, settlement proximity, and coastal proximity;
-- predicts retreat susceptibility using a validated Random Forest model;
-- communicates model outputs through an interactive split-map interface.
+This application addresses that gap by combining glacier change detection, climate trends, topographic controls and anthropogenic proximity indicators into a single exploratory geospatial tool that helps users investigate where these factors align with increased glacier retreat susceptibility.
 
 ### End User
 
@@ -38,15 +32,56 @@ The interface supports these users by combining technical model outputs with acc
 
 ### Data
 
-| Category | Dataset | Use in the project | Source |
-|---|---|---|---|
-| Satellite imagery | Landsat 7/8/9 Collection 2 Level-2 | Summer NDSI glacier extent and land surface temperature trends from ca. 2000 to 2024 | [USGS Landsat Collection 2](https://www.usgs.gov/landsat-missions/landsat-collection-2) |
-| Glacier mask context | GIMP 2000 Ice/Ocean Mask | Land-ice context and model-domain masking | [Google Earth Engine GIMP catalog](https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK) |
-| Terrain | ArcticDEM V4.1 2 m mosaic | Elevation and slope predictors, sampled to the modelling scale | [Google Earth Engine ArcticDEM catalog](https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic) |
-| Boundaries | LSIB Simple 2017 | Greenland boundary and analysis region | [Google Earth Engine LSIB catalog](https://developers.google.com/earth-engine/datasets/catalog/USDOS_LSIB_SIMPLE_2017) |
-| Mining activity | Active mineral licence polygons and post-2000 drillhole points | Mining proximity predictor and map overlay | Greenland Mineral Resources Portal / project uploads |
-| Settlements | Greenland settlements and cities | Human-accessibility proximity predictor and map overlay | Project uploads |
-| Reference grid | 15-degree graticules | Polar map orientation and visual reference | Project upload |
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Dataset</th>
+    <th>Description</th>
+    <th>Source</th>
+  </tr>
+  <tr>
+    <td rowspan="4">GEE</td>
+    <td>Terrain (Elevation/Slope)</td>
+    <td class="description">ArcticDEM V4.1 2m mosaic, resampled to 300m for modelling. Provides elevation and slope predictors.</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/UMN_PGC_ArcticDEM_V4_2m_mosaic">Link</a></td>
+  </tr>
+  <tr>
+    <td>Satellite Imagery</td>
+    <td class="description">Landsat 7, 8, and 9 Collection 2 Level-2. Used for summer NDSI glacier extent and Surface Temperature trends (2000–2024).</td>
+    <td><a href="https://www.usgs.gov/landsat-missions/landsat-collection-2">Link</a></td>
+  </tr>
+  <tr>
+    <td>Glacier Mask</td>
+    <td class="description">OSU GIMP 2000 Ice/Ocean Mask. Used for land-ice context and defining the model domain.</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/OSU_GIMP_2000_ICE_OCEAN_MASK">Link</a></td>
+  </tr>
+  <tr>
+    <td>Boundaries (LSIB)</td>
+    <td class="description">Large Scale International Boundary (LSIB) Simplified 2017. Used to define the Greenland study area.</td>
+    <td><a href="https://developers.google.com/earth-engine/datasets/catalog/USDOS_LSIB_SIMPLE_2017">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="4">Other</td>
+    <td>Mining Activity</td>
+    <td class="description">Active industrial mineral licenses and post-2000 drillhole points. Used as proximity predictors.</td>
+    <td><a href="https://mineralportal.gl/Gl/Minerals/Mining-Nexus">Greenland Portal</a></td>
+  </tr>
+  <tr>
+    <td>Settlements & Cities</td>
+    <td class="description">Greenland settlement and city location layers. Used for human-accessibility proximity analysis.</td>
+    <td><a href="https://kortvisning.asiaq.gl/">Asiaq Portal</a></td>
+  </tr>
+  <tr>
+    <td>Reference Grid</td>
+    <td class="description">15-degree graticules (Natural Earth). Used for polar map orientation and visual reference.</td>
+    <td><a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-graticules/">Link</a></td>
+  </tr>
+  <tr>
+    <td>Administrative Boundaries</td>
+    <td class="description">GADM Greenland (g1bd) administrative boundaries. Used for regional context.</td>
+    <td><a href="https://gadm.org/download_country.html">Link</a></td>
+  </tr>
+</table>
 
 ## Methodology
 
