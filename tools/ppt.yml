@@ -1,0 +1,75 @@
+- title: "Multi-band Precomputation"
+  caption: "To ensure a zero-latency user experience, the app avoids on-the-fly Landsat compositing by loading pre-processed 300m multi-band assets, containing glacier masks, LST trends, and RF susceptibility."
+  image: "images/greenland_precompute.png"
+  code: |
+    // Precomputing heavy layers into a single multi-band Asset
+    var precomputed = ee.Image.cat([
+      glacier_2000.toByte(),
+      glacier_2024.toByte(),
+      warmingRate.toFloat(),
+      susceptibilityMap.toFloat()
+    ]).set({
+      accuracy: confusionMatrix.accuracy(),
+      f1: f1,
+      importance: rfClassify.explain().get('importance')
+    });
+  link: ""
+
+- title: "Linked Dual-Map Interface"
+  caption: "Utilizing a split-panel UI with a Map Linker, the app allows users to synchronize navigation between the year 2000 and 2024 to visually inspect glacier retreat alongside warming trends."
+  image: "images/greenland_dual_map.png"
+  code: |
+    // Synchronizing two maps for historical comparison
+    var leftMap = ui.Map();
+    var rightMap = ui.Map();
+    var linker = ui.Map.Linker([leftMap, rightMap]);
+    var splitPanel = ui.SplitPanel({
+      firstPanel: leftMap,
+      secondPanel: rightMap,
+      wipe: true,
+      style: {stretch: 'both'}
+    });
+  link: ""
+
+- title: "Dynamic Regional Analysis"
+  caption: "When a user clicks the map, the app dynamically generates a 25km buffer and performs on-the-fly spatial reductions to calculate localized glacier loss and temperature trends."
+  image: "images/greenland_click.png"
+  code: |
+    // Handling map clicks for regional statistics
+    function handleMapClick(coords) {
+      var point = ee.Geometry.Point([coords.lon, coords.lat]);
+      var region = point.buffer(25000); // 25km radius
+      var stats = precomputed.reduceRegion({
+        reducer: ee.Reducer.mean().combine(ee.Reducer.sum(), '', true),
+        geometry: region,
+        scale: 300
+      });
+    }
+  link: ""
+
+- title: "Automated Workflow Funnel"
+  caption: "The app features a 'Stage Funnel' dashboard that uses coarse 5km reductions at startup to provide an immediate nationwide summary of ice loss and risk tiers without hanging the UI."
+  image: "images/greenland_dashboard.png"
+  code: |
+    // Fast dashboard summary using multi-scale reduction
+    var areaStats = areaBands.reduceRegion({
+      reducer: ee.Reducer.sum(),
+      geometry: AOI_geom,
+      scale: 5000, // Coarser scale for responsive dashboard
+      bestEffort: true
+    });
+  link: ""
+
+- title: "Model Transparency & Metrics"
+  caption: "Instead of a 'black box', the app extracts RF model metadata (Accuracy, Kappa, Variable Importance) directly from asset properties and renders them using interactive Google Charts."
+  image: "images/greenland_metrics.png"
+  code: |
+    // Rendering model importance from Asset metadata
+    var importanceChart = ui.Chart.feature.byFeature(
+      importanceFeatures, 'variable', 'importance'
+    ).setChartType('BarChart')
+     .setOptions({
+       title: 'Random Forest Variable Importance',
+       colors: ['#0b4f8a']
+     });
+  link: ""
