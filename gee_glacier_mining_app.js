@@ -1,3 +1,6 @@
+
+
+
 // ============================================================
 // CASA0025 — Greenland Glacier × Mining Nexus
 // Interactive Retreat Susceptibility Application
@@ -36,6 +39,9 @@ var lstRecent    = precomputed.select('lst_recent');
 var susceptibilityMap = precomputed.select('susceptibility');
 var elevation    = precomputed.select('elevation');
 var clickStatsScale = 300;
+// Coarser scale for app-startup dashboard summaries.
+// Keeps the dashboard responsive; detailed click statistics still use clickStatsScale.
+var dashboardStatsScale = 5000;
 
 var countries    = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
 var AOI          = countries.filter(ee.Filter.eq('country_na', 'Greenland'));
@@ -57,29 +63,46 @@ var allSettlements = settlements.merge(cities);
 // 2. VISUALISATION PARAMETERS
 // ============================================================
 
-var glacierVis2000 = {min: 1, max: 1, palette: ['#4fc3f7']};
-var glacierVis2024 = glacierVis2000;
-var retreatVis     = {min: 0, max: 1, palette: ['#ff1744']};
-var modelDomainVis = {min: 1, max: 1, palette: ['#2e7d33']};
-var centralIceVis  = {min: 1, max: 1, palette: ['#d9edf7']};
+// Presentation-ready display colours.
+// The underlying precomputed assets and model outputs are unchanged.
+var glacierVis2000 = {min: 1, max: 1, palette: ['#9dd2f2']};
+var glacierVis2024 = {min: 1, max: 1, palette: ['#7cc7ee']};
+var retreatVis     = {min: 0, max: 1, palette: ['#e85d75']};
+var modelDomainVis = {
+  min: 1, max: 1,
+  palette: ['#78909c']   // Slate grey model domain
+};
+
+var centralIceVis = {
+  min: 1, max: 1,
+  palette: ['#eceff1']   // Light grey ice-sheet context
+};
 
 var lstVis = {
   min: -15, max: 15,
-  palette: ['#0d47a1','#42a5f5','#e3f2fd',
-            '#fff9c4','#ffb74d','#e65100','#b71c1c']
+  palette: ['#0b3d91','#4ea3e6','#dcefff',
+            '#fff2b2','#ffb36b','#f26c4f','#b71c1c']
 };
 
 var trendVis = {
   min: -0.05, max: 0.1,
-  palette: ['#1565c0','#90caf9','#ffffff',
-            '#ffcdd2','#e53935','#b71c1c']
+  palette: ['#2166ac','#92c5de','#f7f7f7',
+            '#fddbc7','#ef8a62','#b2182b']
 };
 
+// Low risk = green, then yellow / orange / red for higher susceptibility.
 var susceptibilityVis = {
-  min: 0, max: 1,
-  palette: ['#2e7d32','#66bb6a','#c8e6c9',
-            '#fff9c4','#ffcc80','#ef6c00',
-            '#e53935','#b71c1c']
+  min: 0,
+  max: 1,
+  palette: [
+    '#d8f3dc',
+    '#b7e4c7',
+    '#fff3b0',
+    '#ffc078',
+    '#f77f00',
+    '#d62828',
+    '#b71c1c'
+  ]
 };
 
 
@@ -90,8 +113,39 @@ var susceptibilityVis = {
 // ----- 3.1 Two linked maps -----
 var leftMap  = ui.Map();
 var rightMap = ui.Map();
-leftMap.setOptions('SATELLITE');
-rightMap.setOptions('SATELLITE');
+// Minimal gray basemap
+var grayStyle = [
+  {stylers:[
+      {saturation:-100},
+      {lightness:40}
+  ]},
+  {
+    elementType:'labels.text.fill',
+    stylers:[{color:'#757575'}]
+  },
+  {
+    featureType:'water',
+    elementType:'geometry',
+    stylers:[{color:'#cbdce6'}]
+  }
+];
+
+leftMap.setOptions('Basemap', {
+  Basemap: grayStyle
+});
+
+rightMap.setOptions('Basemap', {
+  Basemap: grayStyle
+});
+
+leftMap.setControlVisibility({
+  mapTypeControl:false
+});
+
+rightMap.setControlVisibility({
+  mapTypeControl:false
+});
+
 leftMap.setCenter(-42, 72, 4);
 var linker = ui.Map.Linker([leftMap, rightMap]);
 
@@ -143,11 +197,25 @@ var rightSusceptibilityLayer = ui.Map.Layer(
 var rightGraticulesLayer = ui.Map.Layer(
   graticules.style({color: '#BDBDBD', width: 1}),
   {}, '15° Graticules', true);
+// Mining points are styled with partial transparency so they remain visible
+// without dominating the glacier and risk layers.
 var rightMinesLayer = ui.Map.Layer(
-  allMines.style({color: '#FFD600', pointSize: 4}),
+  allMines.style({
+    color: '#006d77AA',
+    fillColor: '#94d2bd66',
+    pointSize: 5,
+    pointShape: 'circle',
+    width: 1.2
+  }),
   {}, 'Mining Sites', false);
 var rightSettlementsLayer = ui.Map.Layer(
-  allSettlements.style({color: '#FFFFFF', pointSize: 3}),
+  allSettlements.style({
+    color: '#4a5568',
+    fillColor: '#ffffff',
+    pointSize: 4,
+    pointShape: 'circle',
+    width: 1.2
+  }),
   {}, 'Settlements', false);
 
 rightMap.layers().add(rightCentralLayer);
@@ -161,16 +229,24 @@ rightMap.layers().add(rightGraticulesLayer);
 rightMap.layers().add(rightMinesLayer);
 rightMap.layers().add(rightSettlementsLayer);
 
+
+
 // ----- 3.4 Map labels -----
 leftMap.add(ui.Label('~2000', {
-  fontWeight: 'bold', fontSize: '16px', color: '#4fc3f7',
-  backgroundColor: 'rgba(0,0,0,0.6)',
-  padding: '6px 12px', position: 'top-left'
+  fontWeight: 'bold',
+  fontSize: '18px',
+  color: '#ffffff',
+  backgroundColor: '#0b4f8a',
+  padding: '7px 14px',
+  position: 'top-left'
 }));
 rightMap.add(ui.Label('~2024', {
-  fontWeight: 'bold', fontSize: '16px', color: '#ff8a65',
-  backgroundColor: 'rgba(0,0,0,0.6)',
-  padding: '6px 12px', position: 'top-right'
+  fontWeight: 'bold',
+  fontSize: '18px',
+  color: '#ffffff',
+  backgroundColor: '#f26c4f',
+  padding: '7px 14px',
+  position: 'top-right'
 }));
 
 // ----- 3.5 Split panel -----
@@ -181,7 +257,222 @@ var splitPanel = ui.SplitPanel({
   style: {stretch: 'both'}
 });
 
+var mapPanel = splitPanel;
+
 var activeViewMode = 'default';
+
+// ----- 3.6 Bottom click-summary card -----
+// Reference-style output card shown after clicking on the map.
+var bottomStatsPanel = ui.Panel({
+  layout: ui.Panel.Layout.flow('horizontal'),
+  style: {
+    position: 'bottom-center',
+    width: '88%',
+    padding: '10px 12px',
+    margin: '0 0 10px 0',
+    backgroundColor: 'rgba(255,255,255,0.96)',
+    border: '1px solid #d5dde5'
+  }
+});
+rightMap.add(bottomStatsPanel);
+
+function addBottomCard(title, value, note, color, backgroundColor, wide) {
+  var cardWidth = wide ? '185px' : '150px';
+
+  var card = ui.Panel({
+    layout: ui.Panel.Layout.flow('vertical'),
+    style: {
+      width: cardWidth,
+      padding: '7px 9px',
+      margin: '0 5px',
+      backgroundColor: backgroundColor || 'rgba(255,255,255,0.0)',
+      border: '0 solid #ffffff'
+    }
+  });
+
+  card.add(ui.Label(title, {
+    fontSize: '12px',
+    fontWeight: 'bold',
+    color: '#1a4a75',
+    margin: '0 0 5px 0',
+    textAlign: 'center'
+  }));
+
+  card.add(ui.Label(value, {
+    fontSize: '13px',
+    fontWeight: 'bold',
+    color: color || '#0d47a1',
+    margin: '0 0 3px 0',
+    textAlign: 'center',
+    whiteSpace: 'pre'
+  }));
+
+  if (note) {
+    card.add(ui.Label(note, {
+      fontSize: '10px',
+      color: '#607d8b',
+      margin: '0',
+      textAlign: 'center',
+      whiteSpace: 'pre'
+    }));
+  }
+
+  bottomStatsPanel.add(card);
+}
+
+function riskStyle(value) {
+  if (value === null || value === undefined) {
+    return {label: 'NO VALUE', pct: '—', color: '#607d8b', bg: '#f2f5f7'};
+  }
+
+  var pct = (value * 100).toFixed(0);
+
+  if (value >= 0.75) {
+    return {label: 'CRITICAL', pct: pct + '%', color: '#b71c1c', bg: '#fde2e2'};
+  }
+  if (value >= 0.55) {
+    return {label: 'HIGH', pct: pct + '%', color: '#d35400', bg: '#ffe8cc'};
+  }
+  if (value >= 0.35) {
+    return {label: 'MODERATE', pct: pct + '%', color: '#8a6d00', bg: '#fff3bf'};
+  }
+  return {label: 'LOW', pct: pct + '%', color: '#2e7d32', bg: '#dff3dc'};
+}
+
+function renderBottomIdle() {
+  bottomStatsPanel.clear();
+  addBottomCard('Selected location', 'Click the map', '25 km analysis radius', '#0d47a1', '#ffffff', true);
+  addBottomCard('Map Domain', '—', 'Waiting for location', '#00838f', '#ffffff', false);
+  addBottomCard('Glacier Change', '—', '~2000 vs ~2024', '#1a4a75', '#ffffff', true);
+  addBottomCard('Temperature', '—', 'LST trend after click', '#1565c0', '#ffffff', true);
+  addBottomCard('Elevation', '—', 'Mean elevation', '#1a4a75', '#ffffff', false);
+  addBottomCard('Retreat Susceptibility', '—', 'Random Forest output', '#2e7d32', '#dff3dc', true);
+}
+
+function renderBottomLoading(coords) {
+  bottomStatsPanel.clear();
+  addBottomCard(
+    'Selected location',
+    coords.lat.toFixed(3) + '°N, ' + Math.abs(coords.lon).toFixed(3) + '°W',
+    'Computing 25 km statistics…',
+    '#0d47a1',
+    '#ffffff',
+    true
+  );
+  addBottomCard('Map Domain', 'Loading…', '', '#00838f', '#ffffff', false);
+  addBottomCard('Glacier Change', 'Loading…', '', '#1a4a75', '#ffffff', true);
+  addBottomCard('Temperature', 'Loading…', '', '#1565c0', '#ffffff', true);
+  addBottomCard('Elevation', 'Loading…', '', '#1a4a75', '#ffffff', false);
+  addBottomCard('Retreat Susceptibility', 'Loading…', '', '#2e7d32', '#dff3dc', true);
+}
+
+function renderBottomNoData(coords) {
+  bottomStatsPanel.clear();
+  addBottomCard(
+    'Selected location',
+    coords.lat.toFixed(3) + '°N, ' + Math.abs(coords.lon).toFixed(3) + '°W',
+    'No data here — click on land',
+    '#c62828',
+    '#fff5f5',
+    true
+  );
+}
+
+function updateBottomStatsPanel(st) {
+  bottomStatsPanel.clear();
+
+  addBottomCard(
+    'Selected location',
+    st.coords.lat.toFixed(3) + '°N, ' + Math.abs(st.coords.lon).toFixed(3) + '°W',
+    '(25 km analysis radius)',
+    '#0d47a1',
+    '#ffffff',
+    true
+  );
+
+  addBottomCard(
+    'Map Domain',
+    st.domainText,
+    '',
+    st.domainColor,
+    '#ffffff',
+    false
+  );
+
+  var changeNum = Number(st.dA);
+  var pctText = st.pct === 'N/A' ? 'N/A' : ((Number(st.pct) > 0 ? '+' : '') + st.pct + '%');
+
+  addBottomCard(
+    'Glacier Change',
+    '~2000: ' + st.a0 + ' km²   ~2024: ' + st.a1 + ' km²',
+    'Change: ' + (changeNum > 0 ? '+' : '') + st.dA + ' km² (' + pctText + ')',
+    changeNum < 0 ? '#c62828' : '#2e7d32',
+    '#ffffff',
+    true
+  );
+
+  var tempText = 'No temperature value';
+  var trendText = '';
+  var trendColor = '#1565c0';
+
+  if (st.lstE !== null && st.lstR !== null) {
+    tempText = '~2000: ' + st.lstE.toFixed(1) + '°C    ~2024: ' + st.lstR.toFixed(1) + '°C';
+  }
+
+  if (st.warming !== null) {
+    var wD = (st.warming * 10).toFixed(2);
+    trendText = 'Trend: ' + (st.warming > 0 ? '+' : '') + wD + ' °C / decade';
+    trendColor = st.warming > 0 ? '#e65100' : '#1565c0';
+  }
+
+  addBottomCard(
+    'Temperature',
+    tempText,
+    trendText,
+    trendColor,
+    '#ffffff',
+    true
+  );
+
+  addBottomCard(
+    'Elevation',
+    st.elev !== null ? 'Mean: ' + st.elev.toFixed(0) + ' m' : 'No elevation value',
+    '',
+    '#1a4a75',
+    '#ffffff',
+    false
+  );
+
+  var r = riskStyle(st.susceptibility);
+  addBottomCard(
+    'Retreat Susceptibility',
+    r.label + ' (' + r.pct + ')',
+    '',
+    r.color,
+    r.bg,
+    true
+  );
+}
+
+renderBottomIdle();
+
+
+function syncBothMaps(layerName, shown){
+  if(layerName === 'model'){
+    leftModelDomainLayer.setShown(shown);
+    rightModelDomainLayer.setShown(shown);
+  }
+
+  if(layerName === 'glacier'){
+    leftGlacierLayer.setShown(shown);
+    rightGlacierLayer.setShown(shown);
+  }
+
+  if(layerName === 'graticules'){
+    leftGraticulesLayer.setShown(shown);
+    rightGraticulesLayer.setShown(shown);
+  }
+}
 
 function setMarkerShown(shown) {
   if (markerRegionLayer !== null) {
@@ -192,26 +483,40 @@ function setMarkerShown(shown) {
   }
 }
 
+
+
 function showGlacierComparisonMode() {
-  activeViewMode = 'comparison';
+
+  activeViewMode='comparison';
 
   leftCentralLayer.setShown(false);
-  leftModelDomainLayer.setShown(false);
-  leftGlacierLayer.setShown(true);
-  leftLstLayer.setShown(false);
-  leftGraticulesLayer.setShown(true);
-
   rightCentralLayer.setShown(false);
-  rightModelDomainLayer.setShown(false);
-  rightGlacierLayer.setShown(true);
+
+
+  syncBothMaps('glacier', true);
+
+
+  syncBothMaps('model', true);
+
+
+  syncBothMaps('graticules', false);
+
+  leftLstLayer.setShown(false);
   rightLstLayer.setShown(false);
+
   rightRetreatLayer.setShown(false);
   rightWarmingLayer.setShown(false);
   rightSusceptibilityLayer.setShown(false);
-  rightGraticulesLayer.setShown(true);
+
   rightMinesLayer.setShown(false);
   rightSettlementsLayer.setShown(false);
+
   setMarkerShown(false);
+  
+  if(mapPanel !== splitPanel){
+    mainUI.remove(mapPanel);
+    mapPanel = splitPanel;
+    mainUI.add(mapPanel);}
 }
 
 function showFutureRiskMode() {
@@ -234,57 +539,497 @@ function showFutureRiskMode() {
   rightMinesLayer.setShown(true);
   rightSettlementsLayer.setShown(false);
   setMarkerShown(true);
+  if(mapPanel !== rightMap){
+    mainUI.remove(mapPanel);
+    mapPanel = rightMap;
+    mainUI.add(mapPanel);
+}
 }
 
 
 // ============================================================
 // 4. CONTROL PANEL
 // ============================================================
+// ---------- Sidebar style system ----------
+var TITLE_STYLE = {
+  fontWeight:'bold',
+  fontSize:'21px',
+  color:'#0b3d66',
+  margin:'0 0 10px 0'
+};
+
+var SUBTEXT_STYLE = {
+  fontSize:'11px',
+  color:'#666',
+  margin:'0 0 14px 0',
+  whiteSpace:'pre'
+};
+
+var SECTION_STYLE = {
+  fontWeight:'bold',
+  fontSize:'13px',
+  color:'#1a4a75',
+  margin:'14px 0 6px 0'
+};
+
+var BODY_STYLE = {
+  fontSize:'11px',
+  color:'#555',
+  margin:'0 0 6px 0'
+};
+
+var BUTTON_STYLE = {
+  stretch:'horizontal',
+  margin:'0 0 6px 0',
+  fontSize:'11px',
+  padding:'4px',
+  color:'#0b4f8a',
+  backgroundColor:'#ffffff',
+  border:'1px solid #7aa3c8',
+  fontWeight:'bold'
+};
+
+var STAT_HEADER = {
+ fontWeight:'bold',
+ fontSize:'12px',
+ color:'#2c3e50',
+ margin:'8px 0 2px 0'
+};
+
+var STAT_TEXT = {
+ fontSize:'11px',
+ color:'#546e7a',
+ margin:'0 0 2px 0'
+};
+
+var STAT_HIGHLIGHT = {
+ fontSize:'13px',
+ fontWeight:'bold',
+ color:'#1565c0',
+ margin:'3px 0'
+};
+
+var STAT_COORD = {
+ fontWeight:'bold',
+ fontSize:'14px',
+ color:'#0d47a1',
+ margin:'0 0 2px 0'
+};
+
+function divider(){
+  return ui.Panel({
+    style:{
+      height:'1px',
+      backgroundColor:'#e0e0e0',
+      margin:'14px 0'
+    }
+  });
+}
+
+
+// ---------- Dashboard helper components ----------
+function formatNumberClient(x, digits) {
+  if (x === null || x === undefined || isNaN(x)) {
+    return '—';
+  }
+  return Number(x).toFixed(digits || 0);
+}
+
+function formatAreaClient(x) {
+  if (x === null || x === undefined || isNaN(x)) {
+    return '—';
+  }
+  var n = Number(x);
+  if (Math.abs(n) >= 10000) {
+    return Math.round(n).toLocaleString();
+  }
+  if (Math.abs(n) >= 1000) {
+    return n.toFixed(0);
+  }
+  return n.toFixed(1);
+}
+
+function metricCard(value, label, subtitle, color) {
+  var card = ui.Panel({
+    layout: ui.Panel.Layout.flow('vertical'),
+    style: {
+      width: '128px',
+      padding: '8px 8px',
+      margin: '0 4px 6px 0',
+      backgroundColor: '#ffffff',
+      border: '1px solid #d5dde5'
+    }
+  });
+
+  card.add(ui.Label(value, {
+    fontSize: '19px',
+    fontWeight: 'bold',
+    color: color || '#0b4f8a',
+    margin: '0 0 3px 0'
+  }));
+
+  card.add(ui.Label(label, {
+    fontSize: '11px',
+    color: '#34495e',
+    margin: '0 0 2px 0'
+  }));
+
+  if (subtitle) {
+    card.add(ui.Label(subtitle, {
+      fontSize: '10px',
+      color: '#607d8b',
+      margin: '0'
+    }));
+  }
+
+  return card;
+}
+
+function addMetricPair(parent, leftCard, rightCard) {
+  var row = ui.Panel({
+    layout: ui.Panel.Layout.flow('horizontal'),
+    style: {
+      stretch: 'horizontal',
+      margin: '0 0 4px 0',
+      padding: '0'
+    }
+  });
+  row.add(leftCard);
+  row.add(rightCard);
+  parent.add(row);
+}
+
+function addMiniBar(parent, label, value, maxValue, color, suffix) {
+  var safeMax = Math.max(Number(maxValue || 1), 1);
+  var safeVal = Math.max(Number(value || 0), 0);
+  var pct = Math.max(2, Math.min(100, safeVal / safeMax * 100));
+
+  var row = ui.Panel({
+    layout: ui.Panel.Layout.flow('horizontal'),
+    style: {stretch: 'horizontal', margin: '2px 0'}
+  });
+
+  row.add(ui.Label(label, {
+    width: '72px',
+    fontSize: '11px',
+    color: '#111',
+    margin: '3px 5px 0 0'
+  }));
+
+  var barTrack = ui.Panel({
+    layout: ui.Panel.Layout.flow('horizontal'),
+    style: {
+      width: '132px',
+      height: '16px',
+      backgroundColor: '#f7f9fb',
+      margin: '0 6px 0 0'
+    }
+  });
+
+  barTrack.add(ui.Label('', {
+    width: pct + '%',
+    height: '16px',
+    backgroundColor: color || '#0b4f8a',
+    margin: '0'
+  }));
+
+  row.add(barTrack);
+
+  row.add(ui.Label(formatAreaClient(safeVal) + (suffix || ''), {
+    fontSize: '11px',
+    fontWeight: 'bold',
+    color: '#111',
+    margin: '2px 0 0 0'
+  }));
+
+  parent.add(row);
+}
+
+function renderDashboardLoading(panelTarget, message) {
+  panelTarget.clear();
+  panelTarget.add(ui.Label(message || 'Loading dashboard summary…', {
+    fontSize: '11px',
+    color: '#999',
+    fontStyle: 'italic',
+    margin: '0 0 8px 0'
+  }));
+}
+
+function renderDashboardSummary(st) {
+  overviewPanel.clear();
+  riskDashboardPanel.clear();
+  workflowPanel.clear();
+
+  if (!st || st.area2000 === null) {
+    overviewPanel.add(ui.Label(
+      'Dashboard summary unavailable. Check precomputed assets.',
+      {fontSize: '11px', color: '#c62828'}
+    ));
+    return;
+  }
+
+  var area2000 = Number(st.area2000 || 0);
+  var area2024 = Number(st.area2024 || 0);
+  var retreatArea = Number(st.retreatArea || 0);
+  var highArea = Number(st.highArea || 0);
+  var criticalArea = Number(st.criticalArea || 0);
+  var highCriticalArea = highArea + criticalArea;
+  var meanWarmingDecade = st.meanWarming === null ? null : Number(st.meanWarming) * 10;
+
+  addMetricPair(
+    overviewPanel,
+    metricCard(formatAreaClient(area2000), 'Glacier ~2000', 'km² detected ice', '#0b4f8a'),
+    metricCard(formatAreaClient(area2024), 'Glacier ~2024', 'km² current ice', '#3f007d')
+  );
+
+  addMetricPair(
+    overviewPanel,
+    metricCard(formatAreaClient(retreatArea), 'Observed ice loss', 'km² retreat signal', '#d62828'),
+    metricCard(formatNumberClient(st.mineCount, 0), 'Mining sites', 'licences + drillholes', '#00a6b8')
+  );
+
+  addMetricPair(
+    overviewPanel,
+    metricCard(meanWarmingDecade === null ? '—' : meanWarmingDecade.toFixed(2), 'Mean warming', '°C / decade', '#e65100'),
+    metricCard(formatAreaClient(highCriticalArea), 'High-risk zones', 'km² high + critical', '#d62828')
+  );
+
+  var veryLow = Number(st.veryLowArea || 0);
+  var low = Number(st.lowArea || 0);
+  var moderate = Number(st.moderateArea || 0);
+  var high = Number(st.highArea || 0);
+  var critical = Number(st.criticalArea || 0);
+  var maxTier = Math.max(veryLow, low, moderate, high, critical, 1);
+  var totalRisk = veryLow + low + moderate + high + critical;
+  var highShare = totalRisk > 0 ? ((high + critical) / totalRisk * 100).toFixed(0) : '0';
+
+  riskDashboardPanel.add(ui.Label('Retreat susceptibility by tier', {
+    fontSize: '12px',
+    fontWeight: 'bold',
+    color: '#111',
+    margin: '0 0 6px 0'
+  }));
+
+  addMiniBar(riskDashboardPanel, 'Very low', veryLow, maxTier, '#d8f3dc', ' km²');
+  addMiniBar(riskDashboardPanel, 'Low', low, maxTier, '#74c69d', ' km²');
+  addMiniBar(riskDashboardPanel, 'Moderate', moderate, maxTier, '#ffd60a', ' km²');
+  addMiniBar(riskDashboardPanel, 'High', high, maxTier, '#f77f00', ' km²');
+  addMiniBar(riskDashboardPanel, 'Critical', critical, maxTier, '#d62828', ' km²');
+
+  riskDashboardPanel.add(ui.Label(
+    highShare + '% of modelled current glacier area is classified as high or critical susceptibility.',
+    {
+      fontSize: '12px',
+      color: '#3f007d',
+      fontWeight: 'bold',
+      margin: '8px 0 0 0',
+      backgroundColor: '#ffffff'
+    }
+  ));
+
+  riskDashboardPanel.add(ui.Label(
+    'Dashboard areas are approximate overview values calculated at 5 km scale for faster app loading.',
+    {
+      fontSize: '10px',
+      color: '#90a4ae',
+      margin: '5px 0 0 0'
+    }
+  ));
+
+  workflowPanel.add(ui.Label('Spatial risk screening workflow', {
+    fontSize: '12px',
+    fontWeight: 'bold',
+    color: '#111',
+    margin: '0 0 6px 0'
+  }));
+
+  var modelArea = Number(st.modelDomainArea || 0);
+  var maxFlow = Math.max(modelArea, area2024, highCriticalArea, retreatArea, 1);
+
+  addMiniBar(workflowPanel, 'Model zone', modelArea, maxFlow, '#78909c', ' km²');
+  addMiniBar(workflowPanel, 'Current ice', area2024, maxFlow, '#7cc7ee', ' km²');
+  addMiniBar(workflowPanel, 'High risk', highCriticalArea, maxFlow, '#f77f00', ' km²');
+  addMiniBar(workflowPanel, 'Ice loss', retreatArea, maxFlow, '#d62828', ' km²');
+
+  workflowPanel.add(ui.Label(
+    'The dashboard narrows the peripheral glacier domain into current ice, high-susceptibility areas, and observed retreat signals.',
+    {
+      fontSize: '11px',
+      color: '#607d8b',
+      margin: '7px 0 0 0'
+    }
+  ));
+}
+
+function loadDashboardSummary() {
+  renderDashboardLoading(overviewPanel, 'Loading overview metrics…');
+  renderDashboardLoading(riskDashboardPanel, 'Loading susceptibility tiers…');
+  renderDashboardLoading(workflowPanel, 'Loading screening workflow…');
+
+  // Important: this dashboard is for quick overview only.
+  // Use a coarser scale so the Earth Engine App does not hang at startup.
+  // The map layers and click statistics still use the full precomputed rasters.
+  var areaKm2 = ee.Image.pixelArea().divide(1e6);
+
+  function areaBand(mask, name) {
+    return areaKm2.updateMask(mask).rename(name);
+  }
+
+  var areaBands = ee.Image.cat([
+    areaBand(glacier_2000.eq(1), 'area2000'),
+    areaBand(glacier_2024.eq(1), 'area2024'),
+    areaBand(retreatOnly, 'retreatArea'),
+    areaBand(modelDomain, 'modelDomainArea'),
+    areaBand(susceptibilityMap.lt(0.20), 'veryLowArea'),
+    areaBand(susceptibilityMap.gte(0.20).and(susceptibilityMap.lt(0.35)), 'lowArea'),
+    areaBand(susceptibilityMap.gte(0.35).and(susceptibilityMap.lt(0.55)), 'moderateArea'),
+    areaBand(susceptibilityMap.gte(0.55).and(susceptibilityMap.lt(0.75)), 'highArea'),
+    areaBand(susceptibilityMap.gte(0.75), 'criticalArea')
+  ]);
+
+  var areaStats = areaBands.reduceRegion({
+    reducer: ee.Reducer.sum(),
+    geometry: AOI_geom,
+    scale: dashboardStatsScale,
+    maxPixels: 1e9,
+    bestEffort: true,
+    tileScale: 4
+  });
+
+  var meanWarming = warmingRate.reduceRegion({
+    reducer: ee.Reducer.mean(),
+    geometry: AOI_geom,
+    scale: dashboardStatsScale,
+    maxPixels: 1e9,
+    bestEffort: true,
+    tileScale: 4
+  }).get('warming_rate');
+
+  ee.Dictionary(areaStats).combine(ee.Dictionary({
+    meanWarming: meanWarming,
+    mineCount: allMines.size(),
+    settlementCount: allSettlements.size(),
+    dashboardScale: dashboardStatsScale
+  })).evaluate(function(st) {
+    if (!st) {
+      overviewPanel.clear();
+      riskDashboardPanel.clear();
+      workflowPanel.clear();
+      overviewPanel.add(ui.Label(
+        'Dashboard summary could not load. Map layers and click statistics still work.',
+        {fontSize: '11px', color: '#c62828'}
+      ));
+      return;
+    }
+    renderDashboardSummary(st);
+  });
+}
 
 var panel = ui.Panel({
   style: {
-    width: '320px',
-    height: '95%',
-    maxHeight: '95%',
-    padding: '12px',
-    position: 'top-left',
-    backgroundColor: 'white'
+    width: '340px',
+    padding: '16px',
+    backgroundColor: 'rgba(255,255,255,0.96)',
+    border: '1px solid #d5dde5'
   }
 });
 
-panel.add(ui.Label('Greenland Glacier–Mining Nexus', {
-  fontWeight: 'bold', fontSize: '18px', margin: '0 0 4px 0'
+
+
+panel.add(
+ ui.Label(
+  'Greenland Glacier Retreat\nSusceptibility Application',
+  TITLE_STYLE
+ )
+);
+
+panel.add(
+ ui.Label(
+'Exploring glacier retreat, climate warming,\n' +
+'and mining activity across Greenland’s\n' +
+'peripheral glacier zone.',
+SUBTEXT_STYLE
+ )
+);
+
+panel.add(ui.Button({
+ label:'Reset Center (Greenland)',
+ onClick:function(){
+   leftMap.centerObject(AOI,4);
+   rightMap.centerObject(AOI,4);
+ },
+ style:BUTTON_STYLE
 }));
+
+panel.add(ui.Button({
+ label:'View: 2000 vs 2024 Glacier Content',
+ onClick:showGlacierComparisonMode,
+ style:BUTTON_STYLE
+}));
+
+panel.add(ui.Button({
+ label:'View: Future Risk of Melting',
+ onClick:showFutureRiskMode,
+ style:BUTTON_STYLE
+}));
+
+panel.add(divider());
+
+panel.add(ui.Label('How to use:', SECTION_STYLE));
+
 panel.add(ui.Label(
-  'Exploring glacier retreat, climate warming, and mining activity ' +
-  'across Greenland\'s peripheral glacier zone.',
-  {fontSize: '11px', color: '#666', margin: '0 0 10px 0'}
+'• Drag the swipe bar to compare 2000 vs 2024\n' +
+'• Toggle layers using the map layer controls\n' +
+'• Click anywhere on the map for regional statistics',
+{
+ fontSize:'11px',
+ color:'#555',
+ whiteSpace:'pre',
+ margin:'0 0 10px 0'
+}
 ));
 
-panel.add(ui.Button({
-  label: '2000 vs 2024 glacier content',
-  onClick: showGlacierComparisonMode,
-  style: {stretch: 'horizontal', margin: '4px 0'}
-}));
+// ---- Overview dashboard ----
+panel.add(divider());
+panel.add(ui.Label('Overview', SECTION_STYLE));
+var overviewPanel = ui.Panel();
+panel.add(overviewPanel);
 
-panel.add(ui.Button({
-  label: 'Future Risk of Melting',
-  onClick: showFutureRiskMode,
-  style: {stretch: 'horizontal', margin: '0 0 10px 0'}
-}));
+// ---- AOI dashboard ----
+panel.add(divider());
+panel.add(ui.Label('AOI Dashboard', SECTION_STYLE));
+var riskDashboardPanel = ui.Panel({
+  style: {
+    padding: '7px',
+    backgroundColor: '#f7f9fb',
+    border: '1px solid #d5dde5'
+  }
+});
+panel.add(riskDashboardPanel);
 
-panel.add(ui.Label('How to use:', {fontWeight: 'bold', fontSize: '13px'}));
-panel.add(ui.Label('• Drag the swipe bar to compare 2000 vs 2024',
-  {fontSize: '11px'}));
-panel.add(ui.Label('• Toggle layers with the Layers button on each map',
-  {fontSize: '11px'}));
-panel.add(ui.Label('• Click anywhere on the map for regional stats',
-  {fontSize: '11px', margin: '0 0 10px 0'}));
+// ---- Stage funnel ----
+panel.add(divider());
+panel.add(ui.Label('Stage Funnel', SECTION_STYLE));
+var workflowPanel = ui.Panel({
+  style: {
+    padding: '7px',
+    backgroundColor: '#f7f9fb',
+    border: '1px solid #d5dde5'
+  }
+});
+panel.add(workflowPanel);
+
+loadDashboardSummary();
+
 
 // ---- Model performance from image asset metadata ----
-panel.add(ui.Label('— Model Performance —', {
-  fontWeight: 'bold', fontSize: '13px', margin: '8px 0 4px 0'
-}));
+panel.add(divider());
+panel.add(
+ ui.Label(
+   'Model Performance',
+   SECTION_STYLE
+ )
+);
 
 var modelStatsPanel = ui.Panel();
 panel.add(modelStatsPanel);
@@ -377,21 +1122,38 @@ var importanceChart = ui.Chart.feature.byFeature(
    legend: {position: 'none'},
    hAxis: {title: 'Importance'},
    vAxis: {title: ''},
-   colors: ['#1565c0'],
+   colors: ['#0b4f8a'],
    bar: {groupWidth: '80%'},
    chartArea: {left: 110, width: '55%'}
  });
 panel.add(importanceChart);
 
 // ---- Susceptibility legend ----
-panel.add(ui.Label('— Susceptibility Legend —', {
-  fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
-}));
+panel.add(divider());
+panel.add(
+ ui.Label(
+   'Susceptibility Scale',
+   SECTION_STYLE
+ )
+);
 
-var legendPalette = ['#2e7d32','#66bb6a','#fff9c4',
-                     '#ffcc80','#e53935','#b71c1c'];
-var legendLabels  = ['Very Low','Low','Moderate',
-                     'High','Very High','Critical'];
+var legendPalette = [
+'#d8f3dc',
+'#b7e4c7',
+'#fff3b0',
+'#ffc078',
+'#f77f00',
+'#d62828'
+];
+
+var legendLabels = [
+'Very Low',
+'Low',
+'Moderate',
+'High',
+'Very High',
+'Critical'
+];
 
 for (var i = 0; i < legendPalette.length; i++) {
   var row = ui.Panel({
@@ -409,11 +1171,15 @@ for (var i = 0; i < legendPalette.length; i++) {
 }
 
 // ---- Map domain legend ----
-panel.add(ui.Label('— Map Domain —', {
-  fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
-}));
+panel.add(divider());
+panel.add(
+ ui.Label(
+   'Map Domain',
+   SECTION_STYLE
+ )
+);
 
-var domainPalette = ['#2e7d33', '#d9edf7'];
+var domainPalette = ['#78909c', '#eceff1'];
 var domainLabels  = [
   'Modelled peripheral glacier zone',
   'Central/northern ice context only'
@@ -436,20 +1202,38 @@ for (var j = 0; j < domainPalette.length; j++) {
   panel.add(domainRow);
 }
 
-// ---- Click-stats section ----
-panel.add(ui.Label('— Click Stats —', {
-  fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
-}));
-panel.add(ui.Label('Click on the map to see location details.',
-  {fontSize: '11px', color: '#999', fontStyle: 'italic'}));
+// ---- Map output section ----
+panel.add(divider());
+panel.add(
+ ui.Label(
+   'Location Statistics',
+   SECTION_STYLE
+ )
+);
 
+panel.add(ui.Label(
+  'Click anywhere on the map to generate the bottom dashboard card.\n' +
+  'The sidebar is kept for controls, legends, and methodology notes.',
+  {
+    fontSize: '11px',
+    color: '#666',
+    whiteSpace: 'pre',
+    margin: '0 0 8px 0'
+  }
+));
+
+// Invisible buffer used by the existing click handler.
+// Visible click results are rendered in the bottom dashboard card.
 var clickStatsPanel = ui.Panel();
-panel.add(clickStatsPanel);
 
 // ---- Methodology note ----
-panel.add(ui.Label('— Methodology —', {
-  fontWeight: 'bold', fontSize: '13px', margin: '10px 0 4px 0'
-}));
+panel.add(divider());
+panel.add(
+ ui.Label(
+   'Methodology',
+   SECTION_STYLE
+ )
+);
 panel.add(ui.Label(
   'Heavy processing is run once in gee_preprocess_export.js, while ' +
   'central/northern ice-sheet context and the peripheral study-zone mask ' +
@@ -468,7 +1252,6 @@ panel.add(ui.Label('CASA0025 Coursework · UCL CASA', {
   fontSize: '9px', color: '#999', margin: '6px 0 0 0'
 }));
 
-leftMap.add(panel);
 
 
 // ============================================================
@@ -482,6 +1265,7 @@ function handleMapClick(coords) {
   clickStatsPanel.clear();
   clickStatsPanel.add(ui.Label('Computing…',
     {color: 'gray', fontStyle: 'italic', fontSize: '11px'}));
+  renderBottomLoading(coords);
 
   var point  = ee.Geometry.Point([coords.lon, coords.lat]);
   var region = point.buffer(25000);
@@ -521,16 +1305,19 @@ function handleMapClick(coords) {
     if (!s || s.area2000 === null) {
       clickStatsPanel.add(ui.Label(
         'No data here — click on land.', {color: 'red', fontSize: '11px'}));
+      renderBottomNoData(coords);
       return;
     }
 
     clickStatsPanel.add(ui.Label(
-      coords.lat.toFixed(3) + '°N, ' +
-      Math.abs(coords.lon).toFixed(3) + '°W',
-      {fontWeight: 'bold', fontSize: '13px'}));
+      coords.lat.toFixed(3)+'°N, '+
+      Math.abs(coords.lon).toFixed(3)+'°W',
+      STAT_COORD));
+      
+      
     clickStatsPanel.add(ui.Label(
-      '(25 km radius)',
-      {fontSize: '10px', color: 'gray', margin: '0 0 4px 0'}));
+      '(25 km analysis radius)',
+      {fontSize: '10px', color: '#90a4ae', margin: '0 0 8px 0'}));
 
     var inModelDomain = s.domain !== null && s.domain > 0;
     var inContextOnly = !inModelDomain && s.context !== null && s.context > 0;
@@ -540,25 +1327,24 @@ function handleMapClick(coords) {
     var domainColor = inModelDomain ? '#00838f' :
                       inContextOnly ? '#607d8b' : '#999';
 
-    clickStatsPanel.add(ui.Label(
-      'Map domain: ' + domainText,
-      {fontSize: '11px', fontWeight: 'bold', color: domainColor}));
+    clickStatsPanel.add(ui.Label('Map Domain',STAT_HEADER));
+
+    clickStatsPanel.add(ui.Label(domainText,{fontSize:'11px',fontWeight:'bold',color:domainColor,margin:'0 0 6px 0'}));
 
     var a0  = (s.area2000 / 1e6).toFixed(1);
     var a1  = (s.area2024 / 1e6).toFixed(1);
     var dA  = (a1 - a0).toFixed(1);
     var pct = a0 > 0 ? ((dA / a0) * 100).toFixed(1) : 'N/A';
 
-    clickStatsPanel.add(ui.Label('Glacier', {
-      fontWeight: 'bold', fontSize: '12px', margin: '6px 0 2px 0'}));
+    clickStatsPanel.add(ui.Label('Glacier Change', STAT_HEADER));
     clickStatsPanel.add(ui.Label(
       '~2000: ' + a0 + ' km²   ~2024: ' + a1 + ' km²',
       {fontSize: '11px'}));
     clickStatsPanel.add(ui.Label(
       'Change: ' + (dA > 0 ? '+' : '') + dA + ' km² (' +
       (pct > 0 ? '+' : '') + pct + '%)',
-      {fontSize: '11px', fontWeight: 'bold',
-       color: dA < 0 ? 'red' : '#2e7d32'}));
+      {fontSize: '12px', fontWeight: 'bold',
+       color: dA < 0 ? '#c62828':'#2e7d32',margin:'2px 0 6px 0'}));
 
     if (s.lstE !== null && s.lstR !== null) {
       clickStatsPanel.add(ui.Label('Temperature', {
@@ -587,15 +1373,17 @@ function handleMapClick(coords) {
 
     if (s.susceptibility !== null) {
       var rPct   = (s.susceptibility * 100).toFixed(0);
-      var rColor = s.susceptibility > 0.7 ? '#b71c1c' :
-                   s.susceptibility > 0.4 ? '#ef6c00' : '#2e7d32';
-      var rLabel = s.susceptibility > 0.7 ? 'HIGH' :
-                   s.susceptibility > 0.4 ? 'MODERATE' : 'LOW';
+      var rColor = s.susceptibility > 0.75 ? '#b71c1c' :
+                   s.susceptibility > 0.55 ? '#d35400' :
+                   s.susceptibility > 0.35 ? '#8a6d00' : '#2e7d32';
+      var rLabel = s.susceptibility > 0.75 ? 'CRITICAL' :
+                   s.susceptibility > 0.55 ? 'HIGH' :
+                   s.susceptibility > 0.35 ? 'MODERATE' : 'LOW';
       clickStatsPanel.add(ui.Label('Retreat Susceptibility', {
         fontWeight: 'bold', fontSize: '12px', margin: '6px 0 2px 0'}));
       clickStatsPanel.add(ui.Label(
         rLabel + '  (' + rPct + '%)',
-        {fontSize: '14px', fontWeight: 'bold', color: rColor}));
+        {fontSize: '14px', fontWeight: 'bold', backgroundColor:'#eef4ff',color:rColor,padding:'6px 10px',margin:'4px 0'}));
     } else {
       clickStatsPanel.add(ui.Label(
         inContextOnly ?
@@ -603,6 +1391,21 @@ function handleMapClick(coords) {
           'No current glacier at this location.',
         {fontSize: '11px', color: '#999', margin: '6px 0 0 0'}));
     }
+
+    updateBottomStatsPanel({
+      coords: coords,
+      domainText: domainText,
+      domainColor: domainColor,
+      a0: a0,
+      a1: a1,
+      dA: dA,
+      pct: pct,
+      lstE: s.lstE,
+      lstR: s.lstR,
+      warming: s.warming,
+      elev: s.elev,
+      susceptibility: s.susceptibility
+    });
 
     var regionMarker = ui.Map.Layer(
       ee.FeatureCollection([ee.Feature(region)]).style({
@@ -644,11 +1447,29 @@ leftMap.onClick(handleMapClick);
 // ============================================================
 
 ui.root.clear();
-ui.root.add(splitPanel);
+
+var mainUI = ui.Panel({
+  layout: ui.Panel.Layout.flow('horizontal'),
+  style: {
+    stretch: 'both',
+    width: '100%',
+    height: '100%'
+  }
+});
+
+mainUI.add(panel);
+
+mainUI.add(mapPanel);
+
+ui.root.add(mainUI);
+
+
+leftMap.centerObject(AOI,4);
+rightMap.centerObject(AOI,4);
 
 print('');
 print('═══════════════════════════════════════════════');
-print('  Greenland Glacier–Mining Nexus Explorer');
+print('Greenland Glacier Retreat Susceptibility Application');
 print('═══════════════════════════════════════════════');
 print('Loaded precomputed asset:', precomputed);
 print('Loaded context asset:', contextPrecomputed);
@@ -657,5 +1478,6 @@ print('Context band names:', contextPrecomputed.bandNames());
 print('Model accuracy:', precomputed.get('accuracy'));
 print('Kappa:', precomputed.get('kappa'));
 print('F1:', precomputed.get('f1'));
-print('Click on the map for regional statistics.');
+print('Click on the map for bottom-card regional statistics.');
+print('UI version: compact dashboard cards + fast 5 km overview reductions + ee-k24081637 asset paths.');
 print('═══════════════════════════════════════════════');
