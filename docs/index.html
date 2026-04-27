@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,12 +73,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-67e1af7abdb15bd5a2919d83736f6706.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4f6ed13f903dd169c65400d30de9f695.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-13c306840597b116320032d0931dc0e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-ed3b713f142b650e3636c65583eaf486.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-36cd757a48f70156034ad6e03107a1bd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-ae4d374d64393fe1f2b1f4026bcc48cd.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -320,7 +320,10 @@ background-size: cover;
   </ul></li>
   <li><a href="#interface" id="toc-interface" class="nav-link" data-scroll-target="#interface">Interface</a></li>
   </ul></li>
-  <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a></li>
+  <li><a href="#the-application" id="toc-the-application" class="nav-link" data-scroll-target="#the-application">The Application</a>
+  <ul>
+  <li><a href="#key-features-beyond-the-application" id="toc-key-features-beyond-the-application" class="nav-link" data-scroll-target="#key-features-beyond-the-application">Key Features Beyond the Application</a></li>
+  </ul></li>
   <li><a href="#how-it-works" id="toc-how-it-works" class="nav-link" data-scroll-target="#how-it-works">How it Works</a>
   <ul>
   <li><a href="#data-preparation-and-precomputations" id="toc-data-preparation-and-precomputations" class="nav-link" data-scroll-target="#data-preparation-and-precomputations">1. Data Preparation and Precomputations</a></li>
@@ -951,10 +954,137 @@ GADM Greenland (g1bd) boundaries. Integrated to provide <b>regional context</b> 
 </section>
 <section id="the-application" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-application">The Application</h2>
+<p>Replace the placeholder below with the published Earth Engine App link before final submission.</p>
 <div class="column-screen">
 <iframe src="https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining" width="100%" height="90vh" style="height:90vh; border:none;">
 </iframe>
 </div>
+<section id="key-features-beyond-the-application" class="level3">
+<h3 class="anchored" data-anchor-id="key-features-beyond-the-application">Key Features Beyond the Application</h3>
+<p>While our application showcases the app’s core functionality, several critical features work behind the scenes to enhance its performance and reliability. In this section, we highlight key capabilities implemented to optimize efficiency and ensure a seamless user experience.</p>
+<div class="cell g-col-lg-12 g-col-12">
+<div class="cell-output-display">
+<div id="gallery-carousel" class="carousel carousel-dark slide" data-bs-ride="false" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px;">
+<div class="carousel-indicators">
+<button type="button" data-bs-target="#gallery-carousel" data-bs-slide-to="0" class="active"></button>
+<button type="button" data-bs-target="#gallery-carousel" data-bs-slide-to="1" class=""></button>
+<button type="button" data-bs-target="#gallery-carousel" data-bs-slide-to="2" class=""></button>
+<button type="button" data-bs-target="#gallery-carousel" data-bs-slide-to="3" class=""></button>
+<button type="button" data-bs-target="#gallery-carousel" data-bs-slide-to="4" class=""></button>
+</div>
+<div class="carousel-inner" style="height: 750px; width: 100%;">
+<div class="carousel-item active" style="height: 750px; padding: 40px 20px;">
+<h4 class="mt-2 anchored" style="color: #0b3d66; text-align: center; font-weight: bold;">Multi-band Precomputation</h4>
+<p style="padding: 0 40px; font-size: 0.9em; text-align: center;">To ensure a zero-latency user experience, the app avoids on-the-fly Landsat compositing by loading pre-processed 300m multi-band assets, containing glacier masks, LST trends, and RF susceptibility.</p>
+<div style="padding: 10px; height: 300px; display: flex; align-items: center; justify-content: center;">
+<img src="images/greenland_precompute.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px;">
+</div>
+<div style="padding: 10px 40px;">
+<pre style="background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;"><code>// Precomputing heavy layers into a single multi-band Asset
+var precomputed = ee.Image.cat([
+  glacier_2000.toByte(),
+  glacier_2024.toByte(),
+  warmingRate.toFloat(),
+  susceptibilityMap.toFloat()
+]).set({
+  accuracy: confusionMatrix.accuracy(),
+  f1: f1,
+  importance: rfClassify.explain().get('importance')
+});
+</code>
+</pre>
+</div>
+</div>
+<div class="carousel-item" style="height: 750px; padding: 40px 20px;">
+<h4 class="mt-2 anchored" style="color: #0b3d66; text-align: center; font-weight: bold;">Linked Dual-Map Interface</h4>
+<p style="padding: 0 40px; font-size: 0.9em; text-align: center;">Utilizing a split-panel UI with a Map Linker, the app allows users to synchronize navigation between the year 2000 and 2024 to visually inspect glacier retreat alongside warming trends.</p>
+<div style="padding: 10px; height: 300px; display: flex; align-items: center; justify-content: center;">
+<img src="images/greenland_dual_map.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px;">
+</div>
+<div style="padding: 10px 40px;">
+<pre style="background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;"><code>// Synchronizing two maps for historical comparison
+var leftMap = ui.Map();
+var rightMap = ui.Map();
+var linker = ui.Map.Linker([leftMap, rightMap]);
+var splitPanel = ui.SplitPanel({
+  firstPanel: leftMap,
+  secondPanel: rightMap,
+  wipe: true,
+  style: {stretch: 'both'}
+});
+</code>
+</pre>
+</div>
+</div>
+<div class="carousel-item" style="height: 750px; padding: 40px 20px;">
+<h4 class="mt-2 anchored" style="color: #0b3d66; text-align: center; font-weight: bold;">Dynamic Regional Analysis</h4>
+<p style="padding: 0 40px; font-size: 0.9em; text-align: center;">When a user clicks the map, the app dynamically generates a 25km buffer and performs on-the-fly spatial reductions to calculate localized glacier loss and temperature trends.</p>
+<div style="padding: 10px; height: 300px; display: flex; align-items: center; justify-content: center;">
+<img src="images/greenland_click.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px;">
+</div>
+<div style="padding: 10px 40px;">
+<pre style="background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;"><code>// Handling map clicks for regional statistics
+function handleMapClick(coords) {
+  var point = ee.Geometry.Point([coords.lon, coords.lat]);
+  var region = point.buffer(25000); // 25km radius
+  var stats = precomputed.reduceRegion({
+    reducer: ee.Reducer.mean().combine(ee.Reducer.sum(), '', true),
+    geometry: region,
+    scale: 300
+  });
+}
+</code>
+</pre>
+</div>
+</div>
+<div class="carousel-item" style="height: 750px; padding: 40px 20px;">
+<h4 class="mt-2 anchored" style="color: #0b3d66; text-align: center; font-weight: bold;">Automated Workflow Funnel</h4>
+<p style="padding: 0 40px; font-size: 0.9em; text-align: center;">The app features a 'Stage Funnel' dashboard that uses coarse 5km reductions at startup to provide an immediate nationwide summary of ice loss and risk tiers without hanging the UI.</p>
+<div style="padding: 10px; height: 300px; display: flex; align-items: center; justify-content: center;">
+<img src="images/greenland_dashboard.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px;">
+</div>
+<div style="padding: 10px 40px;">
+<pre style="background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;"><code>// Fast dashboard summary using multi-scale reduction
+var areaStats = areaBands.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: AOI_geom,
+  scale: 5000, // Coarser scale for responsive dashboard
+  bestEffort: true
+});
+</code>
+</pre>
+</div>
+</div>
+<div class="carousel-item" style="height: 750px; padding: 40px 20px;">
+<h4 class="mt-2 anchored" style="color: #0b3d66; text-align: center; font-weight: bold;">Model Transparency &amp; Metrics</h4>
+<p style="padding: 0 40px; font-size: 0.9em; text-align: center;">Instead of a 'black box', the app extracts RF model metadata (Accuracy, Kappa, Variable Importance) directly from asset properties and renders them using interactive Google Charts.</p>
+<div style="padding: 10px; height: 300px; display: flex; align-items: center; justify-content: center;">
+<img src="images/greenland_metrics.png" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px;">
+</div>
+<div style="padding: 10px 40px;">
+<pre style="background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;"><code>// Rendering model importance from Asset metadata
+var importanceChart = ui.Chart.feature.byFeature(
+  importanceFeatures, 'variable', 'importance'
+).setChartType('BarChart')
+ .setOptions({
+   title: 'Random Forest Variable Importance',
+   colors: ['#0b4f8a']
+ });
+</code>
+</pre>
+</div>
+</div>
+</div>
+<button class="carousel-control-prev" type="button" data-bs-target="#gallery-carousel" data-bs-slide="prev">
+<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#gallery-carousel" data-bs-slide="next">
+<span class="carousel-control-next-icon" aria-hidden="true"></span>
+</button>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="how-it-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-it-works">How it Works</h2>
