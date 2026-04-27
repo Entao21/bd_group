@@ -164,3 +164,161 @@ div.sourceCode span.va { color: #6f42c1 !important; }
     font-size: 0.92em !important;
     white-space: normal !important;
 }
+
+.github-top-button {
+    position: fixed;
+    top: 58px;
+    right: 18px;
+    z-index: 1500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(26, 74, 117, 0.92);
+    color: #ffffff !important;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.github-top-button:hover {
+    background: rgba(52, 152, 219, 0.96);
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* Dark mode color overrides only. No layout, spacing, or width rules here. */
+html[data-bs-theme="dark"] body,
+body.quarto-dark {
+    background-color: #0d1720;
+    color: #dce8f2;
+}
+
+html[data-bs-theme="dark"] h2,
+html[data-bs-theme="dark"] .h2,
+body.quarto-dark h2,
+body.quarto-dark .h2 {
+    color: #8fc7f5;
+    border-bottom-color: #3498db;
+}
+
+html[data-bs-theme="dark"] h3,
+html[data-bs-theme="dark"] .h3,
+body.quarto-dark h3,
+body.quarto-dark .h3 {
+    color: #6eb9f0;
+}
+
+html[data-bs-theme="dark"] h4,
+html[data-bs-theme="dark"] .h4,
+body.quarto-dark h4,
+body.quarto-dark .h4 {
+    color: #9dd2f7;
+}
+
+html[data-bs-theme="dark"] a,
+body.quarto-dark a {
+    color: #7cc7ff;
+}
+
+html[data-bs-theme="dark"] table,
+body.quarto-dark table,
+html[data-bs-theme="dark"] .custom-data-table,
+body.quarto-dark .custom-data-table {
+    background-color: #132231 !important;
+    border-color: #2f516d !important;
+    color: #dce8f2 !important;
+}
+
+html[data-bs-theme="dark"] th,
+body.quarto-dark th,
+html[data-bs-theme="dark"] .custom-data-table th,
+body.quarto-dark .custom-data-table th {
+    background-color: #18334a !important;
+    color: #d9efff !important;
+    border-bottom-color: #57a6dc !important;
+}
+
+html[data-bs-theme="dark"] .custom-data-table td,
+body.quarto-dark .custom-data-table td {
+    border-bottom-color: #28465f !important;
+}
+
+html[data-bs-theme="dark"] .custom-data-table tr:hover td,
+body.quarto-dark .custom-data-table tr:hover td {
+    background-color: #1c354b !important;
+}
+
+html[data-bs-theme="dark"] .custom-data-table td[rowspan],
+body.quarto-dark .custom-data-table td[rowspan] {
+    background-color: #132231 !important;
+    color: #d9efff !important;
+    border-right-color: #28465f !important;
+}
+
+html[data-bs-theme="dark"] .dataset-name,
+body.quarto-dark .dataset-name {
+    color: #d9efff !important;
+}
+
+html[data-bs-theme="dark"] .desc-text,
+body.quarto-dark .desc-text {
+    color: #b7c9d8 !important;
+}
+
+html[data-bs-theme="dark"] div.sourceCode,
+body.quarto-dark div.sourceCode,
+html[data-bs-theme="dark"] pre.sourceCode,
+body.quarto-dark pre.sourceCode {
+    background-color: #101820 !important;
+    border-color: #2f516d !important;
+}
+
+html[data-bs-theme="dark"] pre.sourceCode code,
+html[data-bs-theme="dark"] pre code.sourceCode,
+body.quarto-dark pre.sourceCode code,
+body.quarto-dark pre code.sourceCode {
+    color: #e6edf3 !important;
+}
+
+html[data-bs-theme="dark"] div.sourceCode span,
+body.quarto-dark div.sourceCode span {
+    color: #e6edf3 !important;
+}
+
+html[data-bs-theme="dark"] :not(pre) > code,
+body.quarto-dark :not(pre) > code {
+    background-color: #173247 !important;
+    color: #ccecff !important;
+    border-color: #315c7a !important;
+}
+
+html[data-bs-theme="dark"] #quarto-toc-label::after,
+html[data-bs-theme="dark"] .toc-title::after,
+body.quarto-dark #quarto-toc-label::after,
+body.quarto-dark .toc-title::after {
+    color: #d9efff !important;
+}
+
+html[data-bs-theme="dark"] .sidebar nav[role=doc-toc] ul > li > a.active,
+body.quarto-dark .sidebar nav[role=doc-toc] ul > li > a.active {
+    color: #7cc7ff !important;
+    border-left-color: #7cc7ff !important;
+    background-color: rgba(124, 199, 255, 0.12);
+}
+
+html[data-bs-theme="dark"] .github-top-button,
+body.quarto-dark .github-top-button {
+    background: rgba(52, 152, 219, 0.95);
+    color: #ffffff !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+html[data-bs-theme="dark"] .github-top-button:hover,
+body.quarto-dark .github-top-button:hover {
+    background: rgba(124, 199, 255, 0.95);
+    color: #082033 !important;
+}

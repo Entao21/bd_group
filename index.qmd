@@ -11,6 +11,10 @@ format:
     code-overflow: scroll
 ---
 
+```{=html}
+<a class="github-top-button" href="https://github.com/Entao21/bd_group" target="_blank" rel="noopener">GitHub Repo</a>
+```
+
 ## Project Summary
 
 Greenland's ice sheet is losing mass rapidly, with an average loss of about 150 ± 13 Gt per year between 1992 and 2020 ([IMBIE Team, 2020](https://www.nature.com/articles/s41586-019-1855-2)). That amout of ice loss resulted in Greenland ice loss alone contributed to 14.7% of global sea-level rise per year.([IMBIE Team, 2020](https://www.nature.com/articles/s41586-019-1855-2); [Otosaka et al., 2023](https://essd.copernicus.org/articles/15/1597/2023/); [van den Broeke et al., 2016](https://tc.copernicus.org/articles/10/1933/2016/)). Climate change, global warming, human activities,  mineral exploration, and many other factors are all threatening this sensitive cryospheric environment ([Meredith et al.,2024](https://www.ipcc.ch/srocc/chapter/chapter-3-2/)). 
