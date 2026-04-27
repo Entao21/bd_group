@@ -1,5 +1,5 @@
 ---
-title: "Greenland Glacier-Mining Nexus Explorer"
+title: "Greenland Glacier Retreat Susceptibility Application"
 format:
   html:
     css: tools/style.css
@@ -13,7 +13,7 @@ format:
 
 ## Project Summary
 
-This project develops an interactive Google Earth Engine application to explore glacier retreat susceptibility across Greenland's peripheral glacier zone. The app combines Landsat-derived glacier change, Landsat land surface temperature trends, ArcticDEM terrain variables, and proximity indicators for mining activity, settlements, and coastlines. A Random Forest model is trained on observed retreat and stable-ice labels to map where current glaciers are more susceptible to retreat.
+This project develops an interactive Google Earth Engine application to explore glacier retreat susceptibility across Greenland's peripheral glacier zone. The app combines Landsat-derived glacier change, Landsat land surface temperature trends, ArcticDEM terrain variables, and proximity indicators for mining activity, settlements, and coastlines. A Random Forest model is then trained on observed retreat and stable-ice labels to map where current glaciers are more susceptible to retreat.
 
 The application provides a screening tool for identifying places where observed retreat, climate warming, terrain conditions, and mining-related proximity overlap. This supports more transparent discussion around Arctic resource development, environmental monitoring, and glacier vulnerability.
 
