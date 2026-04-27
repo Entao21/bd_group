@@ -13,14 +13,14 @@
 // 0. PROJECT ASSETS
 // ============================================================
 
-var precomputed = ee.Image('projects/gen-lang-client-0947282053/assets/0025/greenland_glacier_mining_precomputed');
-var contextPrecomputed = ee.Image('projects/gen-lang-client-0947282053/assets/0025/greenland_display_context_precomputed');
+var precomputed = ee.Image('projects/ee-k24081637/assets/0025/greenland_glacier_mining_precomputed');
+var contextPrecomputed = ee.Image('projects/ee-k24081637/assets/0025/greenland_display_context_precomputed');
 
-var drillholes     = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/drillholes_post2000_gee_upload');
-var miningLicences = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/greenland_mineral_licences_active_industrial_2026-04-21_gee_upload');
-var settlements    = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/settlement_gee_upload');
-var cities         = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/city_gee_upload');
-var graticules     = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/graticules_15');
+var drillholes     = ee.FeatureCollection('projects/ee-k24081637/assets/0025/drillholes_post2000_gee_upload');
+var miningLicences = ee.FeatureCollection('projects/ee-k24081637/assets/0025/greenland_mineral_licences_active_industrial_2026-04-21_gee_upload');
+var settlements    = ee.FeatureCollection('projects/ee-k24081637/assets/0025/settlement_gee_upload');
+var cities         = ee.FeatureCollection('projects/ee-k24081637/assets/0025/city_gee_upload');
+var graticules     = ee.FeatureCollection('projects/ee-k24081637/assets/0025/graticules_15');
 
 
 // ============================================================
