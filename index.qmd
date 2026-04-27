@@ -13,7 +13,7 @@ format:
 
 ## Project Summary
 
-This project develops an interactive Google Earth Engine application to explore glacier retreat susceptibility across Greenland's peripheral glacier zone. This app is a combination of Landsat-derived glacier change, Landsat land surface temperature trends, ArcticDEM terrain variables, and proximity indicators for mining activity, settlements, and coastlines. A Random Forest model is then trained on observed retreat and stable-ice labels to map where current glaciers are more susceptible to retreat.
+This project develops an interactive Google Earth Engine application to explore glacier retreat susceptibility across Greenland's peripheral glacier zone. This app is a combination of Landsat-derived glacier change, Landsat land surface temperature trends, ArcticDEM terrain variables, and proximity indicators for mining activity, settlements, and coastlines. A Random Forest model is trained on observed retreat and stable-ice labels to map where current glaciers are more susceptible to retreat.
 
 The application is aiming for providing a screening tool for identifying places where the ice sheet suffer the biggest risk of melting. This supports more transparent discussion around Arctic resource development, environmental monitoring, and glacier vulnerability.
 
@@ -23,7 +23,7 @@ Greenland's ice sheet is losing mass rapidly, with an average loss of about 150 
 
 Among all parts of Greenland's ice sheet, peripheral glaciers are the most vulnerable ones. According to [Larocca et al., 2023](https://www.nature.com/articles/s41558-023-01855-6), peripheral glaciers are not only melting at a faster rate than the central ice sheet, but their melting speed is also accelerating more rapidly than the central. Research by [Khan et al., 2022](https://doi.org/10.1029/2022GL098915)found that 4% of the peripheral ice sheet contributed about 14% of total Greenland ice loss ([Khan et al., 2022](https://doi.org/10.1029/2022GL098915)).
 
-Existing tools exhibits huge gap of showing retreat susceptibility. Our model is aiming for combining change detection, climate trends, topographic controls and human intervention indicators into a single exploratory geospatial tool that helps users investigate where these factors align with that gap by increased glacier retreat susceptibility.
+Existing tools exhibits huge gap of showing retreat susceptibility. Our application is aiming for combining change detection, climate trends, topographic controls and human intervention indicators into a single exploratory geospatial tool that helps users investigate where these factors align with that gap by increased glacier retreat susceptibility. The easy-to-use interface greatly improve the size of the target users.
 
 ### End User
 
@@ -170,7 +170,9 @@ Github repository and source code: [https://github.com/Entao21/bd_group](https:/
 
 ### Methodology
 
-The pipeline runs in three steps. Raw inputs — ArcticDEM terrain, Landsat 7/8/9 imagery, vector assets, and the Greenland AOI — feed four processing streams that produce a seven-variable predictor stack. A Random Forest model is trained on observed retreat and stable-ice labels and exports the results as an 8-band GEE image asset. A second script adds a 4-band context asset covering ice mask and domain boundaries. The interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface — no heavy computation at runtime.
+The pipeline runs in three steps. Preprocessing, predictor modelling, and machine learning. The figure below is an overview of this pipeline. Raw inputs produce a seven-variable predictor stack, and then a random forest model is trained on observed retreat and stable-ice labels and exports the results as an GEE image asset. 
+
+Beyonds that, some he interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface — no heavy computation at runtime.
 
 ```{=html}
 <div style="background:#f5f5f5;padding:24px 20px;border-radius:8px;border:1px solid #e0e0e0;font-family:Arial,sans-serif;font-size:13px;margin:16px 0;text-align:center;">
@@ -348,7 +350,7 @@ var cleanStable = stableCandidate.selfMask()
 </div>
 ```
 
-To track how temperatures have changed, Landsat surface temperature (ST) scenes from 2001 to 2024 were converted from raw DN values to degrees Celsius, then averaged into one composite per summer (June–August). Fitting a straight line through all 24 annual means gives a warming rate (°C/year) for every pixel. Two snapshot composites — one for ~2000 and one for ~2024 — were also retained so users can compare absolute temperatures directly in the app. Elevation and slope were derived from ArcticDEM v4 at the same 300 m resolution. Together with three proximity rasters, these variables make up the full predictor set:
+To track how temperatures have changed, Landsat surface temperature (ST) scenes from 2000 to 2024 were converted from raw DN values to degrees Celsius, then averaged into one composite per summer (June–August). Fitting a straight line through all 24 annual means gives a warming rate (°C/year) for every pixel. Two snapshot composites — one for ~2000 and one for ~2024 — were also retained so users can compare absolute temperatures directly in the app. Elevation and slope were derived from ArcticDEM v4 at the same 300 m resolution. Together with three proximity rasters, these variables make up the full predictor set:
 
 | Predictor | Source |
 |-----------|--------|
@@ -445,7 +447,7 @@ var coastProximity = ee.Image(1)
 </div>
 ```
 
-A **Random Forest with 100 trees** was trained to score how likely each current glacier pixel is to retreat. Only pixels with clear historical retreat or clear stable-ice history were used as training examples — ambiguous pixels were left out. The model only runs on peripheral glaciers (GIMP land ice below 2500 m, plus all ice south of 64°N where the southern ice cap behaves like a peripheral glacier rather than the interior ice sheet).
+A **Random Forest with 100 trees** was then trained to score how likely each current glacier pixel is to retreat. Only pixels with clear historical retreat or clear stable-ice history were used as training examples — ambiguous pixels were left out. The model only runs on peripheral glaciers (GIMP land ice below 2500 m, plus all ice south of 64°N where the southern ice cap behaves like a peripheral glacier rather than the interior ice sheet).
 
 To avoid the problem where nearby pixels leak from training into the test set, a **spatial block validation** split the map into 10 geographic chunks: chunks 0–6 trained the model and chunks 7–9 tested it. A second, classification-mode version of the same model produced the accuracy, kappa, precision, recall, and F1 scores shown in the app panel. The final score (0–1) is the fraction of the 100 trees that voted for retreat, assigned to every glacier pixel visible in 2022–2024.
 
@@ -546,24 +548,12 @@ var stats = ee.Dictionary({
 
 ## The Application
 
-Replace the placeholder below with the published Earth Engine App link before final submission.
 
 :::{.column-screen}
 
 <iframe src='https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining' width='100%' height='90vh' style='height:90vh; border:none;'></iframe>
 
 :::
-
-### Key Features Beyond the Application
-
-While our application showcases the app's core functionality, several critical features work behind the scenes to enhance its performance and reliability. In this section, we highlight key capabilities implemented to optimize efficiency and ensure a seamless user experience.
-
-```{r, echo = FALSE, message = FALSE, warning = FALSE}
-#| classes: '.g-col-lg-12 .g-col-12'
-source("tools/ppt.R")
-carousel("gallery-carousel", 5000, 
-         yaml.load_file("tools/ppt.yml"))
-```
 
 ## How it Works
 
