@@ -32,20 +32,6 @@ body {
     .page-columns .content {
         max-width: 1900px !important;
     }
-
-    .col-body, .body-content, .page-columns .page-body {
-        grid-column: body-start / body-end !important;
-        max-width: none !important;
-    }
-
-    #quarto-content > .page-columns {
-        grid-template-columns: [screen-start] 1fr [page-start body-start] minmax(0, 85%) [body-end page-end] 1fr [screen-end] !important;
-    }
-
-    .page-columns .content, .page-columns .page-body {
-        margin-left: 2% !important;
-        margin-right: 2% !important;
-    }
 }
 
 div.quarto-title-banner,
