@@ -23,7 +23,7 @@ This project develops an interactive GEE application to explore glacier retreat 
 
 ### Problem Statement
 
-Among all parts of Greenland's ice sheet, peripheral glaciers are the most vulnerable ones. According to [Larocca et al., 2023](https://www.nature.com/articles/s41558-023-01855-6), peripheral glaciers are not only melting at a faster rate than the central ice sheet, but their melting speed is also accelerating more rapidly than the central. Research by [Khan et al., 2022](https://doi.org/10.1029/2022GL098915)found that 4% of the peripheral ice sheet contributed about 14% of total Greenland ice loss ([Khan et al., 2022](https://doi.org/10.1029/2022GL098915)).
+Among all parts of Greenland's ice sheet, peripheral glaciers are the most vulnerable ones. According to [Larocca et al., 2023](https://www.nature.com/articles/s41558-023-01855-6), peripheral glaciers are not only melting at a faster rate than the central ice sheet, but their melting speed is also accelerating more rapidly than the central. Research by [Khan et al., 2022](https://doi.org/10.1029/2022GL098915) found that 4% of the peripheral ice sheet contributed about 14% of total Greenland ice loss ([Khan et al., 2022](https://doi.org/10.1029/2022GL098915)).
 
 Existing tools exhibits huge gap of showing peripheral glacier retreat susceptibility. Our application is aiming for combining change detection, climate trends, topographic controls and human intervention indicators into a single exploratory geospatial tool that helps users investigate where these factors align with that gap by increased glacier retreat susceptibility. The easy-to-use interface greatly improve the size of the target users.
 
@@ -278,6 +278,12 @@ The sections below describe each processing step in detail.
 ```
 
 Glacier extent for two time windows ~2000 (1999–2002) and ~2024 (2022–2024) was mapped from Landsat summer composites (June–August). Each scene was cloud-masked using the QA_PIXEL band, and the Normalized Difference Snow Index (NDSI) was calculated from the green and SWIR bands (Bands 2 & 5 for Landsat 7; Bands 3 & 6 for Landsat 8/9). Pixels with NDSI > 0.4 were classified as glacier ice. Retreat is defined as any pixel that was ice in ~2000 but not in ~2024. Small isolated patches (fewer than 3 connected pixels) were removed from both retreat and stable-ice labels to reduce noise from cloud shadows and Landsat 7 scan-line gaps. All output rasters were standardized to a 300 m polar grid (EPSG:3413).
+
+The NDSI formula is:
+
+$$
+\mathrm{NDSI} = \frac{\mathrm{Green} - \mathrm{SWIR}}{\mathrm{Green} + \mathrm{SWIR}}
+$$
 
 ```js
 // Cloud masking using QA_PIXEL for Landsat 8/9
