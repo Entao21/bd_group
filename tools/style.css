@@ -173,6 +173,8 @@ div.sourceCode span.va { color: #6f42c1 !important; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 86px;
+    box-sizing: border-box;
     padding: 0.4rem 0.65rem;
     border-radius: 999px;
     background: rgba(26, 74, 117, 0.92);
@@ -187,6 +189,35 @@ div.sourceCode span.va { color: #6f42c1 !important; }
 .github-top-button:hover {
     background: rgba(52, 152, 219, 0.96);
     color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.quarto-color-scheme-toggle.top-right {
+    width: 86px;
+    height: auto;
+    box-sizing: border-box;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.72rem;
+    background: rgba(255, 255, 255, 0.88);
+    color: #1a4a75 !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    text-decoration: none !important;
+    z-index: 2200;
+}
+
+.quarto-color-scheme-toggle.top-right::after {
+    content: " Theme";
+    margin-left: 0.25rem;
+    font-weight: 700;
+}
+
+.quarto-color-scheme-toggle.top-right:hover {
+    background: #ffffff;
+    color: #3498db !important;
     text-decoration: none !important;
 }
 
@@ -321,4 +352,17 @@ html[data-bs-theme="dark"] .github-top-button:hover,
 body.quarto-dark .github-top-button:hover {
     background: rgba(124, 199, 255, 0.95);
     color: #082033 !important;
+}
+
+html[data-bs-theme="dark"] .quarto-color-scheme-toggle.top-right,
+body.quarto-dark .quarto-color-scheme-toggle.top-right {
+    background: rgba(19, 34, 49, 0.92);
+    color: #d9efff !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+html[data-bs-theme="dark"] .quarto-color-scheme-toggle.top-right:hover,
+body.quarto-dark .quarto-color-scheme-toggle.top-right:hover {
+    background: rgba(28, 53, 75, 0.96);
+    color: #7cc7ff !important;
 }
