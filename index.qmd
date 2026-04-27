@@ -27,9 +27,18 @@ Existing tools exhibits huge gap of showing retreat susceptibility. Our model is
 
 ### End User
 
-The application is designed for users who need a clear spatial overview rather than a static scientific map. Potential users include Arctic environmental researchers, Greenland planning and resource governance agencies, environmental NGOs, mining impact analysts, and students studying remote sensing or climate risk.
+This application is designed for users who need a clear spatial overview of the glacier retreat susceptibility of Greenland's peripheral glaciers. Potential users include:
 
-The interface supports these users by combining technical model outputs with accessible interaction: users can compare historical and recent glacier extent, toggle model layers, inspect model diagnostics, and click anywhere on the map to retrieve local glacier, temperature, elevation, and susceptibility statistics.
+- Arctic environmental researchers
+- Greenland planning and resource governance agencies
+- Environmental NGOs
+- Local residents
+- Students
+
+The interface supports these users by combining technical model outputs with accessible interaction. Users can compare historical and recent glacier extent, toggle model layers, inspect model diagnostics, and click anywhere on the map to retrieve local glacier, temperature, elevation, and susceptibility statistics.
+
+Github repository and source code: [https://github.com/Entao21/bd_group](https://github.com/Entao21/bd_group). The application is built on GEE platform.  
+
 
 ### Data
 
