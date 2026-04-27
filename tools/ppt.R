@@ -37,7 +37,7 @@ carouselItem <- function(title, caption, image, link, code, index, interval) {
                    img(src = image, style = "max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 4px;"))
   
   code_row <- div(style = "padding: 10px 40px;",
-                  tags$pre(style = "background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;",
+                  tags$pre(style = "background: #ffffff; color: #333333; border: 1px solid #dee2e6; padding: 15px; border-radius: 5px; height: 220px; overflow-y: auto; text-align: left; font-size: 0.8em;",
                            tags$code(code)))
   
   item <- div(class = paste0("carousel-item", ifelse(index == 0, " active", "")),
