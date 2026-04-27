@@ -32,7 +32,7 @@
   link: ""
 
 - title: "Dynamic Regional Analysis"
-  caption: "When a user clicks the map, the app dynamically generates a 25km buffer and performs on-the-fly spatial reductions to calculate localized glacier loss and temperature trends."
+  caption: "When a user clicks the map, the app dynamically generates a 25km buffer and performs on-the-fly spatial reductions to calculate localized glacier loss and temperature trends.The red dot on the map indicates the selected sampling point."
   image: "images/greenland_click.png"
   code: |
     // Handling map clicks for regional statistics
