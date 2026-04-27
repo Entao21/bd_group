@@ -1,8 +1,5 @@
-
-
-
 // ============================================================
-// CASA0025 — Greenland Glacier × Mining Nexus
+// CASA0025 — Greenland Glacier Retreat Susceptibility Application
 // Interactive Retreat Susceptibility Application
 // ============================================================
 //
@@ -16,14 +13,14 @@
 // 0. PROJECT ASSETS
 // ============================================================
 
-var precomputed = ee.Image('projects/ee-k24081637/assets/0025/greenland_glacier_mining_precomputed');
-var contextPrecomputed = ee.Image('projects/ee-k24081637/assets/0025/greenland_display_context_precomputed');
+var precomputed = ee.Image('projects/gen-lang-client-0947282053/assets/0025/greenland_glacier_mining_precomputed');
+var contextPrecomputed = ee.Image('projects/gen-lang-client-0947282053/assets/0025/greenland_display_context_precomputed');
 
-var drillholes     = ee.FeatureCollection('projects/ee-k24081637/assets/0025/drillholes_post2000_gee_upload');
-var miningLicences = ee.FeatureCollection('projects/ee-k24081637/assets/0025/greenland_mineral_licences_active_industrial_2026-04-21_gee_upload');
-var settlements    = ee.FeatureCollection('projects/ee-k24081637/assets/0025/settlement_gee_upload');
-var cities         = ee.FeatureCollection('projects/ee-k24081637/assets/0025/city_gee_upload');
-var graticules     = ee.FeatureCollection('projects/ee-k24081637/assets/0025/graticules_15');
+var drillholes     = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/drillholes_post2000_gee_upload');
+var miningLicences = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/greenland_mineral_licences_active_industrial_2026-04-21_gee_upload');
+var settlements    = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/settlement_gee_upload');
+var cities         = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/city_gee_upload');
+var graticules     = ee.FeatureCollection('projects/gen-lang-client-0947282053/assets/0025/graticules_15');
 
 
 // ============================================================
@@ -276,15 +273,15 @@ var bottomStatsPanel = ui.Panel({
 });
 rightMap.add(bottomStatsPanel);
 
-function addBottomCard(title, value, note, color, backgroundColor, wide) {
-  var cardWidth = wide ? '185px' : '150px';
+function addBottomCard(title, value, note, color, backgroundColor, wide, valueFontSize, align) {
+  var cardWidth = wide ? '175px' : '140px';
 
   var card = ui.Panel({
     layout: ui.Panel.Layout.flow('vertical'),
     style: {
       width: cardWidth,
-      padding: '7px 9px',
-      margin: '0 5px',
+      padding: '5px 6px',
+      margin: '0 3px',
       backgroundColor: backgroundColor || 'rgba(255,255,255,0.0)',
       border: '0 solid #ffffff'
     }
@@ -295,16 +292,18 @@ function addBottomCard(title, value, note, color, backgroundColor, wide) {
     fontWeight: 'bold',
     color: '#1a4a75',
     margin: '0 0 5px 0',
-    textAlign: 'center'
+    textAlign: 'center',
+    backgroundColor: 'rgba(0,0,0,0)'
   }));
 
   card.add(ui.Label(value, {
-    fontSize: '13px',
+    fontSize: valueFontSize || '13px',
     fontWeight: 'bold',
     color: color || '#0d47a1',
     margin: '0 0 3px 0',
-    textAlign: 'center',
-    whiteSpace: 'pre'
+    textAlign: align || 'center',
+    whiteSpace: 'pre',
+    backgroundColor: 'rgba(0,0,0,0)'
   }));
 
   if (note) {
@@ -313,7 +312,8 @@ function addBottomCard(title, value, note, color, backgroundColor, wide) {
       color: '#607d8b',
       margin: '0',
       textAlign: 'center',
-      whiteSpace: 'pre'
+      whiteSpace: 'pre',
+      backgroundColor: 'rgba(0,0,0,0)'
     }));
   }
 
@@ -342,7 +342,7 @@ function riskStyle(value) {
 function renderBottomIdle() {
   bottomStatsPanel.clear();
   addBottomCard('Selected location', 'Click the map', '25 km analysis radius', '#0d47a1', '#ffffff', true);
-  addBottomCard('Map Domain', '—', 'Waiting for location', '#00838f', '#ffffff', false);
+  addBottomCard('Map Domain', '—', 'Waiting for location', '#00838f', '#ffffff', false, null, 'left');
   addBottomCard('Glacier Change', '—', '~2000 vs ~2024', '#1a4a75', '#ffffff', true);
   addBottomCard('Temperature', '—', 'LST trend after click', '#1565c0', '#ffffff', true);
   addBottomCard('Elevation', '—', 'Mean elevation', '#1a4a75', '#ffffff', false);
@@ -353,13 +353,13 @@ function renderBottomLoading(coords) {
   bottomStatsPanel.clear();
   addBottomCard(
     'Selected location',
-    coords.lat.toFixed(3) + '°N, ' + Math.abs(coords.lon).toFixed(3) + '°W',
+    coords.lat.toFixed(3) + '°N\n' + Math.abs(coords.lon).toFixed(3) + '°W',
     'Computing 25 km statistics…',
     '#0d47a1',
     '#ffffff',
     true
   );
-  addBottomCard('Map Domain', 'Loading…', '', '#00838f', '#ffffff', false);
+  addBottomCard('Map Domain', 'Loading…', '', '#00838f', '#ffffff', false, null, 'left');
   addBottomCard('Glacier Change', 'Loading…', '', '#1a4a75', '#ffffff', true);
   addBottomCard('Temperature', 'Loading…', '', '#1565c0', '#ffffff', true);
   addBottomCard('Elevation', 'Loading…', '', '#1a4a75', '#ffffff', false);
@@ -370,7 +370,7 @@ function renderBottomNoData(coords) {
   bottomStatsPanel.clear();
   addBottomCard(
     'Selected location',
-    coords.lat.toFixed(3) + '°N, ' + Math.abs(coords.lon).toFixed(3) + '°W',
+    coords.lat.toFixed(3) + '°N\n' + Math.abs(coords.lon).toFixed(3) + '°W',
     'No data here — click on land',
     '#c62828',
     '#fff5f5',
@@ -383,7 +383,7 @@ function updateBottomStatsPanel(st) {
 
   addBottomCard(
     'Selected location',
-    st.coords.lat.toFixed(3) + '°N, ' + Math.abs(st.coords.lon).toFixed(3) + '°W',
+    st.coords.lat.toFixed(3) + '°N\n' + Math.abs(st.coords.lon).toFixed(3) + '°W',
     '(25 km analysis radius)',
     '#0d47a1',
     '#ffffff',
@@ -396,7 +396,9 @@ function updateBottomStatsPanel(st) {
     '',
     st.domainColor,
     '#ffffff',
-    false
+    false,
+    null,
+    'left'
   );
 
   var changeNum = Number(st.dA);
@@ -404,7 +406,7 @@ function updateBottomStatsPanel(st) {
 
   addBottomCard(
     'Glacier Change',
-    '~2000: ' + st.a0 + ' km²   ~2024: ' + st.a1 + ' km²',
+    '~2000: ' + st.a0 + ' km²\n~2024: ' + st.a1 + ' km²',
     'Change: ' + (changeNum > 0 ? '+' : '') + st.dA + ' km² (' + pctText + ')',
     changeNum < 0 ? '#c62828' : '#2e7d32',
     '#ffffff',
@@ -416,7 +418,7 @@ function updateBottomStatsPanel(st) {
   var trendColor = '#1565c0';
 
   if (st.lstE !== null && st.lstR !== null) {
-    tempText = '~2000: ' + st.lstE.toFixed(1) + '°C    ~2024: ' + st.lstR.toFixed(1) + '°C';
+    tempText = '~2000: ' + st.lstE.toFixed(1) + '°C\n~2024: ' + st.lstR.toFixed(1) + '°C';
   }
 
   if (st.warming !== null) {
@@ -446,11 +448,13 @@ function updateBottomStatsPanel(st) {
   var r = riskStyle(st.susceptibility);
   addBottomCard(
     'Retreat Susceptibility',
-    r.label + ' (' + r.pct + ')',
+    r.pct + '\n' + r.label,
     '',
     r.color,
     r.bg,
-    true
+    true,
+    '16px',
+    'left'
   );
 }
 
@@ -1031,10 +1035,17 @@ panel.add(
  )
 );
 
-var modelStatsPanel = ui.Panel();
+var modelStatsPanel = ui.Panel({
+  style: {
+    padding: '8px 12px',
+    margin: '0 0 8px 0',
+    backgroundColor: '#ffffff',
+    border: '0 solid rgba(255,255,255,0)'
+  }
+});
 panel.add(modelStatsPanel);
 modelStatsPanel.add(ui.Label('Loading model stats…',
-  {color: 'gray', fontStyle: 'italic', fontSize: '11px'}));
+  {color: 'gray', fontStyle: 'italic', fontSize: '11px', margin: '0'}));
 
 ee.Dictionary({
   accuracy: precomputed.get('accuracy'),
@@ -1057,30 +1068,32 @@ ee.Dictionary({
   }
   modelStatsPanel.add(ui.Label(
     'Accuracy: ' + (st.accuracy * 100).toFixed(1) + '%',
-    {fontSize: '12px', fontWeight: 'bold', color: '#2e7d32'}));
+    {fontSize: '12px', fontWeight: 'bold', color: '#2e7d32', margin: '0 0 4px 0'}));
   modelStatsPanel.add(ui.Label(
     'Kappa: ' + st.kappa.toFixed(3),
-    {fontSize: '11px'}));
+    {fontSize: '11px', color: '#222222', margin: '0 0 4px 0'}));
   modelStatsPanel.add(ui.Label(
     'Precision: ' + st.precision.toFixed(3) +
-    '  |  Recall: ' + st.recall.toFixed(3),
-    {fontSize: '11px'}));
+    ' | Recall: ' + st.recall.toFixed(3),
+    {fontSize: '11px', color: '#222222', margin: '0 0 5px 0'}));
   modelStatsPanel.add(ui.Label(
     'F1 score: ' + st.f1.toFixed(3),
-    {fontSize: '11px', fontWeight: 'bold'}));
+    {fontSize: '11px', fontWeight: 'bold', color: '#222222', margin: '0 0 7px 0'}));
   modelStatsPanel.add(ui.Label(
-    'Train: ' + st.nTrain + '  |  Test: ' + st.nTest + ' samples',
-    {fontSize: '10px', color: '#999'}));
+    'Train: ' + st.nTrain + ' | Test: ' + st.nTest + ' samples',
+    {fontSize: '10px', color: '#999999', margin: '0 0 5px 0'}));
   modelStatsPanel.add(ui.Label(
     'Precomputed at ' + st.scale + ' m scale',
-    {fontSize: '10px', color: '#999'}));
+    {fontSize: '10px', color: '#999999', margin: '0 0 5px 0'}));
   modelStatsPanel.add(ui.Label(
-    'Validation: ' + st.split,
-    {fontSize: '10px', color: '#999'}));
+    'Validation: spatial block split',
+    {fontSize: '10px', color: '#999999', margin: '0 0 5px 0'}));
   modelStatsPanel.add(ui.Label(
     'Min label patch: ' + st.minPatch + ' Landsat pixels',
-    {fontSize: '10px', color: '#999'}));
+    {fontSize: '10px', color: '#999999', margin: '0'}));
 });
+
+
 
 // ---- Variable importance chart from image asset metadata ----
 var importanceFeatures = ee.FeatureCollection([
@@ -1321,9 +1334,9 @@ function handleMapClick(coords) {
 
     var inModelDomain = s.domain !== null && s.domain > 0;
     var inContextOnly = !inModelDomain && s.context !== null && s.context > 0;
-    var domainText = inModelDomain ? 'Modelled peripheral glacier zone' :
-                     inContextOnly ? 'Ice-sheet context only' :
-                     'Outside model domain';
+    var domainText = inModelDomain ? 'Modelled\nperipheral glacier zone' :
+                     inContextOnly ? 'Ice-sheet\ncontext only' :
+                     'Outside\nmodel domain';
     var domainColor = inModelDomain ? '#00838f' :
                       inContextOnly ? '#607d8b' : '#999';
 

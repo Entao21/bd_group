@@ -339,7 +339,7 @@ var cleanStable = stableCandidate.selfMask()
 </div>
 ```
 
-To track how temperatures have changed, Landsat surface temperature (ST) scenes from 2001 to 2024 were converted from raw DN values to degrees Celsius, then averaged into one composite per summer (June–August). Fitting a straight line through all 24 annual means gives a warming rate (°C/year) for every pixel. Two snapshot composites — one for ~2000 and one for ~2024 — were also retained so users can compare absolute temperatures directly in the app. Elevation and slope were derived from ArcticDEM v4 at the same 300 m resolution. Together with three proximity rasters, these variables make up the full predictor set:
+To track how temperatures have changed, Landsat surface temperature (ST) scenes from 2000 to 2024 were converted from raw DN values to degrees Celsius, then averaged into one composite per summer (June–August). Fitting a straight line through all 24 annual means gives a warming rate (°C/year) for every pixel. Two snapshot composites — one for ~2000 and one for ~2024 — were also retained so users can compare absolute temperatures directly in the app. Elevation and slope were derived from ArcticDEM v4 at the same 300 m resolution. Together with three proximity rasters, these variables make up the full predictor set:
 
 | Predictor | Source |
 |-----------|--------|
@@ -436,7 +436,7 @@ var coastProximity = ee.Image(1)
 </div>
 ```
 
-A **Random Forest with 100 trees** was trained to score how likely each current glacier pixel is to retreat. Only pixels with clear historical retreat or clear stable-ice history were used as training examples — ambiguous pixels were left out. The model only runs on peripheral glaciers (GIMP land ice below 2500 m, plus all ice south of 64°N where the southern ice cap behaves like a peripheral glacier rather than the interior ice sheet).
+A **Random Forest with 100 trees** was then trained to score how likely each current glacier pixel is to retreat. Only pixels with clear historical retreat or clear stable-ice history were used as training examples — ambiguous pixels were left out. The model only runs on peripheral glaciers (GIMP land ice below 2500 m, plus all ice south of 64°N where the southern ice cap behaves like a peripheral glacier rather than the interior ice sheet).
 
 To avoid the problem where nearby pixels leak from training into the test set, a **spatial block validation** split the map into 10 geographic chunks: chunks 0–6 trained the model and chunks 7–9 tested it. A second, classification-mode version of the same model produced the accuracy, kappa, precision, recall, and F1 scores shown in the app panel. The final score (0–1) is the fraction of the 100 trees that voted for retreat, assigned to every glacier pixel visible in 2022–2024.
 
@@ -537,7 +537,6 @@ var stats = ee.Dictionary({
 
 ## The Application
 
-Replace the placeholder below with the published Earth Engine App link before final submission.
 
 :::{.column-screen}
 
