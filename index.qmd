@@ -170,7 +170,7 @@ Github repository and source code: [https://github.com/Entao21/bd_group](https:/
 
 The pipeline runs in three steps. Preprocessing, predictor modelling, and machine learning. The figure below is an overview of this pipeline. Raw inputs produce a seven-variable predictor stack, and then a random forest model is trained on observed retreat and stable-ice labels and exports the results as an GEE image asset. 
 
-Beyonds that, some he interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface — no heavy computation at runtime.
+The interactive app then loads both assets alongside uploaded vector layers to build the split-panel interface so there is no heavy computation at runtime.
 
 ```{=html}
 <div style="background:#f5f5f5;padding:24px 20px;border-radius:8px;border:1px solid #e0e0e0;font-family:Arial,sans-serif;font-size:13px;margin:16px 0;text-align:center;">
@@ -273,7 +273,7 @@ The sections below describe each processing step in detail.
 </div>
 ```
 
-Glacier extent for two time windows — ~2000 (1999–2002) and ~2024 (2022–2024) — was mapped from Landsat summer composites (June–August). Each scene was cloud-masked using the QA_PIXEL band, and the **Normalized Difference Snow Index (NDSI)** was calculated from the green and SWIR bands (Bands 2 & 5 for Landsat 7; Bands 3 & 6 for Landsat 8/9). Pixels with NDSI > 0.4 were classified as glacier ice. Retreat is defined as any pixel that was ice in ~2000 but not in ~2024. Small isolated patches (fewer than 3 connected pixels) were removed from both retreat and stable-ice labels to reduce noise from cloud shadows and Landsat 7 scan-line gaps. All output rasters were standardized to a 300 m polar grid (EPSG:3413).
+Glacier extent for two time windows ~2000 (1999–2002) and ~2024 (2022–2024) was mapped from Landsat summer composites (June–August). Each scene was cloud-masked using the QA_PIXEL band, and the Normalized Difference Snow Index (NDSI) was calculated from the green and SWIR bands (Bands 2 & 5 for Landsat 7; Bands 3 & 6 for Landsat 8/9). Pixels with NDSI > 0.4 were classified as glacier ice. Retreat is defined as any pixel that was ice in ~2000 but not in ~2024. Small isolated patches (fewer than 3 connected pixels) were removed from both retreat and stable-ice labels to reduce noise from cloud shadows and Landsat 7 scan-line gaps. All output rasters were standardized to a 300 m polar grid (EPSG:3413).
 
 ```js
 // Cloud masking using QA_PIXEL for Landsat 8/9
@@ -348,7 +348,7 @@ var cleanStable = stableCandidate.selfMask()
 </div>
 ```
 
-To track how temperatures have changed, Landsat surface temperature (ST) scenes from 2000 to 2024 were converted from raw DN values to degrees Celsius, then averaged into one composite per summer (June–August). Fitting a straight line through all 24 annual means gives a warming rate (°C/year) for every pixel. Two snapshot composites — one for ~2000 and one for ~2024 — were also retained so users can compare absolute temperatures directly in the app. Elevation and slope were derived from ArcticDEM v4 at the same 300 m resolution. Together with three proximity rasters, these variables make up the full predictor set:
+To track how temperatures have changed, Landsat surface temperature (ST) scenes from 2000 to 2024 were converted from raw DN values to degrees Celsius, then averaged into one composite per summer (June–August). Fitting a straight line through all 24 annual means gives a warming rate (°C/year) for every pixel. Two snapshot composites, one for ~2000 and one for ~2024 were also retained so users can compare absolute temperatures directly in the app. Elevation and slope were derived from ArcticDEM v4 at the same 300 m resolution. Together with three proximity rasters, these variables make up the full predictor set:
 
 | Predictor | Source |
 |-----------|--------|
@@ -445,9 +445,11 @@ var coastProximity = ee.Image(1)
 </div>
 ```
 
-A **Random Forest with 100 trees** was then trained to score how likely each current glacier pixel is to retreat. Only pixels with clear historical retreat or clear stable-ice history were used as training examples — ambiguous pixels were left out. The model only runs on peripheral glaciers (GIMP land ice below 2500 m, plus all ice south of 64°N where the southern ice cap behaves like a peripheral glacier rather than the interior ice sheet).
+A Random Forest with 100 trees was then trained to score how likely each current glacier pixel is to retreat. Only pixels with clear historical retreat or clear stable-ice history were used as training examples and ambiguous pixels were left out. The model only runs on peripheral glaciers (GIMP land ice below 2500 m, plus all ice south of 64°N where the southern ice cap behaves like a peripheral glacier rather than the interior ice sheet).
 
-To avoid the problem where nearby pixels leak from training into the test set, a **spatial block validation** split the map into 10 geographic chunks: chunks 0–6 trained the model and chunks 7–9 tested it. A second, classification-mode version of the same model produced the accuracy, kappa, precision, recall, and F1 scores shown in the app panel. The final score (0–1) is the fraction of the 100 trees that voted for retreat, assigned to every glacier pixel visible in 2022–2024.
+To avoid the problem where nearby pixels leak from training into the test set, a spatial block validation split the map into 10 geographic chunks. Chunks 0–6 trained the model and chunks 7–9 tested it. 
+
+A second, classification-mode version of the same model produced the accuracy, kappa, precision, recall, and F1 scores shown in the app panel. The final score (0–1) is the fraction of the 100 trees that voted for retreat, assigned to every glacier pixel visible in 2022–2024.
 
 ```js
 // Build spatial folds from a lon/lat grid (10 folds total)
@@ -498,7 +500,7 @@ var susceptibilityMap = predictors
 
 #### Precomputed Asset Architecture
 
-Running Landsat composites, distance rasters, and the Random Forest across all of Greenland takes too long to repeat every time someone opens the app. Instead, everything is computed once and saved as a single multi-band Earth Engine image asset that the app reads at startup. Model performance metrics are embedded as asset metadata so the app can display them without re-running any calculations.
+Running Landsat composites, distance rasters, and the Random Forest across all of Greenland takes too long to repeat every time someone opens the app. For our application, everything is computed once and saved as a single multi-band Earth Engine image asset that the app reads at startup. Model performance metrics are embedded as asset metadata so the app can display them without re-running any calculations.
 
 | Band | Content |
 |------|---------|
@@ -515,8 +517,11 @@ Running Landsat composites, distance rasters, and the Random Forest across all o
 
 The interface uses a linked split map. The left map shows the approximate 2000 glacier extent and early-period temperature context. The right map shows the approximate 2024 glacier extent, observed retreat, warming rate, susceptibility prediction, mining sites, and settlements. A swipe divider allows direct visual comparison between baseline and recent glacier conditions.
 
+After clicking 'future risk of melting', the interface will close the 2000 map and only show the future risk of retreat.
+
 The side panel provides:
 
+- two function buttons: '2000 vs 2024 glacier content' and 'future risk of melting'
 - model performance statistics from the exported asset;
 - a variable-importance chart;
 - susceptibility and domain legends;
@@ -591,7 +596,7 @@ var warmingRate  = precomputed.select('warming_rate');
 var susceptibilityMap = precomputed.select('susceptibility');
 ```
 
-The processing steps behind these assets — NDSI glacier mapping, LST trend fitting, proximity rasters, and Random Forest training — are described in full in the Methodology section above. Model performance metrics (accuracy, kappa, precision, recall, F1) are stored as asset metadata and displayed in the app side panel without re-running any calculations.
+The processing steps behind these assets including NDSI glacier mapping, LST trend fitting, proximity rasters, and Random Forest training are described in full in the Methodology section above. Model performance metrics (accuracy, kappa, precision, recall, F1) are stored as asset metadata and displayed in the app side panel without re-running any calculations.
 
 ### 2. Interactive Visualization and Analysis
 
