@@ -539,9 +539,9 @@ var stats = ee.Dictionary({
 
 Replace the placeholder below with the published Earth Engine App link before final submission.
 
-:::{.column-page}
+:::{.column-screen}
 
-<iframe src='https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining' width='100%' height='900px'></iframe>
+<iframe src='https://ee-k24081637.projects.earthengine.app/view/greenland-glacier-mining' width='100%' height='90vh' style='height:90vh; border:none;'></iframe>
 
 :::
 
